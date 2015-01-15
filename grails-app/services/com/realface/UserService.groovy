@@ -11,7 +11,7 @@ class UserService
             return;
 
         User user = new User(name: "Daniel Monti", code: "dmonti", email: "dms.monti@gmail.com");
-        user.encodePassword("123qwe");
-        user.save();
+        user.encodePassword("1234qwer");
+        user.save(failOnError: true);
     }
 }

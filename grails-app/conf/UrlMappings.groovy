@@ -8,8 +8,12 @@ class UrlMappings
             }
         }
 
-//        "/"(controller:"home", action: "index")
-        "/"(view:"/index")
+        "/"(controller:"home", action: "index")
+
+        "/login"(view: "login")
+        "/logout"(controller: "access", action: "logout")
+
+        // Error pages
         "500"(view:'/error')
 	}
 }

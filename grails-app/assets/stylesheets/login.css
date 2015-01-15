@@ -1,0 +1,14 @@
+/*
+*= require toastr.min
+*= require bootstrap.min
+*= require_self
+*/
+
+.form-container {
+    max-width: 420px;
+    margin: 100px auto 10px;
+}
+
+.toast-top-center {
+    margin-top: 15px;
+}

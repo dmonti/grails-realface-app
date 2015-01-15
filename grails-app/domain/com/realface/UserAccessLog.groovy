@@ -1,12 +1,10 @@
 package com.realface
 
-class AccessPointLog
+class UserAccessLog
 {
-    enum Status { DENIED, GRANTED; }
+    enum Status { LOGGED_IN, INVALID_PASSWORD, INVALID_USERNAME, INACTIVE, BLOCKED, JS_EXCEPTION; }
 
-    Person person;
-
-    AccessPoint accessPoint;
+    String  userCode;
 
     Status status;
 

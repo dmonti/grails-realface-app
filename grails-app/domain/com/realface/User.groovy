@@ -6,8 +6,6 @@ class User extends Person
 {
     String code;
 
-    String email;
-
     String password;
 
     String passwordSalt;
@@ -18,8 +16,7 @@ class User extends Person
 
     static constraints =
     {
-        code(unique: true);
-        email(unique: true);
+        code(blank: false, size: 4..16, unique: true);
     }
 
     public String getPasswordSalt()
@@ -54,6 +51,22 @@ class User extends Person
     public String generatePasswordTokenHash()
     {
         return TextUtils.hash("SHA1", "jwt" + getId() + password + code);
+    }
+
+    public static User findUser(String codeOrEmail)
+    {
+        List result = executeQuery(
+            "FROM User WHERE code = :codeOrEmail OR email = :codeOrEmail",
+            [codeOrEmail: codeOrEmail], [max: 1]
+        );
+
+        User user;
+        if (result.isEmpty())
+            user = null;
+        else
+            user = result.first();
+
+        return user;
     }
 
     public static boolean existsUsernameOrEmail(String codeOrEmail)

@@ -1,14 +1,14 @@
 package com.realface
 
-class PermissionAccess
+class AccessPermission
 {
     enum Type { PERSON, ROLE; }
 
     long objectId;
 
-    Date dateCreated
+    Date dateCreated;
 
-    Date lastUpdated
+    Date lastUpdated;
 
     static constraints = { }
 }

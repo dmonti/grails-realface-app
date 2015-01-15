@@ -8,9 +8,9 @@ class AccessPoint
 
     Date lastUpdated
 
-    static hasMany = [accessLogs: AccessLog]
+    static hasMany = [logs: AccessPointLog]
 
-    static mappedBy = [accessLogs: "accessPoint"]
+    static mappedBy = [logs: "accessPoint"]
 
     static constraints = { }
 }

@@ -1,16 +1,16 @@
 package com.realface
 
-class AccessLog
+class AccessPointLog
 {
     enum Status { DENIED, GRANTED; }
 
-    Person user
+    Person person;
 
-    AccessPoint accessPoint
+    AccessPoint accessPoint;
 
-    Status status
+    Status status;
 
-    Date dateCreated
+    Date dateCreated;
 
     static constraints = { }
 

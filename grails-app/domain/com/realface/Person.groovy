@@ -6,9 +6,9 @@ class Person
 
     // Photos/Auth info
 
-    static hasMany = [accessLogs: AccessLog, roles: Role]
+    static hasMany = [logs: AccessPointLog, roles: Role]
 
-    static mappedBy = [accessLogs: "user"]
+    static mappedBy = [logs: "person"]
 
     static constraints =
     {

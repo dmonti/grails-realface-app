@@ -16,7 +16,11 @@ class User extends Person
 
     Date lastUpdated;
 
-    static constraints = { }
+    static constraints =
+    {
+        code(unique: true);
+        email(unique: true);
+    }
 
     public String getPasswordSalt()
     {

@@ -1,6 +1,9 @@
 class BootStrap
 {
-    def init = { servletContext ->
+    def userService;
+
+    def init = {  servletContext ->
+        userService.bootStrap();
     }
 
     def destroy = {

@@ -1,5 +1,7 @@
 package com.realface
 
+import com.realface.TextUtils
+
 class User extends Person
 {
     String code;
@@ -10,9 +12,9 @@ class User extends Person
 
     String passwordSalt;
 
-    Date dateCreated
+    Date dateCreated;
 
-    Date lastUpdated
+    Date lastUpdated;
 
     static constraints = { }
 
@@ -20,32 +22,9 @@ class User extends Person
     {
         if (passwordSalt == null)
         {
-            passwordSalt = buildNewPasswordSalt();
+            passwordSalt = TextUtils.generatePasswordSalt();
         }
         return passwordSalt;
-    }
-
-    private String buildNewPasswordSalt()
-    {
-        String salt = "";
-        for (int i = 0; i < 7; i++)
-        {
-            char c;
-            double x = Math.random();
-            if (x < 0.31)
-                c = (char) ('A' + ((int) (Math.random() * 25)));
-            else if (x < 0.62)
-                c = (char) ('a' + ((int) (Math.random() * 25)));
-            else if (x < 0.93)
-                c = (char) ('0' + ((int) (Math.random() * 10)));
-            else if (x < 0.95)
-                c = '=';
-            else
-                c = '_';
-            salt += c;
-        }
-        salt += "=";
-        return salt;
     }
 
     public void encodePassword(String password)
@@ -56,7 +35,7 @@ class User extends Person
     private String buildSecretPassword(String password)
     {
         String passwordSalt = getPasswordSalt();
-        return new StringBuilder("rface").append(password).append(passwordSalt).append("8.");
+        return new StringBuilder("rface").append(password).append(passwordSalt).append("8");
     }
 
     public boolean checkPassword(String password)
@@ -71,5 +50,11 @@ class User extends Person
     public String generatePasswordTokenHash()
     {
         return TextUtils.hash("SHA1", "jwt" + getId() + password + code);
+    }
+
+    public static boolean existsUsernameOrEmail(String codeOrEmail)
+    {
+        final String query = "SELECT 1 FROM User WHERE code = :codeOrEmail OR email = :codeOrEmail";
+        return !executeQuery(query, [codeOrEmail: codeOrEmail], [max: 1]).isEmpty()
     }
 }

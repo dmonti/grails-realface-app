@@ -1,4 +1,4 @@
-<ul class="nav nav-pills nav-stacked" style="max-width: 300px;">
+<ul class="nav nav-pills nav-stacked">
     <li><g:link controller="home">Dashboard</g:link></li>
     <li><g:link controller="User">Usuários</g:link></li>
     <li class="dropdown">

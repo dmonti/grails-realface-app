@@ -14,10 +14,10 @@
 <g:render template="/layouts/admin/header" />
 <div class="container-fluid">
     <div class="row">
-        <div class="col-xs-2">
+        <div id="menu" class="col-xs-2">
             <g:render template="/layouts/admin/menu" />
         </div>
-        <div class="col-xs-10">
+        <div id="content" class="col-xs-10">
             <g:layoutBody />
         </div>
     </div>

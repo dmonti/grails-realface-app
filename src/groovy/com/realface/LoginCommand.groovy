@@ -35,13 +35,13 @@ class LoginCommand
         User user = User.findUser(username);
         if (user == null)
         {
-            userAccessLogService.create(value, Status.INVALID_USERNAME);
+            userAccessLogService.create(username, Status.INVALID_USERNAME);
             return false;
         }
 
         boolean passwordChecked = user.checkPassword(password);
         if (!passwordChecked)
-            userAccessLogService.create(value, Status.INVALID_PASSWORD);
+            userAccessLogService.create(username, Status.INVALID_PASSWORD);
 
         return passwordChecked;
     }

@@ -1,11 +1,11 @@
-<ul class="nav nav-pills nav-stacked">
-    <li class="btn btn-default dropdown-toggle" data-toggle="dropdown">Logs <span class="caret"></span></li>
-    <ul class="dropdown-menu" style="left: 13px;" role="sub-menu">
-        <li>
-            <g:link controller="userAccessLog">Acesso do sistema</g:link>
-        </li>
-        <li>
-            <g:link controller="accessPointLog">Pontos de autenticação</g:link>
-        </li>
-    </ul>
+<ul class="nav nav-pills nav-stacked" style="max-width: 300px;">
+    <li><g:link controller="home">Dashboard</g:link></li>
+    <li><g:link controller="User">Usuários</g:link></li>
+    <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Logs <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            <li><g:link controller="UserAccessLog">Acesso do sistema</g:link></li>
+            <li><g:link controller="AccessPointLog">Pontos de autenticação</g:link></li>
+        </ul>
+    </li>
 </ul>

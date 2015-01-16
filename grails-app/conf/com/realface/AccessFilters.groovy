@@ -15,7 +15,9 @@ class AccessFilters
                 }
             }
 
-            after = { Map model -> }
+            after = { Map model ->
+                model.currentUser = User.get(session.currentUserId);
+            }
 
             afterView = { Exception e -> }
         }

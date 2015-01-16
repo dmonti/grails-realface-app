@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>RealFace - Administração</title>
+    <meta name="layout" content="admin/main">
 </head>
 <body>
+    Dashboard
 </body>
 </html>

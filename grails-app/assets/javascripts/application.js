@@ -9,8 +9,8 @@
 //= require handlebars-v2.0.0
 //= require ember-1.9.1
 //= require bootstrap.min
-//= require_self
 //= require_tree .
+//= require_self
 
 $(function() {
 });

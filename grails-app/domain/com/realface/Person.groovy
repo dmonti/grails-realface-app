@@ -12,6 +12,10 @@ class Person
 
     // Photos/Auth info
 
+    Date dateCreated;
+
+    Date lastUpdated;
+
     static constraints =
     {
         email(blank: false, size: 8..64, unique: true);

@@ -8,10 +8,15 @@
 * compiled file, but it's generally better to create a new file per style scope.
 *
 *= require bootstrap.min
+*= require toastr.min
 *= require main
 *= require_self
 */
 
 header {
     background-color: #e1e1e8;
+}
+
+h3 {
+    margin-bottom: 50px;
 }

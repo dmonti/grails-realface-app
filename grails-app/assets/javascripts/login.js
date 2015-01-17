@@ -33,9 +33,9 @@ toastr.options = {
 
 function Login($form) {
     var self = this;
+    var $btnSubmit = $form.find("button[type=submit]");
 
     this.submit = function() {
-        $btnSubmit = $form.find("button[type=submit]");
         $btnSubmit.attr("disabled",  "disabled");
         $.get($form.attr("action"), $form.serialize(), function(response) {
             if (response.status == 0)

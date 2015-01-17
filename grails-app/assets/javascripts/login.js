@@ -33,17 +33,17 @@ toastr.options = {
 
 function Login($form) {
     var self = this;
-    var $btnSubmit = $form.find("button[type=submit]");
+    var $btn = $form.find("button[type=submit]");
 
     this.submit = function() {
-        $btnSubmit.attr("disabled",  "disabled");
+        $btn.button("loading");
         $.get($form.attr("action"), $form.serialize(), function(response) {
-            if (response.status == 0)
-                toastr.error(response.message);
-            else
+            if (response.status) {
                 self.login();
-        }).always(function() {
-            $btnSubmit.removeAttr("disabled");
+            } else {
+                toastr.error(response.message);
+                $btn.button("reset");
+            }
         });
     };
 

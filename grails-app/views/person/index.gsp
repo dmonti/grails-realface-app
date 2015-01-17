@@ -12,21 +12,23 @@
           <th>Nome</th>
           <th>Email</th>
           <th>Data de criação</th>
+          <th>Última atualização</th>
           <th>Editar</th>
         </tr>
       </thead>
       <tbody>
           <g:each in="${persons}">
             <tr>
-            <th scope="row">${it.id}</th>
-            <td>${it.name}</td>
-            <td>${it.email}</td>
-            <td>${it.dateCreated}</td>
-            <td>
-                <g:link controller="person" action="edit" id="${it.id}">
-                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                </g:link>
-            </td>
+                <td scope="row">${it.id}</td>
+                <td>${it.name}</td>
+                <td>${it.email}</td>
+                <td>${it.dateCreated}</td>
+                <td>${it.lastUpdated}</td>
+                <td>
+                    <g:link controller="person" action="edit" id="${it.id}">
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </g:link>
+                </td>
             </tr>
           </g:each>
       </tbody>

@@ -2,3 +2,6 @@
 *= require_self
 */
 
+.toast-top-center {
+    margin-top: 65px;
+}

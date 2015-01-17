@@ -10,10 +10,6 @@ class User extends Person
 
     String passwordSalt;
 
-    Date dateCreated;
-
-    Date lastUpdated;
-
     static constraints =
     {
         code(blank: false, size: 4..16, unique: true);

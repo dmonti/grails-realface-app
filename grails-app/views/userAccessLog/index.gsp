@@ -20,7 +20,7 @@
             <th scope="row">${it.id}</th>
             <td>${it.userCode}</td>
             <td>${it.status}</td>
-            <td>${it.dateCreated}</td>
+            <td><g:formatDate date="${it.dateCreated}" /></td>
             </tr>
           </g:each>
       </tbody>

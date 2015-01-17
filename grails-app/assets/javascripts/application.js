@@ -7,7 +7,7 @@
 //
 //= require jquery-2.1.3.min
 //= require handlebars-v2.0.0
-//= require ember-1.9.1
+//= require angular.min
 //= require bootstrap.min
 //= require_tree .
 //= require_self

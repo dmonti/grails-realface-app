@@ -17,17 +17,36 @@ class UserController
         return [ user: user ]
     }
 
+    def create()
+    {
+        render(view: "edit")
+    }
+
     def submit()
     {
-        User user = User.get(params.id);
+        boolean containsId = params.containsKey("id");
+
+        User user = (containsId ? User.get(params.id) : new User());
+        if (params.containsKey("password"))
+        {
+            params.password = user.encodePassword(params.password)
+            params.remove("password")
+        }
+
         user.properties = params;
         user.save(flush: true);
 
+        String msg;
         boolean hasErrors = user.hasErrors();
-        String message = hasErrors ? message(error: user.errors.allErrors.first()) : message(code: "default.updated.message2")
-        return render(contentType: "text/json") {[
-            status: hasErrors ? NOK : OK,
-            message: message
-        ]};
+        if (hasErrors)
+            msg = message(error: user.errors.allErrors.first());
+        else if (containsId)
+            msg = message(code: "default.updated.message2")
+        else
+            msg = message(code: "default.created.message2")
+
+        return render(contentType: "text/json") {
+            [ status: (hasErrors ? NOK : OK), message: msg]
+        };
     }
 }

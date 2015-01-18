@@ -5,6 +5,11 @@
 </head>
 <body>
     <h3>Usuários</h3>
+    <div class="row actions">
+        <div class="col-xs-12">
+            <g:link controller="User" action="create" class="btn btn-primary pull-right">Cadastrar novo</g:link>
+        </div>
+    </div>
     <table class="table table-striped">
       <thead>
         <tr>

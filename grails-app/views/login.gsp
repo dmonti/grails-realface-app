@@ -10,15 +10,15 @@
         <div class="form-container">
             <g:form controller="access" action="login" class="form-login form-horizontal">
               <div class="form-group">
-                <label for="inputEmail" class="col-sm-2 control-label">Email:</label>
+                <label for="inputLoginEmail" class="col-sm-2 control-label">Email:</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" name="username" id="inputEmail" placeholder="Email">
+                  <input type="text" class="form-control" name="username" id="inputLoginEmail" placeholder="Email">
                 </div>
               </div>
               <div class="form-group">
-                <label for="inputPassword" class="col-sm-2 control-label">Senha:</label>
+                <label for="inputLoginPassword" class="col-sm-2 control-label">Senha:</label>
                 <div class="col-sm-10">
-                  <input type="password" class="form-control" name="password" id="inputPassword" placeholder="Senha">
+                  <input type="password" class="form-control" name="password" id="inputLoginPassword" placeholder="Senha">
                 </div>
               </div>
               <div class="form-group">

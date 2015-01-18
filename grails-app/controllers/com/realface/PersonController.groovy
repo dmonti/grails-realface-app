@@ -17,17 +17,30 @@ class PersonController
         return [ person: person ]
     }
 
+    def create()
+    {
+        render(view: "edit")
+    }
+
     def submit()
     {
-        Person person = Person.get(params.id);
+        boolean containsId = params.containsKey("id");
+
+        Person person = (containsId ? Person.get(params.id) : new Person());
         person.properties = params;
         person.save(flush: true);
 
+        String msg;
         boolean hasErrors = person.hasErrors();
-        String message = hasErrors ? message(error: person.errors.allErrors.first()) : message(code: "default.updated.message2")
-        return render(contentType: "text/json") {[
-            status: hasErrors ? NOK : OK,
-            message: message
-        ]};
+        if (hasErrors)
+            msg = message(error: person.errors.allErrors.first());
+        else if (containsId)
+            msg = message(code: "default.updated.message2")
+        else
+            msg = message(code: "default.created.message2")
+
+        return render(contentType: "text/json") {
+            [ status: (hasErrors ? NOK : OK), message: msg]
+        };
     }
 }

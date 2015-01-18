@@ -20,3 +20,7 @@ header {
 h3 {
     margin-bottom: 50px;
 }
+
+.row.actions {
+    margin-bottom: 25px;
+}

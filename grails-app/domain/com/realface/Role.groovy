@@ -4,9 +4,13 @@ import com.realface.AccessPermission.Type
 
 class Role
 {
-    String name
+    String name;
 
     List<AccessPermission> permissions;
+
+    Date dateCreated;
+
+    Date lastUpdated;
 
     static constraints = { }
 

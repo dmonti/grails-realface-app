@@ -6,7 +6,7 @@ function Menu() {
         $("#menu").find("li > a").each(function(i, element) {
             var href = $(element).attr("href");
             if (urlPathName == href) {
-                $(element).parents("li:last").addClass("active");
+                $(element).parents("li").addClass("active");
                 return;
             }
         });

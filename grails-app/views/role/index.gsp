@@ -28,7 +28,7 @@
                 <td><g:formatDate date="${it.dateCreated}" /></td>
                 <td><g:formatDate date="${it.lastUpdated}" /></td>
                 <td>
-                    <g:link controller="Role" action="edit" id="${it.id}">
+                    <g:link class="edit" controller="Role" action="editModal" id="${it.id}">
                         <span class="glyphicon glyphicon-edit"></span>
                     </g:link>
                 </td>
@@ -36,5 +36,6 @@
           </g:each>
       </tbody>
     </table>
+    <asset:javascript src="role.js"/>
 </body>
 </html>

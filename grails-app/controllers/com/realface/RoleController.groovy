@@ -11,10 +11,10 @@ class RoleController
         return [ roles: roles ]
     }
 
-    def edit()
+    def editModal()
     {
         Role role = Role.get(params.id);
-        return [ role: role ]
+        return render(template: "/role/edit_modal", model: [role: role]);
     }
 
     def create()
@@ -40,7 +40,7 @@ class RoleController
             msg = message(code: "default.created.message2")
 
         return render(contentType: "text/json") {
-            [ status: (hasErrors ? NOK : OK), message: msg]
+            [ status: (hasErrors ? NOK : OK), message: msg ]
         };
     }
 }

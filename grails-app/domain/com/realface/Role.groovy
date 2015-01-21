@@ -14,15 +14,22 @@ class Role
 
     static constraints = { }
 
+    static belongsTo = Person
+
+    static hasMany = [persons: Person]
+
+    static mapping =
+    {
+        persons(joinTable: [name: "person_roles", key: "role_id" ])
+    }
+
     static transients = ["permissions"];
 
     public AccessPermission getPermissions()
     {
         if (permissions == null)
         {
-            permissions = AccessPermission.executeQuery(
-                "FROM AccessPermission WHERE (type = ? AND objectId = ?)", [Type.ROLE, id]
-            );
+            permissions = AccessPermission.findWhere(type: Type.ROLE, objectId: id);
         }
         return permissions;
     }

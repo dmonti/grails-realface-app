@@ -24,6 +24,7 @@ class Person
     static mapping =
     {
         tablePerHierarchy(false)
+        roles(joinTable: [name: "person_roles", key: "person_id" ])
     }
 
     static hasMany = [logs: AccessPointLog, roles: Role]
@@ -36,9 +37,7 @@ class Person
     {
         if (permissions == null)
         {
-            permissions = AccessPermission.executeQuery(
-                "FROM AccessPermission WHERE (type = ? AND objectId = ?)", [Type.PERSON, id]
-            );
+            permissions = AccessPermission.findWhere(type: Type.PERSON, objectId: id);
         }
         return permissions;
     }

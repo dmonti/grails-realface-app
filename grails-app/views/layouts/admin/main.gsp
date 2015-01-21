@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="shortcut icon" href="/bootstrap/img/favicon.ico">
     <g:layoutHead/>
-    <asset:stylesheet src="application.css"/>
-    <asset:javascript src="application.js"/>
+    <asset:stylesheet src="application.css" />
+    <asset:javascript src="application.js" />
 </head>
 <body>
 <g:render template="/layouts/admin/header" />

@@ -12,7 +12,10 @@ class Role
 
     Date lastUpdated;
 
-    static constraints = { }
+    static constraints =
+    {
+        name(unique: true);
+    }
 
     static hasMany = [personRoles: PersonRole]
 

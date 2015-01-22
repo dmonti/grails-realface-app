@@ -1,6 +1,6 @@
 package com.realface
 
-import com.realface.AccessPermission.Type
+import org.apache.commons.lang.builder.HashCodeBuilder
 
 class PersonRole implements Serializable
 {
@@ -13,5 +13,20 @@ class PersonRole implements Serializable
     static mapping =
     {
         id(composite: ['person', 'role']);
+    }
+
+    boolean equals(other)
+    {
+        return (other instanceof PersonRole) &&
+               (other.person.id == person.id) &&
+               (other.role.id == role.id)
+    }
+
+    int hashCode()
+    {
+        def builder = new HashCodeBuilder()
+        builder.append(person.id);
+        builder.append(role.id);
+        return builder.toHashCode();
     }
 }

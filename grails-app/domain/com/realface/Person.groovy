@@ -28,7 +28,12 @@ class Person
 
     static mappedBy = [logs: "person", personRoles: "person"]
 
-    static transients = ["permissions"];
+    static transients = ["roles", "permissions"];
+
+    public List<Role> getRoles()
+    {
+        return getPersonRoles().collect() { it.role; };
+    }
 
     public AccessPermission getPermissions()
     {

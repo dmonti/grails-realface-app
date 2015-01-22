@@ -5,6 +5,8 @@ class RoleController
     private static final byte OK = 1;
     private static final byte NOK = 0;
 
+    def roleService;
+
     def index()
     {
         List roles = Role.findAll("from Role", [max: 25]);
@@ -45,12 +47,8 @@ class RoleController
         boolean hasErrors = role.hasErrors();
         if (params.persons && !hasErrors)
         {
-            PersonRole.executeUpdate("DELETE FROM PersonRole WHERE role = ?", [role])
-            params.list("persons.id").each() {
-                Person person = Person.get(it.toLong());
-                PersonRole personRole = new PersonRole([person: person, role: role]).save();
-                personRole.save(flush: true);
-            }
+            List personIds = params.list("persons.id");
+            roleService.updatePersons(role, personIds);
         }
 
         String msg;

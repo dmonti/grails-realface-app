@@ -1,8 +1,17 @@
 //= require jquery-2.1.3.min
+//= require jquery-ui.min
 //= require bootstrap.min
 //= require toastr.min
 //= require menu
 //= require_self
+
+function showHtmlModal(modalHtml) {
+    var $modal = $(modalHtml);
+    $modal.on('hidden.bs.modal', function() { $modal.remove() });
+    $("body").append($modal);
+    $modal.modal("show");
+    return $modal;
+}
 
 toastr.options = {
     "closeButton": false,

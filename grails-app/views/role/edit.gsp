@@ -5,7 +5,7 @@
 </head>
 <body>
     <g:if test="${role}">
-        <h3>Papel #${role.id}</h3>
+        <h3>Editar papel #${role.id}</h3>
     </g:if>
     <g:else>
         <h3>Novo papel</h3>

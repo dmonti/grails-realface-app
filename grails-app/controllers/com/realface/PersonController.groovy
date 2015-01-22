@@ -17,6 +17,14 @@ class PersonController
         return [ person: person ]
     }
 
+    def search()
+    {
+        List persons = Person.list(max: 10);
+        return render(contentType: "text/json") {
+            persons.collect { [ id: it.id, value: it.name, label: it.email ] };
+        };
+    }
+
     def create()
     {
         render(view: "edit")

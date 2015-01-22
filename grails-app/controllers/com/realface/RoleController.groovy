@@ -16,9 +16,9 @@ class RoleController
         return [ role: Role.get(params.id) ]
     }
 
-    def addUserModal()
+    def addPersonModal()
     {
-        return render(template: "/role/add_user_modal");
+        return render(template: "/role/add_person_modal");
     }
 
     def editModal()
@@ -40,6 +40,14 @@ class RoleController
 
         Role role = (containsId ? Role.get(params.id) : new Role());
         role.properties = params;
+        if (params.persons)
+        {
+            params.persons.id.each() {
+                Person person = Person.get(it.toLong());
+                person.roles.add(role);
+                person.save();
+            }
+        }
         role.save(flush: true);
 
         String msg;

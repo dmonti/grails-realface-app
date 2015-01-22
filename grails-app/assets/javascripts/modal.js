@@ -1,29 +1,38 @@
-function Modal(html, data) {
+function Modal(html, config) {
     var self = this;
+
+    var data;
     var $modal = $(html);
 
     var initialize = function() {
-        if (data && data.appendTo) {
+        if (config && config.appendTo) {
             $modal.appendTo(appendTo);
         } else {
             $("body").append($modal);
         }
-        if (data && data.removeAfterHide) {
-            $modal.on('hidden.bs.modal', function() { self.remove() });
-        }
+
+        $modal.on("hidden.bs.modal", function(e, o) {
+            $modal.trigger("hide", self);
+            if (config && config.removeAfterHide) {
+                $modal.remove();
+            }
+        });
     };
 
     self.get = function() {
         return $modal;
     }
 
-    self.find = function(selector) {
-        return $modal.find(selector);
+    self.data = function(value) {
+        if (typeof value != "undefined") {
+            data = value;
+        }
+        return data;
     }
 
-    self.remove = function() {
-        $modal.remove();
-    };
+    self.on = function(eventName, callback) {
+        $modal.on(eventName, callback);
+    }
 
     self.show = function() {
         $modal.modal("show");

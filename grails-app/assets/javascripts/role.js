@@ -5,19 +5,29 @@ $(function() {
 function RoleForm($form) {
     var self = this;
 
-    $form.find(".add-user").click(function() {
-        $.get($(this).attr("href"), null, function(htmlModal) {
-            var $modal = showHtmlModal(htmlModal);
-            $modal.find("#inputEmail").autocomplete({
+    $form.find("a.add-user").click(function(e) {
+        try {
+            var url = $(this).attr("href");
+            loadAddUserModal(url);
+        } catch (e) {
+            toastr.error(response.message);
+        } finally {
+            return false;
+        }
+    });
+
+    var loadAddUserModal = function(url) {
+        $.get(url, null, function(html) {
+            var modal = new Modal(html, { removeAfterHide: true });
+            modal.find("#inputEmail").autocomplete({
                 source: "/user/search",
                 minLength: 2,
                 select: function(event, ui) {
-                    console.log(ui.item ? "Selected: " + ui.item.value + " aka " + ui.item.id : "Nothing selected, input was " + this.value );
                 }
             });
-        })
-        return false;
-    });
+            modal.show();
+        });
+    };
 
     var submit = function(e) {
         try {

@@ -10,7 +10,6 @@ function Modal(html, config) {
         } else {
             $("body").append($modal);
         }
-
         $modal.on("hidden.bs.modal", function(e, o) {
             $modal.trigger("hide", self);
             if (config && config.removeAfterHide) {

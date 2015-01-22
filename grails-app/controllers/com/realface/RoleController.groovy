@@ -40,18 +40,21 @@ class RoleController
 
         Role role = (containsId ? Role.get(params.id) : new Role());
         role.properties = params;
-        if (params.persons)
-        {
-            params.persons.id.each() {
-                Person person = Person.get(it.toLong());
-                person.roles.add(role);
-                person.save();
-            }
-        }
         role.save(flush: true);
 
         String msg;
         boolean hasErrors = role.hasErrors();
+        if (params.persons && !hasErrors)
+        {
+            PersonRole.executeUpdate("DELETE FROM PersonRole WHERE role = ?", [role])
+            params.list("persons.id").each() {
+                Person person = Person.get(it.toLong());
+                PersonRole personRole = new PersonRole([person: person, role: role]).save();
+                personRole.save(flush: true);
+            }
+        }
+
+
         if (hasErrors)
             msg = message(error: role.errors.allErrors.first());
         else if (containsId)

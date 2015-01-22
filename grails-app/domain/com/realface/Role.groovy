@@ -14,14 +14,9 @@ class Role
 
     static constraints = { }
 
-    static belongsTo = Person
+    static hasMany = [personRoles: PersonRole]
 
-    static hasMany = [persons: Person]
-
-    static mapping =
-    {
-        persons(joinTable: [name: "person_roles", key: "role_id" ])
-    }
+    static mappedBy = [personRoles: "role"]
 
     static transients = ["permissions"];
 

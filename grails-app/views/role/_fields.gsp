@@ -21,8 +21,8 @@
                 </tr>
             </thead>
             <tbody>
-                <g:each in="${role.persons}">
-                    <g:render template="persons_row" bean="${it}" />
+                <g:each in="${role?.personRoles}">
+                    <g:render template="persons_row" bean="${it.person}" />
                 </g:each>
             </tbody>
         </table>

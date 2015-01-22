@@ -10,8 +10,6 @@ class Person
 
     List<AccessPermission> permissions;
 
-    // Photos/Auth info
-
     Date dateCreated;
 
     Date lastUpdated;
@@ -24,12 +22,11 @@ class Person
     static mapping =
     {
         tablePerHierarchy(false)
-        roles(joinTable: [name: "person_roles", key: "person_id" ])
     }
 
-    static hasMany = [logs: AccessPointLog, roles: Role]
+    static hasMany = [logs: AccessPointLog, personRoles: PersonRole]
 
-    static mappedBy = [logs: "person"]
+    static mappedBy = [logs: "person", personRoles: "person"]
 
     static transients = ["permissions"];
 

@@ -1,0 +1,31 @@
+package com.realface
+
+import org.codehaus.groovy.grails.web.servlet.mvc.exceptions.ControllerExecutionException;
+
+class TemplateController
+{
+    def index()
+    {
+        redirect(action: "load", params: params);
+    }
+
+    def load()
+    {
+        String path = params.path;
+        if (!path || path.isEmpty())
+        {
+            log.warn("Template path not informed!");
+            return render("");
+        }
+
+        try
+        {
+            return render(template: path);
+        }
+        catch (ControllerExecutionException e)
+        {
+            log.warn("Exception loading template path: '${path}'", e);
+            return render("");
+        }
+    }
+}

@@ -20,7 +20,7 @@ class TemplateController
 
         try
         {
-            return render(template: path);
+            return render(template: path, model: params);
         }
         catch (ControllerExecutionException e)
         {

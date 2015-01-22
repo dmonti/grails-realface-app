@@ -49,6 +49,7 @@ grails.project.dependency.resolution = {
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes e.g.
         runtime "mysql:mysql-connector-java:5.1.34"
+        runtime "org.postgresql:postgresql:9.3-1102-jdbc41" // Heorku DB
         compile "com.google.guava:guava:18.0"
     }
 

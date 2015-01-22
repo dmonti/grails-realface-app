@@ -6,12 +6,7 @@
                 <h4 class="modal-title" id="editlLabel"></h4>
             </div>
             <div class="modal-body">
-                  <div class="form-group">
-                    <label for="inputName" class="col-sm-2 control-label">Nome:</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" name="name" id="inputName" value="${role?.name}" placeholder="Nome" />
-                    </div>
-                  </div>
+                <g:render template="fields" />
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>

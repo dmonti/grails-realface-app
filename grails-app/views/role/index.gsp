@@ -28,7 +28,7 @@
                 <td><g:formatDate date="${it.dateCreated}" /></td>
                 <td><g:formatDate date="${it.lastUpdated}" /></td>
                 <td>
-                    <g:link class="edit" controller="Role" action="editModal" id="${it.id}">
+                    <g:link controller="Role" action="edit" id="${it.id}">
                         <span class="glyphicon glyphicon-edit"></span>
                     </g:link>
                 </td>

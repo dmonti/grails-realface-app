@@ -7,7 +7,7 @@ class UserController
 
     def index()
     {
-        List users = User.findAll("from User", [max: 25]);
+        List users = User.list(max: 25);
         return [ users: users ]
     }
 
@@ -15,6 +15,14 @@ class UserController
     {
         User user = User.get(params.id);
         return [ user: user ]
+    }
+
+    def search()
+    {
+        List users = User.list(max: 10);
+        return render(contentType: "text/json") {
+            users.collect { [ id: it.id, value: it.name, label: it.email ] };
+        };
     }
 
     def create()
@@ -46,7 +54,7 @@ class UserController
             msg = message(code: "default.created.message2")
 
         return render(contentType: "text/json") {
-            [ status: (hasErrors ? NOK : OK), message: msg]
+            [ status: (hasErrors ? NOK : OK), message: msg ]
         };
     }
 }

@@ -11,9 +11,21 @@ class RoleController
         return [ roles: roles ]
     }
 
+    def edit()
+    {
+        return [ role: Role.get(params.id) ]
+    }
+
+    def addUserModal()
+    {
+        return render(template: "/role/add_user_modal");
+    }
+
     def editModal()
     {
-        Role role = Role.get(params.id);
+        boolean containsId = params.containsKey("id");
+
+        Role role = containsId ? Role.get(params.id) : null;
         return render(template: "/role/edit_modal", model: [role: role]);
     }
 

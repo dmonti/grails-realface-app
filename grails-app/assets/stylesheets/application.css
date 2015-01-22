@@ -7,11 +7,20 @@
 * You're free to add application-wide styles to this file and they'll appear at the top of the
 * compiled file, but it's generally better to create a new file per style scope.
 *
+*= require jquery-ui.min
 *= require bootstrap.min
 *= require toastr.min
 *= require main
 *= require_self
 */
+
+.ui-autocomplete-loading {
+    background: white url("../images/spinner.gif") right center no-repeat;
+}
+
+.ui-widget-content {
+    z-index: 99999 !important;
+}
 
 header {
     background-color: #e1e1e8;

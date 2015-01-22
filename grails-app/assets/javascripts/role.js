@@ -1,59 +1,46 @@
 $(function() {
-    $("a.edit").click(function() {
-        try {
-            var href = $(this).attr("href");
-            new RoleModal(href).show();
-        } catch(e) {
-            toastr.error(response.message);
-        } finally {
-            return false;
-        }
-    });
+    new RoleForm($("form"));
 });
 
-function RoleModal(href) {
+function RoleForm($form) {
     var self = this;
-    var $content = $("#content");
 
-    var initialize = function() {
-        $.get(href, null, initModal);
-    };
-
-    var initModal = function(html) {
-        $modal = $(html);
-        $modal.on('hidden.bs.modal', function() { $modal.remove() });
-        $modal.find("form").submit(submit);
-        $content.append($modal);
-        $modal.modal("show");
-    }
+    $form.find(".add-user").click(function() {
+        $.get($(this).attr("href"), null, function(htmlModal) {
+            var $modal = showHtmlModal(htmlModal);
+            $modal.find("#inputEmail").autocomplete({
+                source: "/user/search",
+                minLength: 2,
+                select: function(event, ui) {
+                    console.log(ui.item ? "Selected: " + ui.item.value + " aka " + ui.item.id : "Nothing selected, input was " + this.value );
+                }
+            });
+        })
+        return false;
+    });
 
     var submit = function(e) {
         try {
-            update($(this));
-        } catch(e) {
+            update($form);
+        } catch (e) {
             toastr.error(response.message);
         } finally {
             return false;
         }
-    }
+    };
 
-    var update = function($form) {
+    var update = function(url, data) {
         var $btn = $form.find("button[type=submit]").button("loading");
         $.post($form.attr("action"), $form.serialize(), function(result) {
-            if (result.status) {
-                $form.parents(".modal:first").modal("hide");
+            if (result.status)
                 toastr.success(result.message)
-            } else {
+            else
                 toastr.error(result.message)
-            }
         }).always(function() {
             $btn.button("reset");
         });
     };
 
-    self.show = function() {
-    }
-
-    initialize();
+    $form.submit(submit);
     return self;
 };

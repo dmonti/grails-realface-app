@@ -5,7 +5,7 @@ $(function() {
 function RoleForm($form) {
     var self = this;
 
-    $form.on("click", "a.user-remove", function(e) {
+    $form.on("click", "a.person-remove", function(e) {
         $(this).parents("tr:first").remove();
     })
 

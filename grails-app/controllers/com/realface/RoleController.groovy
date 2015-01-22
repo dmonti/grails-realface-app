@@ -42,7 +42,6 @@ class RoleController
         role.properties = params;
         role.save(flush: true);
 
-        String msg;
         boolean hasErrors = role.hasErrors();
         if (params.persons && !hasErrors)
         {
@@ -54,7 +53,7 @@ class RoleController
             }
         }
 
-
+        String msg;
         if (hasErrors)
             msg = message(error: role.errors.allErrors.first());
         else if (containsId)

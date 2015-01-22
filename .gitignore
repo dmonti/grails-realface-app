@@ -32,3 +32,6 @@
 # .gitignore for Eclipse
 .classpath
 /.project
+
+# OSX System files
+.DS_Store

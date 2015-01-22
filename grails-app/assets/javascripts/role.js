@@ -5,6 +5,10 @@ $(function() {
 function RoleForm($form) {
     var self = this;
 
+    $form.on("click", "a.user-remove", function(e) {
+        $(this).parents("tr:first").remove();
+    })
+
     $form.find("a.add-person").click(function(e) {
         try {
             var url = $(this).attr("href");

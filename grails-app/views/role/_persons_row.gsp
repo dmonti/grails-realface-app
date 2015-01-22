@@ -7,5 +7,5 @@
     <td>${it.id}</td>
     <td>${it.name}</td>
     <td>${it.email}</td>
-    <td><span class="glyphicon glyphicon-minus-sign pull-right" /></td>
+    <td><a class="user-remove" href="javascript:void(0);"><span class="glyphicon glyphicon-minus-sign pull-right" /></a></td>
 </tr>

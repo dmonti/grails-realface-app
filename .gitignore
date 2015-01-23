@@ -11,7 +11,7 @@
 *Db.script
 
 # logs
-/stacktrace.log
+stacktrace.log
 /test/reports
 /logs
 
@@ -25,12 +25,15 @@
 # older plugin install locations
 /plugins
 /web-app/plugins
+/.link_to_grails_plugins/
 
 # "temporary" build files
+/target-eclipse
 /target
 
 # .gitignore for Eclipse
 .classpath
+.settings
 /.project
 
 # OSX System files

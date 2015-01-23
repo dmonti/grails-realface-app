@@ -15,6 +15,11 @@ class User extends Person
         code(blank: false, size: 4..16, unique: true);
     }
 
+    static mapping =
+    {
+        table("AppUser");
+    }
+
     public String getPasswordSalt()
     {
         if (passwordSalt == null)

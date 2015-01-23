@@ -1,9 +1,6 @@
 dataSource {
     pooled = true
     jmxExport = true
-
-    driverClassName = "com.mysql.jdbc.Driver"
-    dialect = org.hibernate.dialect.MySQL5InnoDBDialect
 }
 hibernate {
     cache.use_second_level_cache = true
@@ -18,8 +15,10 @@ environments {
     development {
         dataSource {
             dbCreate = "update" // one of 'create', 'create-drop', 'update', 'validate', ''
-            url = "jdbc:mysql://localhost:3306/realface?reconnect=true"
+            driverClassName = "com.mysql.jdbc.Driver"
+            dialect = org.hibernate.dialect.MySQL5InnoDBDialect
 
+            url = "jdbc:mysql://localhost:3306/realface?reconnect=true"
             username = "root"
             password = ""
         }
@@ -27,10 +26,12 @@ environments {
     production {
         dataSource {
             dbCreate = "update" // one of 'create', 'create-drop', 'update', 'validate', ''
-            url = "mysql://be1ac84661a6cf:42020a89@us-cdbr-iron-east-01.cleardb.net/heroku_a325aefff6c2817?reconnect=true"
+            driverClassName = "org.postgresql.Driver"
+            dialect = org.hibernate.dialect.PostgreSQLDialect
 
-            username = "be1ac84661a6cf"
-            password = "42020a89"
+            url = "jdbc:postgresql://ec2-54-83-204-244.compute-1.amazonaws.com/d7ejnsducu84n6"
+            username = "wxlcbxacjtpavg"
+            password = "CmW2CfetzOaTXMd8516fXWlnvq"
 
             properties {
                // See http://grails.org/doc/latest/guide/conf.html#dataSource for documentation

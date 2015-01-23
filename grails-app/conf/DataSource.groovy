@@ -1,6 +1,9 @@
 dataSource {
     pooled = true
     jmxExport = true
+
+    driverClassName = "com.mysql.jdbc.Driver"
+    dialect = org.hibernate.dialect.MySQL5InnoDBDialect
 }
 hibernate {
     cache.use_second_level_cache = true
@@ -15,32 +18,20 @@ environments {
     development {
         dataSource {
             dbCreate = "update" // one of 'create', 'create-drop', 'update', 'validate', ''
-            url = "jdbc:mysql://localhost:3306/realface?zeroDateTimeBehavior=convertToNull&reconnect=true"
-            driverClassName = "com.mysql.jdbc.Driver"
-            dialect = org.hibernate.dialect.MySQL5InnoDBDialect
+            url = "jdbc:mysql://localhost:3306/realface?reconnect=true"
 
             username = "root"
             password = ""
         }
     }
-    test {
-        dataSource {
-            driverClassName = "org.h2.Driver"
-            username = "sa"
-            password = ""
-
-            dbCreate = "update"
-            url = "jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE"
-        }
-    }
     production {
         dataSource {
-            driverClassName = "org.h2.Driver"
-            username = "sa"
-            password = ""
+            dbCreate = "update" // one of 'create', 'create-drop', 'update', 'validate', ''
+            url = "mysql://be1ac84661a6cf:42020a89@us-cdbr-iron-east-01.cleardb.net/heroku_a325aefff6c2817?reconnect=true"
 
-            dbCreate = "update"
-            url = "jdbc:h2:prodDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE"
+            username = "be1ac84661a6cf"
+            password = "42020a89"
+
             properties {
                // See http://grails.org/doc/latest/guide/conf.html#dataSource for documentation
                jmxEnabled = true

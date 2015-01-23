@@ -25,22 +25,22 @@ environments {
     }
     test {
         dataSource {
+            driverClassName = "org.h2.Driver"
+            username = "sa"
+            password = ""
+
             dbCreate = "update"
             url = "jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE"
         }
     }
     production {
         dataSource {
-            dbCreate = "create-drop"
-            driverClassName = "org.postgresql.Driver"
-            dialect = org.hibernate.dialect.PostgreSQLDialect
+            driverClassName = "org.h2.Driver"
+            username = "sa"
+            password = ""
 
-            uri = new URI(System.env.DATABASE_URL?:"postgres://test:test@localhost/test")
-
-            url = "jdbc:postgresql://"+uri.host+uri.path
-            username = uri.userInfo.split(":")[0]
-            password = uri.userInfo.split(":")[1]
-
+            dbCreate = "update"
+            url = "jdbc:h2:prodDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE"
             properties {
                // See http://grails.org/doc/latest/guide/conf.html#dataSource for documentation
                jmxEnabled = true
@@ -61,6 +61,6 @@ environments {
                jdbcInterceptors = "ConnectionState"
                defaultTransactionIsolation = java.sql.Connection.TRANSACTION_READ_COMMITTED
             }
-        }
+       }
     }
 }

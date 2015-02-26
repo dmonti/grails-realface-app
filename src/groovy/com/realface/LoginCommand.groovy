@@ -40,6 +40,16 @@ class LoginCommand
             userAccessLogService.create(username, Status.INVALID_USERNAME);
             return false;
         }
+        if (!user.credential.enabled)
+        {
+            userAccessLogService.create(username, Status.INACTIVE);
+            return false;
+        }
+        if (!AccessLevel.SYSTEM.equals(user.credential.level))
+        {
+            userAccessLogService.create(username, Status.PERMISSION_DENIED);
+            return false;
+        }
         boolean passwordChecked = user.credential.checkPassword(password);
         if (!passwordChecked)
         {

@@ -2,7 +2,7 @@ package com.realface
 
 class UserAccessLog
 {
-    enum Status { LOGGED_IN, INVALID_PASSWORD, INVALID_USERNAME, INACTIVE, BLOCKED, JS_EXCEPTION; }
+    enum Status { LOGGED_IN, INVALID_PASSWORD, INVALID_USERNAME, PERMISSION_DENIED, INACTIVE, BLOCKED, JS_EXCEPTION; }
 
     String  userCode;
 

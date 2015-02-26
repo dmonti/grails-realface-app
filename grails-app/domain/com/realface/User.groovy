@@ -23,7 +23,7 @@ class User
 
     static mapping =
     {
-        table("AppUser")
+        table("app_user")
         credential(cascade: "save-update")
     }
 

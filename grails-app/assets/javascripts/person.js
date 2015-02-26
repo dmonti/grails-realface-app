@@ -1,11 +1,11 @@
 //= require_self
 
 $(function() {
-    var $form = $("form.person");
-    new PersonForm($form);
+    var $form = $("form.user");
+    new UserForm($form);
 });
 
-function PersonForm($form) {
+function UserForm($form) {
     var self = this;
     var $btn = $form.find("button[type=submit]");
 

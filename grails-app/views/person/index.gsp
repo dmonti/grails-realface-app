@@ -7,7 +7,7 @@
     <h3>Pessoas cadastradas</h3>
     <div class="row actions">
         <div class="col-xs-12">
-            <g:link controller="Person" action="create" class="btn btn-primary pull-right">Cadastrar novo</g:link>
+            <g:link controller="User" action="create" class="btn btn-primary pull-right">Cadastrar novo</g:link>
         </div>
     </div>
     <table class="table table-striped">
@@ -22,7 +22,7 @@
         </tr>
       </thead>
       <tbody>
-          <g:each in="${persons}">
+          <g:each in="${users}">
             <tr>
                 <td scope="row">${it.id}</td>
                 <td>${it.name}</td>
@@ -30,7 +30,7 @@
                 <td><g:formatDate date="${it.dateCreated}" /></td>
                 <td><g:formatDate date="${it.lastUpdated}" /></td>
                 <td>
-                    <g:link controller="person" action="edit" id="${it.id}">
+                    <g:link controller="user" action="edit" id="${it.id}">
                         <span class="glyphicon glyphicon-edit"></span>
                     </g:link>
                 </td>

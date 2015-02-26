@@ -5,11 +5,11 @@ $(function() {
 function RoleForm($form) {
     var self = this;
 
-    $form.on("click", "a.person-remove", function(e) {
+    $form.on("click", "a.user-remove", function(e) {
         $(this).parents("tr:first").remove();
     })
 
-    $form.find("a.add-person").click(function(e) {
+    $form.find("a.add-user").click(function(e) {
         try {
             var url = $(this).attr("href");
             loadAddUserModal(url);
@@ -24,7 +24,7 @@ function RoleForm($form) {
         $.get(url, null, function(html) {
             var modal = new Modal(html, { removeAfterHide: true });
             modal.get().find("#inputEmail").autocomplete({
-                source: "/person/search",
+                source: "/user/search",
                 minLength: 2,
                 select: function(event, ui) {
                     modal.data(ui.item);
@@ -37,13 +37,13 @@ function RoleForm($form) {
         });
     };
 
-    var addUser = function(person) {
-        var $tbody = $("table.persons > tbody");
-        var $tr = $tbody.find("tr#person-" + person.id);
+    var addUser = function(user) {
+        var $tbody = $("table.users > tbody");
+        var $tr = $tbody.find("tr#user-" + user.id);
         if ($tr.length > 0) {
             $tbody.prepend($tr);
         } else {
-            $.get("/template/load", { path: "/role/persons_row", bean: "User", id: person.id }, function(html) {
+            $.get("/template/load", { path: "/role/users_row", bean: "User", id: user.id }, function(html) {
                 console.log(html);
                 $tbody.prepend(html);
             });

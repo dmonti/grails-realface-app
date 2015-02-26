@@ -6,6 +6,7 @@ import com.realface.UserAccessLog.Status;
 @Validateable
 class LoginCommand
 {
+    def userService;
     def userAccessLogService;
 
     String username;
@@ -23,26 +24,27 @@ class LoginCommand
 
     public boolean usernameValidator(String value)
     {
-        boolean exists = User.existsUsernameOrEmail(value);
+        boolean exists = userService.existsUsernameOrEmail(value);
         if (!exists)
+        {
             userAccessLogService.create(value, Status.INVALID_USERNAME);
-
+        }
         return exists;
     }
 
     public boolean passwordValidator(String value)
     {
-        User user = User.findUser(username);
+        User user = userService.findUser(username);
         if (user == null)
         {
             userAccessLogService.create(username, Status.INVALID_USERNAME);
             return false;
         }
-
-        boolean passwordChecked = user.checkPassword(password);
+        boolean passwordChecked = user.credential.checkPassword(password);
         if (!passwordChecked)
+        {
             userAccessLogService.create(username, Status.INVALID_PASSWORD);
-
+        }
         return passwordChecked;
     }
 }

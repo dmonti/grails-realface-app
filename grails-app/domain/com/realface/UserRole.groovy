@@ -2,9 +2,9 @@ package com.realface
 
 import org.apache.commons.lang.builder.HashCodeBuilder
 
-class PersonRole implements Serializable
+class UserRole implements Serializable
 {
-    Person person;
+    User user;
 
     Role role;
 
@@ -12,20 +12,20 @@ class PersonRole implements Serializable
 
     static mapping =
     {
-        id(composite: ['person', 'role']);
+        id(composite: ['user', 'role']);
     }
 
     boolean equals(other)
     {
-        return (other instanceof PersonRole) &&
-               (other.person.id == person.id) &&
+        return (other instanceof UserRole) &&
+               (other.user.id == user.id) &&
                (other.role.id == role.id)
     }
 
     int hashCode()
     {
         def builder = new HashCodeBuilder()
-        builder.append(person.id);
+        builder.append(user.id);
         builder.append(role.id);
         return builder.toHashCode();
     }

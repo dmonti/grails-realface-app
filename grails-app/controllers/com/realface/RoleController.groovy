@@ -18,9 +18,9 @@ class RoleController
         return [ role: Role.get(params.id) ]
     }
 
-    def addPersonModal()
+    def addUserModal()
     {
-        return render(template: "/role/add_person_modal");
+        return render(template: "/role/add_user_modal");
     }
 
     def editModal()
@@ -45,10 +45,10 @@ class RoleController
         role.save(flush: true);
 
         boolean hasErrors = role.hasErrors();
-        if (params.persons && !hasErrors)
+        if (params.users && !hasErrors)
         {
-            List personIds = params.list("persons.id");
-            roleService.updatePersons(role, personIds);
+            List userIds = params.list("users.id");
+            roleService.updateUsers(role, userIds);
         }
 
         String msg;

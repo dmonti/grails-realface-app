@@ -1,27 +1,27 @@
 package com.realface
 
-class PersonController
+class UserController
 {
     private static final byte OK = 1;
     private static final byte NOK = 0;
 
     def index()
     {
-        List persons = Person.findAll("from Person", [max: 25]);
-        return [ persons: persons ]
+        List users = User.findAll("from User", [max: 25]);
+        return [ users: users ]
     }
 
     def edit()
     {
-        Person person = Person.get(params.id);
-        return [ person: person ]
+        User user = User.get(params.id);
+        return [ user: user ]
     }
 
     def search()
     {
-        List persons = Person.list(max: 10);
+        List users = User.list(max: 10);
         return render(contentType: "text/json") {
-            persons.collect { [ id: it.id, value: it.name, label: it.email ] };
+            users.collect { [ id: it.id, value: it.name, label: it.email ] };
         };
     }
 
@@ -34,14 +34,14 @@ class PersonController
     {
         boolean containsId = params.containsKey("id");
 
-        Person person = (containsId ? Person.get(params.id) : new Person());
-        person.properties = params;
-        person.save(flush: true);
+        User user = (containsId ? User.get(params.id) : new User());
+        user.properties = params;
+        user.save(flush: true);
 
         String msg;
-        boolean hasErrors = person.hasErrors();
+        boolean hasErrors = user.hasErrors();
         if (hasErrors)
-            msg = message(error: person.errors.allErrors.first());
+            msg = message(error: user.errors.allErrors.first());
         else if (containsId)
             msg = message(code: "default.updated.message2")
         else

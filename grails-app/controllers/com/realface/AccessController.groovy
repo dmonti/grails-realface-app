@@ -7,6 +7,8 @@ class AccessController
     private static final byte OK = 1;
     private static final byte NOK = 0;
 
+    def userService
+
     def accessService;
 
     def userAccessLogService;
@@ -17,7 +19,7 @@ class AccessController
         if (!hasErrors)
         {
             String username = command.username;
-            User user = User.findUser(username);
+            User user = userService.findUser(username);
             session.currentUserId = user.id;
 
             userAccessLogService.create(username, Status.LOGGED_IN);

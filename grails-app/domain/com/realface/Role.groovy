@@ -17,15 +17,15 @@ class Role
         name(unique: true);
     }
 
-    static hasMany = [personRoles: PersonRole]
+    static hasMany = [userRoles: UserRole]
 
-    static mappedBy = [personRoles: "role"]
+    static mappedBy = [userRoles: "role"]
 
-    static transients = ["persons", "permissions"];
+    static transients = ["users", "permissions"];
 
-    public List<Person> getPersons()
+    public List<User> getUsers()
     {
-        return getPersonRoles().collect() { it.person; };
+        return getUserRoles().collect() { it.user; };
     }
 
     public AccessPermission getPermissions()

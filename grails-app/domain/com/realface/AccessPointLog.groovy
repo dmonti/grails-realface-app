@@ -4,7 +4,7 @@ class AccessPointLog
 {
     enum Status { DENIED, GRANTED; }
 
-    Person person;
+    User user;
 
     AccessPoint accessPoint;
 

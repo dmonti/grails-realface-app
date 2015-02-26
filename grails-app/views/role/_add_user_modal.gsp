@@ -10,7 +10,7 @@
                     <label for="inputEmail" class="col-xs-2 control-label">Email:</label>
                     <div class="col-xs-4">
                         <input type="text" class="form-control" name="value" id="inputEmail" placeholder="Email ou código..." />
-                        <input type="hidden" id="person" />
+                        <input type="hidden" id="user" />
                     </div>
                 </div>
             </div>

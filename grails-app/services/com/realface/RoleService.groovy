@@ -5,23 +5,23 @@ import grails.transaction.Transactional
 @Transactional
 class RoleService
 {
-    def updatePersons(Role role, List<String> personIds)
+    def updateUsers(Role role, List<String> userIds)
     {
-        Set<PersonRole> newPersons = personIds.collect() {
-            Person person = Person.get(it.toLong());
-            return new PersonRole([person: person, role: role]);
+        Set<UserRole> newUsers = userIds.collect() {
+            User user = User.get(it.toLong());
+            return new UserRole([user: user, role: role]);
         }
 
-        Set<PersonRole> oldPersons = role.personRoles;
-        if (oldPersons) {
-            Set removed = (oldPersons - newPersons);
+        Set<UserRole> oldUsers = role.userRoles;
+        if (oldUsers) {
+            Set removed = (oldUsers - newUsers);
             removed.each() {
-                role.personRoles.remove(it);
+                role.userRoles.remove(it);
                 it.delete();
             }
         }
 
-        Set added = (newPersons - oldPersons);
+        Set added = (newUsers - oldUsers);
         added.each() { it.save(); }
     }
 }

@@ -26,7 +26,7 @@
           <g:each in="${users}">
             <tr>
                 <td scope="row">${it.id}</td>
-                <td>${it.code}</td>
+                <td>${it.credential.code}</td>
                 <td>${it.name}</td>
                 <td>${it.email}</td>
                 <td><g:formatDate date="${it.dateCreated}" /></td>

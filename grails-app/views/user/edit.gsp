@@ -22,7 +22,7 @@
               <div class="form-group">
                 <label for="inputName" class="col-sm-2 control-label">Código:</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" name="credential.code" id="inputName" value="${user?.credential.code}" placeholder="Código" />
+                  <input type="text" class="form-control" name="credential.code" id="inputName" value="${user?.credential?.code}" placeholder="Código" />
                 </div>
               </div>
               <div class="form-group">

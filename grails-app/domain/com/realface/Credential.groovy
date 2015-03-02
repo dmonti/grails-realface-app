@@ -33,6 +33,11 @@ class Credential
         level(enumType: "ordinal", defaultValue: 0)
     }
 
+    public Credential()
+    {
+        setLevel(AccessLevel.DEFAULT)
+    }
+
     public boolean checkPassword(String password)
     {
         String secretPwd = buildSecretPassword(password)

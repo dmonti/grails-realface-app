@@ -35,7 +35,7 @@
                   <div class="form-group">
                     <label for="inputPassword" class="col-sm-2 control-label">Senha:</label>
                     <div class="col-sm-10">
-                      <input type="password" class="form-control" name="password" id="inputPassword" placeholder="Senha" />
+                      <input type="password" class="form-control" name="credential.password" id="inputPassword" placeholder="Senha" />
                     </div>
                   </div>
               </g:if>

@@ -32,13 +32,23 @@ class UserController
 
     def submit()
     {
-        boolean containsId = params.containsKey("id");
+        User user;
 
-        User user = (containsId ? User.get(params.id) : new User());
-        if (params.containsKey("password"))
+        boolean containsId = params.containsKey("id");
+        if (containsId)
         {
-            params.password = user.encodePassword(params.password)
-            params.remove("password")
+            user = User.get(params.id)
+        }
+        else
+        {
+            user = new User();
+            user.credential = new Credential()
+        }
+
+        if (params.containsKey("credential.password"))
+        {
+            user.credential.setAndEncodePassword(params.credential.password)
+            params.remove("credential.password")
         }
 
         user.properties = params;

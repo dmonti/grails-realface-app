@@ -6,11 +6,30 @@
 //= require modal
 //= require_self
 
+function $post($form, data, $btn) {
+    if ($btn == null) {
+        $btn = $form.find("button[type=submit]")
+    }
+    $btn.button("loading");
+    if (data == null) {
+        data = $form.serialize();
+    }
+    $.post($form.attr("action"), data, function(result) {
+        if (result.status) {
+            toastr.success(result.message);
+        } else {
+            toastr.error(result.message);
+        }
+    }).always(function() {
+        $btn.button("reset");
+    });
+}
+
 toastr.options = {
     "closeButton": false,
     "progressBar": false,
     "positionClass": "toast-top-center",
-    "showDuration": "250",
+    "showDuration": "500",
     "hideDuration": "250",
     "timeOut": "2500",
     "showEasing": "swing",

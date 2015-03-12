@@ -11,7 +11,7 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Name</th>
+                    <th>Nome</th>
                     <th>Email</th>
                     <th>&nbsp;
                         <g:link controller="Template" action="load" params="${[path: '/role/add_user_modal']}" class="add-user">

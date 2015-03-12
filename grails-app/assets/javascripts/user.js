@@ -8,7 +8,7 @@ $(function() {
 function UserForm($form) {
     var self = this;
 
-    var submit = function(e) {
+    var submit = function() {
         try {
             $post($form);
         } catch (e) {

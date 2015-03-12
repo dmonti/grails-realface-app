@@ -2,45 +2,37 @@ package com.realface
 
 class AccessRule
 {
-    enum TargetType { PERSON, ROLE; }
+    String code
+    String description
 
-    RuleType type;
-    AccessPoint accessPoint;
+    RuleType type
 
-    long targetId;
-    TargetType targetType;
+    int afterHour
+    int afterMinute
 
-    int afterHour;
-    int afterMinute;
+    int beforeHour
+    int beforeMinute
 
-    int beforeHour;
-    int beforeMinute;
+    Date dateCreated
+    Date lastUpdated
 
-    Date dateCreated;
-    Date lastUpdated;
+    static hasMany = [users: User, roles: Role]
 
-    static constraints = { }
+    static constraints =
+    {
+        code(size: 3..64, unique: true)
+        description(type: "text")
+
+        users(joinTable: [name: "access_rule_users"])
+        roles(joinTable: [name: "access_rule_roles"])
+    }
 
     static mapping =
     {
-        targetType(enumType: "ordinal");
-        type(enumType: "ordinal");
-    }
-
-    public Object getTarget()
-    {
-        Object targetType;
-        switch(type) {
-            case PERSON:
-                targetType = User.get(targetId);
-            break
-            case ROLE:
-                targetType = Role.get(targetId);
-            break
-            default:
-                targetType = null;
-            break
-        }
-        return targetType;
+        type(enumType: "ordinal")
+        afterHour(defaultValue: 0)
+        afterMinute(defaultValue: 0)
+        beforeHour(defaultValue: 0)
+        beforeMinute(defaultValue: 0)
     }
 }

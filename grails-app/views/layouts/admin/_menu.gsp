@@ -5,6 +5,8 @@
         <ul class="dropdown-menu">
             <li><g:link controller="User">Usuários</g:link></li>
             <li><g:link controller="Role">Papéis</g:link></li>
+            <li><g:link controller="AccessPoint">Pontos de acesso</g:link></li>
+            <li><g:link controller="AccessRule">Regras de acesso</g:link></li>
         </ul>
     </li>
     <li class="dropdown">

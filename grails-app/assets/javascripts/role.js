@@ -50,7 +50,7 @@ function RoleForm($form) {
         }
     }
 
-    var submit = function(e) {
+    var submit = function() {
         try {
             update($form);
         } catch (e) {

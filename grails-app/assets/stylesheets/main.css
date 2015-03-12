@@ -2,6 +2,14 @@
 *= require_self
 */
 
+header {
+    background-color: #e1e1e8;
+}
+
+h3 {
+    margin-bottom: 50px;
+}
+
 .toast-top-center {
     margin-top: 65px;
 }

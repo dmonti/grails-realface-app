@@ -1,7 +1,5 @@
 package com.realface
 
-import com.realface.TextUtils
-
 class User
 {
     String name
@@ -18,7 +16,8 @@ class User
 
     static constraints =
     {
-        email(size: 8..64, unique: true, email: true)
+        name(size: 3..64)
+        email(size: 9..64, unique: true, email: true)
     }
 
     static mapping =

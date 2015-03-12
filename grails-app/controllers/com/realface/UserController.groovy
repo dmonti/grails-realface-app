@@ -33,7 +33,6 @@ class UserController
     def submit()
     {
         User user;
-
         boolean containsId = params.containsKey("id");
         if (containsId)
         {

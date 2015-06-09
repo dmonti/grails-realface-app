@@ -11,4 +11,9 @@ class UserPhoto
     static belongsTo = [user: User]
 
     static constraints = { }
+
+    public int getUserNumber()
+    {
+        return user.id.intValue()
+    }
 }

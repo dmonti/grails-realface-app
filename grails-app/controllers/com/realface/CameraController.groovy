@@ -8,18 +8,34 @@ import javax.imageio.ImageIO
 
 class CameraController
 {
-    def test()
-    {
-        //FaceRecognition faceRecognition = new FaceRecognition()
-        //faceRecognition.learn("/Volumes/dmonti/Development/workspace/realface/realface-cv/data/all10.txt")
+    def test() { }
 
-        //faceRecognition.recognizeFileList(params.fileName)
+    def recognize()
+    {
+        File file = new File("/Volumes/dmonti/Development/workspace/realface/realface-app/target/tmp/${System.currentTimeMillis()}.txt")
+
+        User user = User.get(params.user.id)
+        String filePath = "/Volumes/dmonti/Development/workspace/realface/realface-app/target/tmp/${params.photo.name}"
+        file << ("${user.id} ${user.name} ${filePath}\n")
+
+        FaceRecognition faceRecognition = new FaceRecognition()
+
+        String msg
+        boolean test = faceRecognition.recognizeFileList(file.getAbsolutePath())
+        if (test)
+            msg = "Usuário ${user.name} identificado."
+        else
+            msg = "Usuário ${user.name} não reconhecido."
+
+        return render(contentType: "text/json") { [ test: test, message: msg ] }
     }
 
     def init()
     {
-        FaceRecognition2 faceRecognition = new FaceRecognition2()
-        faceRecognition.learn()
+        FaceRecognition faceRecognition = new FaceRecognition()
+        java.util.List<UserPhoto> photos = UserPhoto.findAll()
+        faceRecognition.learn2(photos)
+        render(1)
     }
 
     def shoot()
@@ -36,6 +52,6 @@ class CameraController
 
         webcam.close()
 
-        return render(contentType: "text/json") { [ name: fileName ] };
+        return render(contentType: "text/json") { [ name: fileName ] }
     }
 }

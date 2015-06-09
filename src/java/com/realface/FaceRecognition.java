@@ -1,38 +1,5 @@
 package com.realface;
 
-/*
- * FaceRecognition.java
- *
- * Created on Dec 7, 2011, 1:27:25 PM
- *
- * Description: Recognizes faces.
- *
- * Copyright (C) Dec 7, 2011, Stephen L. Reed, Texai.org.
- *
- * This file is a translation from the OpenCV example http://www.shervinemami.info/faceRecognition.html, ported
- * to Java using the JavaCV library.  Notable changes are the addition of the Apache Log4J framework and the
- * installation of image files in a data directory child of the working directory. Some of the code has
- * been expanded to make debugging easier.  Expected results are 100% recognition of the lower3.txt test
- * image index set against the all10.txt training image index set.  See http://en.wikipedia.org/wiki/Eigenface
- * for a technical explanation of the algorithm.
- *
- * stephenreed@yahoo.com
- *
- * FaceRecognition is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version (subject to the "Classpath" exception
- * as provided in the LICENSE.txt file that accompanied this code).
- *
- * FaceRecognition is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with JavaCV.  If not, see .
- *
- */
 import static org.bytedeco.javacpp.opencv_core.CV_32FC1;
 import static org.bytedeco.javacpp.opencv_core.CV_32SC1;
 import static org.bytedeco.javacpp.opencv_core.CV_L1;
@@ -87,14 +54,8 @@ import org.bytedeco.javacpp.opencv_core.CvSize;
 import org.bytedeco.javacpp.opencv_core.CvTermCriteria;
 import org.bytedeco.javacpp.opencv_core.IplImage;
 
-/**
- * Recognizes faces.
- *
- * @author reed
- */
 public class FaceRecognition
 {
-
     /** the number of training faces */
     private int nTrainFaces = 0;
     /** the training face image array */
@@ -119,6 +80,77 @@ public class FaceRecognition
     /** Constructs a new FaceRecognition instance. */
     public FaceRecognition()
     {
+    }
+
+    public void learn2(java.util.List<UserPhoto> photos)
+    {
+        System.out.println("===========================================");
+        System.out.println("===========================================");
+        System.out.println("Loading the training images from photos list");
+        trainingFaceImgArr = loadFaceImgArray(photos);
+        nTrainFaces = trainingFaceImgArr.length;
+
+        System.out.println("Got " + nTrainFaces + " training images");
+        if (nTrainFaces < 3)
+        {
+            System.out.println("Need 3 or more training faces\n" + "Input file contains only " + nTrainFaces);
+            return;
+        }
+
+        // do Principal Component Analysis on the training faces
+        doPCA();
+
+        System.out.println("projecting the training images onto the PCA subspace");
+        // project the training images onto the PCA subspace
+        projectedTrainFaceMat = cvCreateMat(nTrainFaces, // rows
+                nEigens, // cols
+                CV_32FC1); // type, 32-bit float, 1 channel
+
+        // initialize the training face matrix - for ease of debugging
+        for (int i1 = 0; i1 < nTrainFaces; i1++)
+        {
+            for (int j1 = 0; j1 < nEigens; j1++)
+            {
+                projectedTrainFaceMat.put(i1, j1, 0.0);
+            }
+        }
+
+        System.out.println("created projectedTrainFaceMat with " + nTrainFaces + " (nTrainFaces) rows and " + nEigens + " (nEigens) columns");
+        if (nTrainFaces < 5)
+        {
+            System.out.println("projectedTrainFaceMat contents:\n" + oneChannelCvMatToString(projectedTrainFaceMat));
+        }
+
+        final FloatPointer floatPointer = new FloatPointer(nEigens);
+        for (int i = 0; i < nTrainFaces; i++)
+        {
+            cvEigenDecomposite(trainingFaceImgArr[i], // obj
+                    nEigens, // nEigObjs
+                    new PointerPointer(eigenVectArr), // eigInput (Pointer)
+                    0, // ioFlags
+                    null, // userData (Pointer)
+                    pAvgTrainImg, // avg
+                    floatPointer); // coeffs (FloatPointer)
+
+            if (nTrainFaces < 5)
+            {
+                System.out.println("floatPointer: " + floatPointerToString(floatPointer));
+            }
+            for (int j1 = 0; j1 < nEigens; j1++)
+            {
+                projectedTrainFaceMat.put(i, j1, floatPointer.get(j1));
+            }
+        }
+        if (nTrainFaces < 5)
+        {
+            System.out.println("projectedTrainFaceMat after cvEigenDecomposite:\n" + projectedTrainFaceMat);
+        }
+
+        // store the recognition data as an xml file
+        storeTrainingData();
+
+        // Save all the eigenvectors as images, so that they can be checked.
+        storeEigenfaceImages();
     }
 
     /**
@@ -200,13 +232,97 @@ public class FaceRecognition
         storeEigenfaceImages();
     }
 
+    public boolean recognize(User user, String photoFilePath)
+    {
+        System.out.println("===========================================");
+        System.out.println("recognizing faces from photo " + photoFilePath);
+
+        int nTestFaces = 0; // the number of test images
+        CvMat trainPersonNumMat; // the person numbers during training
+        float[] projectedTestFace;
+        String answer;
+        int nCorrect = 0;
+        int nWrong = 0;
+        double timeFaceRecognizeStart;
+        double tallyFaceRecognizeTime;
+        float confidence = 0.0f;
+
+        // load test images and ground truth for person number
+        IplImage[] testFaceImgArr = new IplImage[1];
+        // load the face image
+        testFaceImgArr[0] = cvLoadImage(photoFilePath, // filename
+                CV_LOAD_IMAGE_GRAYSCALE); // isColor
+
+        nTestFaces = testFaceImgArr.length;
+        System.out.println(nTestFaces + " test faces loaded");
+
+        // load the saved training data
+        trainPersonNumMat = loadTrainingData();
+        if (trainPersonNumMat == null)
+        {
+            System.out.println("trainPersonNumMat NULL!");
+            return false;
+        }
+
+        // project the test images onto the PCA subspace
+        projectedTestFace = new float[nEigens];
+        timeFaceRecognizeStart = (double) cvGetTickCount(); // Record the timing.
+
+        int iNearest;
+        int nearest;
+        int truth;
+
+        // project the test image onto the PCA subspace
+        cvEigenDecomposite(testFaceImgArr[0], // obj
+                nEigens, // nEigObjs
+                new PointerPointer(eigenVectArr), // eigInput (Pointer)
+                0, // ioFlags
+                null, // userData
+                pAvgTrainImg, // avg
+                projectedTestFace); // coeffs
+
+        // System.out.println("projectedTestFace\n" + floatArrayToString(projectedTestFace));
+
+        final FloatPointer pConfidence = new FloatPointer(confidence);
+        iNearest = findNearestNeighbor(projectedTestFace, new FloatPointer(pConfidence));
+        confidence = pConfidence.get();
+        System.out.println("confidence:>>>"+confidence);
+
+        System.out.println("sizeof:>>>"+personNumTruthMat.data_i().sizeof());
+        System.out.println("capacity:>>>"+personNumTruthMat.data_i().capacity());
+
+        truth = personNumTruthMat.data_i().get(0);
+        nearest = trainPersonNumMat.data_i().get(iNearest);
+
+        if (nearest == truth)
+        {
+            answer = "Correct";
+            nCorrect++;
+        }
+        else
+        {
+            answer = "WRONG!";
+            nWrong++;
+        }
+        System.out.println("nearest = " + nearest + ", Truth = " + truth + " (" + answer + "). Confidence = " + confidence);
+
+        tallyFaceRecognizeTime = (double) cvGetTickCount() - timeFaceRecognizeStart;
+        if (nCorrect + nWrong > 0)
+        {
+            System.out.println("TOTAL ACCURACY: " + (nCorrect * 100 / (nCorrect + nWrong)) + "% out of " + (nCorrect + nWrong) + " tests.");
+            System.out.println("TOTAL TIME: " + (tallyFaceRecognizeTime / (cvGetTickFrequency() * 1000.0 * (nCorrect + nWrong))) + " ms average.");
+        }
+
+        return true;
+    }
+
     /**
      * Recognizes the face in each of the test images given, and compares the results with the truth.
      *
      * @param szFileTest
      *            the index file of test images
      */
-    public void recognizeFileList(final String szFileTest)
+    public boolean recognizeFileList(final String szFileTest)
     {
         System.out.println("===========================================");
         System.out.println("recognizing faces indexed from " + szFileTest);
@@ -231,7 +347,7 @@ public class FaceRecognition
         trainPersonNumMat = loadTrainingData();
         if (trainPersonNumMat == null)
         {
-            return;
+            return false;
         }
 
         // project the test images onto the PCA subspace
@@ -279,6 +395,84 @@ public class FaceRecognition
             System.out.println("TOTAL ACCURACY: " + (nCorrect * 100 / (nCorrect + nWrong)) + "% out of " + (nCorrect + nWrong) + " tests.");
             System.out.println("TOTAL TIME: " + (tallyFaceRecognizeTime / (cvGetTickFrequency() * 1000.0 * (nCorrect + nWrong))) + " ms average.");
         }
+        return nCorrect > 0;
+    }
+
+    /**
+     * Reads the names & image filenames of people from a text file, and loads all those images listed.
+     *
+     * @param filename
+     *            the training file name
+     * @return the face image array
+     */
+    private IplImage[] loadFaceImgArray(List<UserPhoto> photos)
+    {
+        int nFaces = photos.size();
+        System.out.println("nFaces: " + nFaces);
+
+        // allocate the face-image array and person number matrix
+        IplImage[] faceImgArr = new IplImage[nFaces];
+        personNumTruthMat = cvCreateMat(1, // rows
+                nFaces, // cols
+                CV_32SC1); // type, 32-bit unsigned, one channel
+
+        // initialize the person number matrix - for ease of debugging
+        for (int j1 = 0; j1 < nFaces; j1++)
+        {
+            personNumTruthMat.put(0, j1, 0);
+        }
+
+        personNames.clear(); // Make sure it starts as empty.
+        nPersons = 0;
+
+        // store the face images in an array
+        for (int iFace = 0; iFace < nFaces; iFace++)
+        {
+            UserPhoto photo = photos.get(iFace);
+            String personName = photo.getUser().getName();
+            String sPersonName = personName;
+            int personNumber = photo.getUserNumber();
+            String imgFilename = "/Volumes/dmonti/Development/workspace/realface/realface-app/web-app/images/photos/" + String.valueOf(photo.getId().intValue()) + ".jpg";
+            System.out.println("Got " + iFace + " " + personNumber + " " + personName + " " + imgFilename);
+
+            // Check if a new person is being loaded.
+            if (personNumber > nPersons)
+            {
+                // Allocate memory for the extra person (or possibly multiple), using this new person's name.
+                personNames.add(sPersonName);
+                nPersons = personNumber;
+                System.out.println("Got new person " + sPersonName + " -> nPersons = " + nPersons + " [" + personNames.size() + "]");
+            }
+
+            // Keep the data
+            personNumTruthMat.put(0, // i
+                    iFace, // j
+                    personNumber); // v
+
+            // load the face image
+            faceImgArr[iFace] = cvLoadImage(imgFilename, // filename
+                    CV_LOAD_IMAGE_GRAYSCALE); // isColor
+
+            if (faceImgArr[iFace] == null)
+            {
+                throw new RuntimeException("Can't load image from " + imgFilename);
+            }
+        }
+
+        System.out.println("Data loaded: (" + nFaces + " images of " + nPersons + " people).");
+        final StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("People: ");
+        if (nPersons > 0)
+        {
+            stringBuilder.append("<").append(personNames.get(0)).append(">");
+        }
+        for (int i = 1; i < nPersons && i < personNames.size(); i++)
+        {
+            stringBuilder.append(", <").append(personNames.get(i)).append(">");
+        }
+        System.out.println(stringBuilder.toString());
+
+        return faceImgArr;
     }
 
     /**
@@ -725,7 +919,7 @@ public class FaceRecognition
      *            the test face index
      * @return the index
      */
-    private int findNearestNeighbor(def projectedTestFace, FloatPointer pConfidencePointer)
+    private int findNearestNeighbor(float projectedTestFace[], FloatPointer pConfidencePointer)
     {
         double leastDistSq = Double.MAX_VALUE;
         int i = 0;
@@ -881,9 +1075,7 @@ public class FaceRecognition
     public static void main(final String[] args)
     {
         final FaceRecognition faceRecognition = new FaceRecognition();
-        // faceRecognition.learn("data/some-training-faces.txt");
-        // faceRecognition.learn("data/all10.txt");
-        // faceRecognition.recognizeFileList("data/some-test-faces.txt");
+        //faceRecognition.learn("data/all10.txt");
         faceRecognition.recognizeFileList("data/lower3.txt");
     }
 }

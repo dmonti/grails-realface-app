@@ -7,12 +7,12 @@
     <h3>Test</h3>
     <div class="row">
         <div class="col-xs-6">
-            <g:form controller="camera" action="test" class="camera-test form-horizontal">
+            <g:form controller="camera" action="recognize" class="camera-test form-horizontal">
                 <h4 class="modal-title" id="editlLabel">Usuário teste</h4>
                 <div class="form-group">
                     <label for="inputId" class="col-xs-2 control-label">ID:</label>
                     <div class="col-xs-4">
-                        <input type="text" class="form-control" name="user.id" id="inputId" placeholder="ID do usuário" />
+                        <input type="text" class="form-control" name="user.id" id="inputId" value="1" placeholder="ID do usuário" />
                     </div>
                 </div>
                 <div class="form-group">

@@ -5,8 +5,11 @@ function Camera() {
 
     var submitEvent = function(e) {
         var $form = $(this);
-        var action = $form.data("action");
-        $.post(action, $form.serialize(), function(data) {
+        $.post($form.attr("action"), $form.serialize(), function(data) {
+            if (data.test)
+                toastr.success(data.message);
+            else
+                toastr.error(data.message);
         });
         return false;
     };
@@ -15,8 +18,9 @@ function Camera() {
         var $btn = $(this);
         var action = $btn.data("action");
         $.get(action, function(data) {
+            toastr.success("Foto capturada!");
             $("#photoName").val(data.name);
-        })
+        });
     };
 
     self.initialize = function() {

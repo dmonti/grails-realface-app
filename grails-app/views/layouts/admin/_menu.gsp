@@ -7,6 +7,7 @@
             <li><g:link controller="User">Usuários</g:link></li>
             <li><g:link controller="AccessRule">Regras de acesso</g:link></li>
             <li><g:link controller="AccessPoint">Pontos de acesso</g:link></li>
+            <li><g:link controller="Camera" action="test">Teste de acesso</g:link></li>
         </ul>
     </li>
     <li class="dropdown">

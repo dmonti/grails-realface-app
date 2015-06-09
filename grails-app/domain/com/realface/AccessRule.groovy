@@ -21,7 +21,7 @@ class AccessRule
     static constraints =
     {
         code(size: 3..64, unique: true)
-        description(type: "text")
+        description(nullable: true, type: "text")
 
         users(joinTable: [name: "access_rule_users"])
         roles(joinTable: [name: "access_rule_roles"])
@@ -32,7 +32,7 @@ class AccessRule
         type(enumType: "ordinal")
         afterHour(defaultValue: 0)
         afterMinute(defaultValue: 0)
-        beforeHour(defaultValue: 0)
+        beforeHour(defaultValue: 24)
         beforeMinute(defaultValue: 0)
     }
 }

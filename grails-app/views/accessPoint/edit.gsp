@@ -26,26 +26,28 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-xs-2 control-label">Regras de acesso:</label>
-                    <div class="col-xs-10">
-                        <table class="users table table-striped table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Nome</th>
-                                    <th>&nbsp;
-                                        <g:link controller="Template" action="load" params="${[path: '/accessPoint/add_rule_modal', 'accessPoint.id': point?.id]}" class="add-rule">
-                                            <span class="glyphicon glyphicon-plus-sign pull-right" />
-                                        </g:link>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <g:each in="${point?.rules}">
-                                    <g:render template="rule_row" bean="${it}" />
-                                </g:each>
-                            </tbody>
-                        </table>
+                    <div class="row">
+                        <div class="col-xs-offset-2 col-xs-10">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Regras de acesso:</div>
+                                <div class="panel-body">
+                                    <input type="text" class="form-control" name="rule" placeholder="Procurar regra de acesso..." />
+                                </div>
+                                <table class="users table">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Nome</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <g:each in="${point?.rules}">
+                                            <g:render template="rule_row" bean="${it}" />
+                                        </g:each>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">

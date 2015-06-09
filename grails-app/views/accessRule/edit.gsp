@@ -13,7 +13,7 @@
     </g:else>
     <div class="row">
         <div class="col-xs-6">
-            <g:form controller="rule" action="submit" id="${rule?.id}" class="rule form-horizontal">
+            <g:form controller="accessRule" action="submit" id="${rule?.id}" class="rule form-horizontal">
                 <div class="form-group">
                     <label for="inputCode" class="col-xs-3 control-label">Código:</label>
                     <div class="col-xs-9">
@@ -31,7 +31,7 @@
                     <div class="col-xs-9">
                         <select multiple class="form-control rule-type" name="type">
                             <g:each in="${RuleType.values()}">
-                                <option value="${it.ordinal()}"><g:message code="${it}" /></option>
+                                <option value="${it.ordinal()}" ${it.equals(rule?.type) ? 'selected' : ''}><g:message code="${it}" /></option>
                             </g:each>
                         </select>
                     </div>

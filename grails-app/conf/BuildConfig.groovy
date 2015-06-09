@@ -3,8 +3,8 @@ grails.project.class.dir = "target/classes"
 grails.project.test.class.dir = "target/test-classes"
 grails.project.test.reports.dir = "target/test-reports"
 grails.project.work.dir = "target/work"
-grails.project.target.level = 1.6
-grails.project.source.level = 1.6
+grails.project.target.level = 1.8
+grails.project.source.level = 1.8
 //grails.project.war.file = "target/${appName}-${appVersion}.war"
 
 grails.project.fork = [
@@ -49,8 +49,10 @@ grails.project.dependency.resolution = {
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes e.g.
         runtime "mysql:mysql-connector-java:5.1.34"
-        runtime "postgresql:postgresql:9.1-901-1.jdbc4"
         compile "com.google.guava:guava:18.0"
+        compile "org.bytedeco:javacpp:0.11"
+        compile "org.bytedeco:javacv:0.11"
+        compile "com.github.sarxos:webcam-capture:0.3.10"
     }
 
     plugins {

@@ -26,9 +26,9 @@ class User
         credential(cascade: "save-update")
     }
 
-    static hasMany = [logs: AccessPointLog, userRoles: UserRole]
+    static hasMany = [logs: AccessPointLog, userRoles: UserRole, photos: UserPhoto]
 
-    static mappedBy = [logs: "user", userRoles: "user"]
+    static mappedBy = [logs: "user", userRoles: "user", photos: "user"]
 
     static transients = ["roles", "permissions"];
 

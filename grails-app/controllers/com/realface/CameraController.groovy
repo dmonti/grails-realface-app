@@ -8,14 +8,18 @@ import javax.imageio.ImageIO
 
 class CameraController
 {
+    private static final String STORAGE_PATH = "/Volumes/dmonti/Development/workspace/realface/realface-app/target/"
+
+    private static final Dimension DEFAULT_PHOTO_DIMENSION = new Dimension(640, 480)
+
     def test() { }
 
     def recognize()
     {
-        File file = new File("/Volumes/dmonti/Development/workspace/realface/realface-app/target/tmp/${System.currentTimeMillis()}.txt")
+        File file = new File("${STORAGE_PATH}tmp/${System.currentTimeMillis()}.txt")
 
         User user = User.get(params.user.id)
-        String filePath = "/Volumes/dmonti/Development/workspace/realface/realface-app/target/tmp/${params.photo.name}"
+        String filePath = "${STORAGE_PATH}tmp/${params.photo.name}"
         file << ("${user.id} ${user.name} ${filePath}\n")
 
         FaceRecognition faceRecognition = new FaceRecognition()
@@ -43,11 +47,11 @@ class CameraController
         String fileName = "${System.currentTimeMillis()}.png"
 
         Webcam webcam = Webcam.getDefault()
-        webcam.setViewSize(new Dimension(640, 480))
+        webcam.setViewSize(DEFAULT_PHOTO_DIMENSION)
         webcam.open()
 
         BufferedImage image = webcam.getImage()
-        File file = new File("/Volumes/dmonti/Development/workspace/realface/realface-app/target/tmp/${fileName}")
+        File file = new File("${STORAGE_PATH}tmp/${fileName}")
         ImageIO.write(image, "PNG", file)
 
         webcam.close()

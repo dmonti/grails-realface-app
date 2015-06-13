@@ -6,6 +6,7 @@ function Camera() {
     var submitEvent = function(e) {
         var $form = $(this);
         $.post($form.attr("action"), $form.serialize(), function(data) {
+            console.log(data);
             if (data.test)
                 toastr.success(data.message);
             else

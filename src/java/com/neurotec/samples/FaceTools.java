@@ -9,7 +9,12 @@ import java.util.Map;
 import com.neurotec.biometrics.client.NBiometricClient;
 import com.neurotec.licensing.NLicense;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public final class FaceTools {
+
+    private static final Logger log = LoggerFactory.getLogger(FaceTools.class);
 
 	// ===========================================================
 	// Private static fields
@@ -26,6 +31,7 @@ public final class FaceTools {
 	public static FaceTools getInstance() {
 		synchronized (FaceTools.class) {
 			if (instance == null) {
+                log.debug("Initializing FaceTools...");
 				instance = new FaceTools();
 			}
 			return instance;
@@ -64,9 +70,9 @@ public final class FaceTools {
 			if (!isLicenseObtained(license)) {
 				boolean state = NLicense.obtainComponents(address, port, license);
 				obtainedLicenses.put(license, state);
-				System.out.println(license + ": " + (state ? "obtainted" : "not obtained"));
+				log.debug(license + ": " + (state ? "obtainted" : "not obtained"));
 			} else {
-				System.out.println(license + ": " + " already obtained");
+				log.debug(license + ": " + " already obtained");
 			}
 		}
 		return result;
@@ -84,7 +90,7 @@ public final class FaceTools {
 		if (licenses != null && !licenses.isEmpty()) {
 			String components = licenses.toString().replace("[", "").replace("]", "").replace(" ", "");
 			try {
-				System.out.println("Releasing licenses: " + components);
+				log.debug("Releasing licenses: " + components);
 				NLicense.releaseComponents(components);
 				licenses.clear();
 			} catch (IOException e) {

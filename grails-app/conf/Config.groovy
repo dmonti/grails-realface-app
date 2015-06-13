@@ -117,4 +117,6 @@ log4j.main = {
     warn 'grails.app', // Grails App
          'com.realface' // RealFace
 
+    debug "com.neurotec.samples"
+
 }

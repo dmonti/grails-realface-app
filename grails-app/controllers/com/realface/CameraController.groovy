@@ -37,6 +37,9 @@ class CameraController
         subject.getFaces().add(face)
 
         NBiometricTask task = FaceTools.getInstance().getClient().createTask(EnumSet.of(NBiometricOperation.SEGMENT, NBiometricOperation.ASSESS_QUALITY), subject);
+
+        List licenses = ["Biometrics.FaceDetection", "Biometrics.FaceSegmentation", "Biometrics.FaceQualityAssessment"]
+        FaceTools.getInstance().obtainLicenses(licenses)
         FaceTools.getInstance().getClient().performTask(task, null, imageCreationHandler)
 
         return render(1)
@@ -71,6 +74,10 @@ class CameraController
         {
             NBiometricStatus status = task.getStatus();
             println("run status: ${status}")
+
+            if (task.getError() != null)
+                task.getError().printStackTrace();
+
             if (status == NBiometricStatus.OK) {
                 tokenFace = subject.getFaces().get(1);
             } else {

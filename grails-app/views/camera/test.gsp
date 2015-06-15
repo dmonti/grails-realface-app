@@ -20,8 +20,11 @@
                 <button type="submit" name="add" class="btn btn-primary">Testar</button>
             </g:form>
         </div>
-        <div class="col-xs-8">
-            <!-- <img src="${createLink(controller: 'camera', action: 'photo', id: 1)}" /> -->
+        <div class="col-xs-4">
+            <img class="col-xs-12" id="photo1" src="${createLink(controller: 'camera', action: 'photo', id: 1)}" />
+        </div>
+        <div class="col-xs-4">
+            <img class="col-xs-12" id="photo2" src="${createLink(controller: 'camera', action: 'photo', id: 'test')}" />
         </div>
     </div>
     <asset:javascript src="camera.js"/>

@@ -37,10 +37,13 @@ public class IdentificationHandler implements CompletionHandler<NBiometricStatus
             {
                 log.warn("IDENTIFY TARGET id: " + result.getId());
                 log.warn("IDENTIFY TARGET score: " + result.getScore());
+                log.warn(String.valueOf(result.getScore() > 2000));
+                CameraController.TEST = (status == NBiometricStatus.OK && result.getScore() > 1000);
             }
         }
         else
         {
+            CameraController.TEST = false;
             log.warn("Identification failed: " + status);
             // JOptionPane.showMessageDialog(IdentifyFace.this, "Identification failed: " + status, "Error", JOptionPane.WARNING_MESSAGE);
         }

@@ -1,16 +1,14 @@
 //= require_self
 
+var test = false;
+
 function Camera() {
     var self = this;
 
     var submitEvent = function(e) {
         var $form = $(this);
-        $.post($form.attr("action"), $form.serialize(), function(data) {
-            console.log(data);
-            if (data.test)
-                toastr.success(data.message);
-            else
-                toastr.error(data.message);
+        $.post($form.attr("action"), $form.serialize(), function() {
+            test = null;
         });
         return false;
     };
@@ -22,6 +20,8 @@ function Camera() {
         $.get(action, function(data) {
             toastr.success("Foto capturada!");
             $("#photoName").val(data.name);
+            $("#photo1").attr("src", "/camera/photo/" + id + "?" + new Date().getTime());
+            $("#photo2").attr("src", "/camera/photo/test?" + new Date().getTime());
         });
     };
 
@@ -33,4 +33,23 @@ function Camera() {
     self.initialize();
 };
 
-$(function() { new Camera(); });
+function updateTest() {
+    setTimeout(function() {
+        $.get("/camera/check", function(data) {
+            if (data.test != null && test == null)
+            {
+                test = data.test;
+                //if (test)
+                    //toastr.success("Usuário validado!");
+                //else
+                    //toastr.error("Usuário não validado!");
+            }
+        });
+        updateTest();
+    }, 1000);
+}
+
+$(function() {
+    new Camera();
+    updateTest();
+});

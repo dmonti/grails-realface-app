@@ -21,15 +21,9 @@ class CameraController
     def recognize()
     {
         String id = params.user.id
-
-        File file = new File("${STORAGE_PATH}tmp/test.png")
-        cameraService.shootAndSaveOnFile(file)
-
-        File templateFile = new File(file.getParent(), "test.template")
-        templateService.saveFrom(id, file, templateFile)
-
-        File templateTest = new File("${STORAGE_PATH}tmp/${id}.template")
-        templateService.recognize(templateTest, templateFile)
+        File templateUser = new File("${STORAGE_PATH}tmp/${id}.template")
+        File templateTest = new File("${STORAGE_PATH}tmp/test.template")
+        templateService.recognize(templateUser, templateTest)
 
         return render(contentType: "text/json") {[ test: test ]}
     }
@@ -41,7 +35,7 @@ class CameraController
 
     def shoot()
     {
-        String id = params.id
+        String id = params.id ?: params.user
 
         File file = new File("${STORAGE_PATH}tmp/${id}.png")
         cameraService.shootAndSaveOnFile(file)

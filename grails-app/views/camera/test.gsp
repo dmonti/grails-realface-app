@@ -16,11 +16,12 @@
                     </div>
                 </div>
                 <button type="button" name="shoot" class="btn btn-default" data-action="${createLink(controller: 'camera', action: 'shoot')}">Tirar foto</button>
+                <button type="button" name="shoot" class="btn btn-default" data-action="${createLink(controller: 'camera', action: 'shoot', id: 'test')}">Tirar foto test</button>
                 <button type="submit" name="add" class="btn btn-primary">Testar</button>
             </g:form>
         </div>
         <div class="col-xs-8">
-            <img src="${createLink(controller: 'camera', action: 'photo', id: 1)}" />
+            <!-- <img src="${createLink(controller: 'camera', action: 'photo', id: 1)}" /> -->
         </div>
     </div>
     <asset:javascript src="camera.js"/>

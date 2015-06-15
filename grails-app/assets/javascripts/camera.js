@@ -18,7 +18,7 @@ function Camera() {
     var shootEvent = function(e) {
         var $btn = $(this);
         var id = $("input[name=user\\.id]").val()
-        var action = $btn.data("action") + "?id=" + id;
+        var action = $btn.data("action") + "?user=" + id;
         $.get(action, function(data) {
             toastr.success("Foto capturada!");
             $("#photoName").val(data.name);

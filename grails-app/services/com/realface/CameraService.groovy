@@ -1,22 +1,31 @@
 package com.realface
 
 import java.awt.Dimension
+import java.awt.image.BufferedImage
 import java.io.File
 import javax.imageio.ImageIO
 import com.github.sarxos.webcam.Webcam
 
 class CameraService
 {
+    static transactional = false
+
+    private static final String DEFAULT_FORMAT = "PNG"
     private static final Dimension DEFAULT_PHOTO_DIMENSION = new Dimension(640, 480)
 
-    def shootAndSaveOnFile(File file, String format = "PNG")
+    def photoService
+
+    public UserPhoto shoot()
     {
+        UserPhoto photo
         Webcam webcam = Webcam.getDefault()
-        webcam.setViewSize(DEFAULT_PHOTO_DIMENSION)
         try
         {
+            webcam.setViewSize(DEFAULT_PHOTO_DIMENSION)
             webcam.open()
-            ImageIO.write(webcam.getImage(), format, file)
+
+            BufferedImage image = webcam.getImage()
+            photo = photoService.save(image, DEFAULT_FORMAT)
         }
         catch(Exception e)
         {
@@ -26,5 +35,6 @@ class CameraService
         {
             webcam.close()
         }
+        return photo
     }
 }

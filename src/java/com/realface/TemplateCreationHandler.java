@@ -15,41 +15,32 @@ public class TemplateCreationHandler implements CompletionHandler<NBiometricStat
 {
     private static final Logger log = LoggerFactory.getLogger(TemplateCreationHandler.class);
 
-    private NSubject subject;
-    private File templateFile;
+    private long timeMillis;
 
-    public TemplateCreationHandler(NSubject subject, File templateFile)
+    private NSubject subject;
+    private UserPhoto photo;
+    private TemplateService service;
+
+    public TemplateCreationHandler(TemplateService service, UserPhoto photo, NSubject subject)
     {
+        this.timeMillis = System.currentTimeMillis();
+        log.debug("Generating template...");
+
+        this.service = service;
+        this.photo = photo;
         this.subject = subject;
-        this.templateFile = templateFile;
     }
 
     @Override
     public void completed(final NBiometricStatus result, final Object attachment)
     {
-        log.warn("TemplateCreationHandler result: " + result);
-        if (result == NBiometricStatus.OK)
-        {
-            wirteTemplate(subject);
-        }
+        log.debug("Template creation for photo #" + photo.id + " completed in " + (System.currentTimeMillis() - timeMillis) + "ms, result: " + result);
+        service.save(subject, photo, result);
     }
 
     @Override
     public void failed(final Throwable th, final Object attachment)
     {
-        log.warn("TemplateCreationHandler Failed!", th);
-    }
-
-    public void wirteTemplate(NSubject subject)
-    {
-        try
-        {
-            log.warn(">>> Saving template subject id: " + subject.getId());
-            NFile.writeAllBytes(templateFile.getAbsolutePath(), subject.getTemplateBuffer());
-        }
-        catch (IOException e)
-        {
-            log.warn("Exception writing template file: " + templateFile.getAbsolutePath());
-        }
+        log.debug("Template creation for photo #" + photo.id + " failed in " + (System.currentTimeMillis() - timeMillis) + "ms.");
     }
 }

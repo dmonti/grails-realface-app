@@ -17,21 +17,55 @@ import com.neurotec.samples.FaceTools
 
 class TemplateService
 {
-    void saveFrom(String subjectId, File photoFile, File templateFile)
-    {
-        NImage image = NImage.fromFile(photoFile.getAbsolutePath())
+    def photoService
 
+    def storageService
+
+    File baseDir
+
+    void generate(UserPhoto photo)
+    {
         NSubject subject = new NSubject()
-        subject.setId(subjectId)
+        User user = photo.user
+        if (user)
+        {
+            subject.setId(user.getSubjectId())
+        }
 
         NFace face = new NFace()
-        face.setImage(image)
-
+        File file = photoService.getFile(photo)
+        face.setImage(NImage.fromFile(file.getAbsolutePath()))
         subject.getFaces().add(face)
 
         NBiometricClient client = FaceTools.getInstance().getClient()
         FaceTools.getInstance().obtainLicenses(["Biometrics.FaceExtraction", "Biometrics.FaceSegmentsDetection"])
-        client.createTemplate(subject, null, new TemplateCreationHandler(subject, templateFile))
+
+        TemplateCreationHandler handler = new TemplateCreationHandler(this, photo, subject)
+        client.createTemplate(subject, null, handler)
+    }
+
+    public void save(NSubject subject, UserPhoto photo, NBiometricStatus status)
+    {
+        Template template = new Template(photo: photo, status: status)
+        Template.withTransaction { template.save(failOnError: true) }
+        if (NBiometricStatus.OK.equals(status))
+        {
+            wirteTemplate(subject, template)
+        }
+    }
+
+    private void wirteTemplate(NSubject subject, Template template)
+    {
+        File file = getFile(template)
+        try
+        {
+            log.debug("Saving template file: ${file.getAbsolutePath()}")
+            NFile.writeAllBytes(file.getAbsolutePath(), subject.getTemplateBuffer())
+        }
+        catch (IOException e)
+        {
+            log.warn("Exception writing template file: ${file.getAbsolutePath()}", e)
+        }
     }
 
     void recognize(File templateTarget, File templateTest)
@@ -51,5 +85,21 @@ class TemplateService
         enrollmentTask.getSubjects().add(subjectTarget)
 
         FaceTools.getInstance().getClient().performTask(enrollmentTask, null, new EnrollHandler(subjectTest))
+    }
+
+    public File getBaseDir()
+    {
+        if (baseDir == null)
+        {
+            baseDir = new File(storageService.getBaseDir(), Template.DIR)
+            if (!baseDir.exists())
+                baseDir.mkdirs()
+        }
+        return baseDir
+    }
+
+    public File getFile(Template template)
+    {
+        return new File(getBaseDir(), template.getFileName())
     }
 }

@@ -4,8 +4,7 @@ import java.io.File
 
 class CameraController
 {
-    private static final String STORAGE_PATH = "/Volumes/dmonti/Development/Realface/workspace/realface-app/target/"
-    public static Boolean TEST = null;
+    def storageService
 
     def cameraService
 
@@ -13,45 +12,24 @@ class CameraController
 
     def test() { }
 
-    def photo()
+    def shoot()
     {
-        File file = new File("${STORAGE_PATH}tmp/${params.id}.png")
-        return render(file: file, contentType: "image/png")
+        UserPhoto photo = cameraService.shoot()
+        templateService.generate(photo)
+        return render(contentType: "text/json") { photo }
     }
 
     def recognize()
     {
-        CameraController.TEST = null
+        println("params: ${params}")
+        UserPhoto photo1 = UserPhoto.get(params.id1)
+        UserPhoto photo2 = UserPhoto.get(params.id2)
 
-        String id = params.user.id
-        File templateUser = new File("${STORAGE_PATH}tmp/${id}.template")
-        File templateTest = new File("${STORAGE_PATH}tmp/test.template")
+        File template1 = templateService.getFile(photo1.template)
+        File template2 = templateService.getFile(photo2.template)
 
-        templateService.recognize(templateUser, templateTest)
+        templateService.recognize(template1, template2)
 
         return render(1)
-    }
-
-    def check()
-    {
-        return render(contentType: "text/json") {
-            [ test: CameraController.TEST != null ? CameraController.TEST : "null" ]
-        }
-    }
-
-    def shoot()
-    {
-        String id = params.id ?: params.user
-
-        File file = new File("${STORAGE_PATH}tmp/${id}.png")
-        file.delete()
-
-        File templateFile = new File(file.getParent(), "${id}.template")
-        templateFile.delete()
-
-        cameraService.shootAndSaveOnFile(file)
-        templateService.saveFrom(id, file, templateFile)
-
-        return render(contentType: "text/json") {[ name: fileName ]}
     }
 }

@@ -114,9 +114,8 @@ log4j.main = {
            'org.hibernate',
            'net.sf.ehcache.hibernate'
 
-    warn 'grails.app', // Grails App
-         'com.realface' // RealFace
+    warn "grails.app", // Grails App
+         "com.realface" // RealFace
 
-    debug "com.neurotec.samples"
-
+    debug "com.realface.TemplateCreationHandler"
 }

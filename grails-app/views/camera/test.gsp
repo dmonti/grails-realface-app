@@ -9,22 +9,16 @@
         <div class="col-xs-4">
             <g:form controller="camera" action="recognize" class="camera-test form-horizontal">
                 <h4 class="modal-title" id="editlLabel">Usuário teste</h4>
-                <div class="form-group">
-                    <label for="inputId" class="col-xs-4 control-label">ID:</label>
-                    <div class="col-xs-8">
-                        <input type="text" class="form-control" name="user.id" id="inputId" value="1" placeholder="ID do usuário" />
-                    </div>
-                </div>
-                <button type="button" name="shoot" class="btn btn-default" data-action="${createLink(controller: 'camera', action: 'shoot')}">Tirar foto</button>
-                <button type="button" name="shoot" class="btn btn-default" data-action="${createLink(controller: 'camera', action: 'shoot', id: 'test')}">Tirar foto test</button>
-                <button type="submit" name="add" class="btn btn-primary">Testar</button>
+                <button type="button" name="shoot" data-target="#photo1" class="btn btn-default" data-action="${createLink(controller: 'camera', action: 'shoot')}">Tirar foto 1</button>
+                <button type="button" name="shoot" data-target="#photo2" class="btn btn-default" data-action="${createLink(controller: 'camera', action: 'shoot')}">Tirar foto 2</button>
+                <button type="submit" name="add" class="btn btn-primary">Comparar fotos</button>
             </g:form>
         </div>
         <div class="col-xs-4">
-            <img class="col-xs-12" id="photo1" src="${createLink(controller: 'camera', action: 'photo', id: 1)}" />
+            <img class="col-xs-12" id="photo1" data-id="3" src="${createLink(controller: 'photo', action: 'index', id: 3)}" />
         </div>
         <div class="col-xs-4">
-            <img class="col-xs-12" id="photo2" src="${createLink(controller: 'camera', action: 'photo', id: 'test')}" />
+            <img class="col-xs-12" id="photo2" data-id="4" src="${createLink(controller: 'photo', action: 'index', id: 4)}" />
         </div>
     </div>
     <asset:javascript src="camera.js"/>

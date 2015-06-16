@@ -1,27 +1,23 @@
 //= require_self
 
-var test = false;
-
 function Camera() {
     var self = this;
 
     var submitEvent = function(e) {
         var $form = $(this);
-        $.post($form.attr("action"), $form.serialize(), function() {
-            test = null;
-        });
+        var id1 = $("#photo1").data("id");
+        var id2 = $("#photo2").data("id");
+        $.post($form.attr("action"), { id1: id1, id2: id2 }, function() { });
         return false;
     };
 
     var shootEvent = function(e) {
         var $btn = $(this);
-        var id = $("input[name=user\\.id]").val()
-        var action = $btn.data("action") + "?user=" + id;
+        var action = $btn.data("action")
         $.get(action, function(data) {
+            var target = $btn.data("target");
+            $(target).data("id", data.id).attr("src", "/photo/index/" + data.id);
             toastr.success("Foto capturada!");
-            $("#photoName").val(data.name);
-            $("#photo1").attr("src", "/camera/photo/" + id + "?" + new Date().getTime());
-            $("#photo2").attr("src", "/camera/photo/test?" + new Date().getTime());
         });
     };
 
@@ -33,23 +29,4 @@ function Camera() {
     self.initialize();
 };
 
-function updateTest() {
-    setTimeout(function() {
-        $.get("/camera/check", function(data) {
-            if (data.test != null && test == null)
-            {
-                test = data.test;
-                //if (test)
-                    //toastr.success("Usuário validado!");
-                //else
-                    //toastr.error("Usuário não validado!");
-            }
-        });
-        updateTest();
-    }, 1000);
-}
-
-$(function() {
-    new Camera();
-    updateTest();
-});
+$(function() { new Camera(); });

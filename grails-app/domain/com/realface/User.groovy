@@ -32,6 +32,11 @@ class User
 
     static transients = ["roles", "permissions"];
 
+    public String getSubjectId()
+    {
+        return String.valueOf(id)
+    }
+
     public List<Role> getRoles()
     {
         return getUserRoles().collect() { it.role; };

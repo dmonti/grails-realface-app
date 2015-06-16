@@ -46,8 +46,6 @@ class UserService
         user.credential.setAndEncodePassword("1234qwer");
         user.save(failOnError: true);
 
-        bootStrapPhotos(user)
-
         user = new User(
             name: "Anderson",
             email: "souza.ander@gmail.com",
@@ -59,14 +57,5 @@ class UserService
         );
         user.credential.setAndEncodePassword("1234qwer");
         user.save(failOnError: true);
-
-        bootStrapPhotos(user)
-    }
-
-    def bootStrapPhotos(user)
-    {
-        new UserPhoto(user: user).save(failOnError: true)
-        new UserPhoto(user: user).save(failOnError: true)
-        new UserPhoto(user: user).save(failOnError: true)
     }
 }

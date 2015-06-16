@@ -8,6 +8,11 @@ class PhotoController
 
     def index()
     {
+        [photos: UserPhoto.list(sort: "id", order: "desc")]
+    }
+
+    def resource()
+    {
         File file
         UserPhoto photo = UserPhoto.get(params.id)
         if (photo)

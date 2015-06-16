@@ -15,10 +15,10 @@
             </g:form>
         </div>
         <div class="col-xs-4">
-            <img class="col-xs-12" id="photo1" data-id="1" src="${createLink(controller: 'photo', action: 'index', id: 1)}" />
+            <img class="col-xs-12" id="photo1" data-id="1" src="${createLink(controller: 'photo', action: 'resource', id: 1)}" />
         </div>
         <div class="col-xs-4">
-            <img class="col-xs-12" id="photo2" data-id="2" src="${createLink(controller: 'photo', action: 'index', id: 2)}" />
+            <img class="col-xs-12" id="photo2" data-id="2" src="${createLink(controller: 'photo', action: 'resource', id: 2)}" />
         </div>
     </div>
     <asset:javascript src="camera.js"/>

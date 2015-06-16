@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 public class IdentificationHandler implements CompletionHandler<NBiometricStatus, Object>
 {
-    private static final Logger log = LoggerFactory.getLogger(ImageCreationHandler.class);
+    private static final Logger log = LoggerFactory.getLogger(IdentificationHandler.class);
 
     NSubject subject;
 

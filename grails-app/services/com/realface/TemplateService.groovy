@@ -48,23 +48,22 @@ class TemplateService
     {
         Template template = new Template(photo: photo, status: status)
         Template.withTransaction { template.save(failOnError: true) }
-        if (NBiometricStatus.OK.equals(status))
-        {
-            wirteTemplate(subject, template)
-        }
-    }
 
-    private void wirteTemplate(NSubject subject, Template template)
-    {
+        if (!NBiometricStatus.OK.equals(status))
+        {
+            log.debug("Template #${template.id} NOT OK, status: ${template.status}.")
+            return
+        }
+
         File file = getFile(template)
         try
         {
-            log.debug("Saving template file: ${file.getAbsolutePath()}")
+            log.debug("Saving template #${template.id} file: ${file.getAbsolutePath()}")
             NFile.writeAllBytes(file.getAbsolutePath(), subject.getTemplateBuffer())
         }
         catch (IOException e)
         {
-            log.warn("Exception writing template file: ${file.getAbsolutePath()}", e)
+            log.warn("Exception writing template #${template.id} file: ${file.getAbsolutePath()}", e)
         }
     }
 

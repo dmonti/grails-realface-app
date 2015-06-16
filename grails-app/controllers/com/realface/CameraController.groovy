@@ -5,10 +5,7 @@ import com.neurotec.biometrics.NBiometricStatus
 
 class CameraController
 {
-    def storageService
-
     def cameraService
-
     def templateService
 
     def test() { }
@@ -22,7 +19,6 @@ class CameraController
 
     def recognize()
     {
-        println("params: ${params}")
         UserPhoto photo1 = UserPhoto.get(params.id1)
         UserPhoto photo2 = UserPhoto.get(params.id2)
 

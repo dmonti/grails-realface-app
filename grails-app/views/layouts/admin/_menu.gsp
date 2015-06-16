@@ -7,13 +7,13 @@
             <li><g:link controller="User">Usuários</g:link></li>
             <li><g:link controller="AccessRule">Regras de acesso</g:link></li>
             <li><g:link controller="AccessPoint">Pontos de acesso</g:link></li>
-            <li><g:link controller="Camera" action="test">Teste de acesso</g:link></li>
         </ul>
     </li>
     <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Cameras <span class="caret"></span></a>
         <ul class="dropdown-menu">
             <li><g:link controller="Photo">Fotos</g:link></li>
+            <li><g:link controller="Camera" action="test">Teste de reconhecimento</g:link></li>
         </ul>
     </li>
     <li class="dropdown">

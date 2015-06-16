@@ -15,15 +15,27 @@ function Camera() {
         var $btn = $(this);
         var action = $btn.data("action")
         $.get(action, function(data) {
+            var id = data.id;
             var target = $btn.data("target");
-            $(target).data("id", data.id).attr("src", "/photo/index/" + data.id);
+            $(target).data("id", id).attr("src", "/photo/resource/" + id).siblings("input[type=text]").val(id);
             toastr.success("Foto capturada!");
         });
     };
 
+    var photoChangeEvent = function(e) {
+        var $input = $(e.target);
+        var id = $input.val();
+        if ($.isNumeric(id))
+        {
+            var targetSelector = $input.data("target");
+            $(targetSelector).data("id", id).attr("src", "/photo/resource/" + id + "?" + new Date().getTime());
+        }
+    };
+
     self.initialize = function() {
-        $("form.camera-test").submit(submitEvent);
+        $("form").submit(submitEvent);
         $("button[name=shoot]").click(shootEvent);
+        $("input[name=photo]").change(photoChangeEvent);
     };
 
     self.initialize();

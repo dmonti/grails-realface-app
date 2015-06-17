@@ -10,6 +10,8 @@ class PhotoTemplate
 
     Date dateCreated
 
+    Date lastUpdated
+
     static constraints =
     {
         user(nullable: true)

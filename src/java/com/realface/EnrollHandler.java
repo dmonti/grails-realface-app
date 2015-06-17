@@ -26,7 +26,7 @@ public class EnrollHandler implements CompletionHandler<NBiometricTask, Object>
     public void completed(NBiometricTask task, Object attachment)
     {
         log.warn("EnrollHandler status: " + task.getStatus());
-        if (task.getStatus() == NBiometricStatus.OK)
+        if (NBiometricStatus.OK.equals(task.getStatus()))
         {
             FaceTools.getInstance().getClient().identify(subject, null, new IdentificationHandler(subject));
         }

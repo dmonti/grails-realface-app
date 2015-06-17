@@ -27,10 +27,7 @@ class PhotoTemplateController
         }
         else
         {
-            File template1 = photoTemplateService.getTemplateFile(photo1)
-            File template2 = photoTemplateService.getTemplateFile(photo2)
-
-            photoTemplateService.recognize(template1, template2)
+            photoTemplateService.recognize(photo1, photo2)
         }
         return render(1)
     }

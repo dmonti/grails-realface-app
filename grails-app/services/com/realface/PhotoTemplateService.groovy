@@ -25,10 +25,11 @@ class PhotoTemplateService
     private static final String DEFAULT_FORMAT = "PNG"
     private static final Dimension DEFAULT_PHOTO_DIMENSION = new Dimension(640, 480)
 
-    def storageService
-
     File photoBaseDir
+
     File templateBaseDir
+
+    def storageService
 
     public PhotoTemplate capture()
     {
@@ -99,17 +100,18 @@ class PhotoTemplateService
         }
     }
 
-    void recognize(File templateTarget, File templateTest)
+    void recognize(PhotoTemplate source, PhotoTemplate target)
     {
-        NSubject subjectTarget = NSubject.fromFile(templateTarget.getAbsolutePath())
-        subjectTarget.setId(templateTarget.getName())
+        File sourceFile = getTemplateFile(source)
+        NSubject subjectTest = NSubject.fromFile(sourceFile.getAbsolutePath())
+        subjectTest.setId(source.getSubjectId())
 
-        NSubject subjectTest = NSubject.fromFile(templateTest.getAbsolutePath())
-        subjectTest.setId(templateTest.getName())
+        File targetFile = getTemplateFile(target)
+        NSubject subjectTarget = NSubject.fromFile(targetFile.getAbsolutePath())
+        subjectTarget.setId(target.getSubjectId())
 
         List licenses = ["Biometrics.FaceExtraction", "Biometrics.FaceMatching"]
         FaceTools.getInstance().obtainLicenses(licenses)
-
         FaceTools.getInstance().getClient().clear()
 
         NBiometricTask enrollmentTask = new NBiometricTask(EnumSet.of(NBiometricOperation.ENROLL))

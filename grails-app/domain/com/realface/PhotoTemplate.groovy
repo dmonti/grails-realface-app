@@ -24,6 +24,11 @@ class PhotoTemplate
         status(enumType: "ordinal")
     }
 
+    public String getSubjectId()
+    {
+        return (user ? String.valueOf(user.id) : String.valueOf(id))
+    }
+
     public String getTemplateFileName()
     {
         String sId = String.valueOf(id)

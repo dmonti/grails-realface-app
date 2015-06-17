@@ -41,6 +41,6 @@ public class TemplateCreationHandler implements CompletionHandler<NBiometricStat
     @Override
     public void failed(final Throwable th, final Object attachment)
     {
-        log.debug("Template creation for photo #" + photo.id + " failed in " + (System.currentTimeMillis() - timeMillis) + "ms.");
+        log.debug("Template creation for photo #" + photo.id + " failed in " + (System.currentTimeMillis() - timeMillis) + "ms.", th);
     }
 }

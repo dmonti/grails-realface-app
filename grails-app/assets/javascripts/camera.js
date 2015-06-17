@@ -11,7 +11,7 @@ function Camera() {
         return false;
     };
 
-    var shootEvent = function(e) {
+    var captureEvent = function(e) {
         var $btn = $(this);
         var action = $btn.data("action")
         $.get(action, function(data) {
@@ -34,7 +34,7 @@ function Camera() {
 
     self.initialize = function() {
         $("form").submit(submitEvent);
-        $("button[name=shoot]").click(shootEvent);
+        $("button[name=capture]").click(captureEvent);
         $("input[name=photo]").change(photoChangeEvent);
     };
 

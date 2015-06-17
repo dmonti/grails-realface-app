@@ -49,9 +49,10 @@ grails.project.dependency.resolution = {
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes e.g.
         runtime "mysql:mysql-connector-java:5.1.35"
-        compile "com.google.guava:guava:18.0"
+
         compile "com.github.sarxos:webcam-capture:0.3.10"
-        compile "net.java.dev.jna:jna:3.5.2"
+        compile "com.google.guava:guava:18.0"
+
         compile "com.neurotec:neurotec-core:5.1.0.0"
         compile "com.neurotec:neurotec-licensing:5.1.0.0"
         compile "com.neurotec:neurotec-biometrics:5.1.0.0"
@@ -60,6 +61,8 @@ grails.project.dependency.resolution = {
         compile "com.neurotec:neurotec-media:5.1.0.0"
         compile "com.neurotec:neurotec-media-processing:5.1.0.0"
         compile "com.neurotec:neurotec-devices:5.1.0.0"
+
+        compile "net.java.dev.jna:jna:3.5.2"
     }
 
     plugins {

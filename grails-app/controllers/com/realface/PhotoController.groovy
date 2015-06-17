@@ -1,23 +1,21 @@
 package com.realface
 
-import java.io.File
-
 class PhotoController
 {
-    def photoService
+    def photoTemplateService
 
     def index()
     {
-        [photos: UserPhoto.list(sort: "id", order: "desc")]
+        [photos: PhotoTemplate.list(sort: "id", order: "desc")]
     }
 
     def resource()
     {
         File file
-        UserPhoto photo = UserPhoto.get(params.id)
+        PhotoTemplate photo = PhotoTemplate.get(params.id)
         if (photo)
         {
-            file = photoService.getFile(photo)
+            file = photoTemplateService.getPhotoFile(photo)
         }
         return render(file: file, contentType: "image/png")
     }

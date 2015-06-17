@@ -18,10 +18,10 @@ public class TemplateCreationHandler implements CompletionHandler<NBiometricStat
     private long timeMillis;
 
     private NSubject subject;
-    private UserPhoto photo;
-    private TemplateService service;
+    private PhotoTemplate photo;
+    private PhotoTemplateService service;
 
-    public TemplateCreationHandler(TemplateService service, UserPhoto photo, NSubject subject)
+    public TemplateCreationHandler(PhotoTemplateService service, PhotoTemplate photo, NSubject subject)
     {
         this.timeMillis = System.currentTimeMillis();
         log.debug("Generating template...");

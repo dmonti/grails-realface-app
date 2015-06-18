@@ -16,28 +16,30 @@ public class IdentificationHandler implements CompletionHandler<NBiometricStatus
 {
     private static final Logger log = LoggerFactory.getLogger(IdentificationHandler.class);
 
+    IdentificationService service;
+
     NSubject subject;
 
-    public IdentificationHandler(NSubject subject)
+    PhotoTemplate source;
+
+    PhotoTemplate target;
+
+    public IdentificationHandler(IdentificationService service, NSubject subject, PhotoTemplate source, PhotoTemplate target)
     {
+        this.service = service;
         this.subject = subject;
+        this.source = source;
+        this.target = target;
     }
 
     @Override
     public void completed(final NBiometricStatus status, final Object attachment)
     {
-        log.warn(">>>> Identification status: " + status);
-        log.warn("IDENTIFY TEST id: " + subject.getId());
-        log.warn("IDENTIFY results size: " + subject.getMatchingResults().size());
-
         if ((status == NBiometricStatus.OK) || (status == NBiometricStatus.MATCH_NOT_FOUND))
         {
-            // Match subjects.
             for (NMatchingResult result : subject.getMatchingResults())
             {
-                log.warn("IDENTIFY TARGET id: " + result.getId());
-                log.warn("IDENTIFY TARGET score: " + result.getScore());
-                log.warn(String.valueOf(result.getScore() > 2000));
+                service.save(result, status, source, target);
             }
         }
         else

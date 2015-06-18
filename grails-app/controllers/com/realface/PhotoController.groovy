@@ -2,7 +2,13 @@ package com.realface
 
 class PhotoController
 {
-    def photoTemplateService
+    def identificationService
+
+    def capture()
+    {
+        PhotoTemplate photo = identificationService.capture()
+        return render(contentType: "text/json") { photo }
+    }
 
     def index()
     {
@@ -11,12 +17,15 @@ class PhotoController
 
     def resource()
     {
-        File file
         PhotoTemplate photo = PhotoTemplate.get(params.id)
         if (photo)
         {
-            file = photoTemplateService.getPhotoFile(photo)
+            File file = identificationService.getPhotoFile(photo)
+            return render(file: file, contentType: "image/png")
         }
-        return render(file: file, contentType: "image/png")
+        else
+        {
+            return render(0)
+        }
     }
 }

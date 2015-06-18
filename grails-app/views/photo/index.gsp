@@ -1,4 +1,3 @@
-<%@ page import="com.realface.PhotoService" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,7 +23,7 @@
                         <img src="${createLink(controller: 'photo', action: 'resource', id: it.id)}" />
                     </a>
                 </td>
-                <td>${it.template.status}</td>
+                <td>${it.status}</td>
                 <td><g:formatDate date="${it.dateCreated}" /></td>
             </tr>
           </g:each>

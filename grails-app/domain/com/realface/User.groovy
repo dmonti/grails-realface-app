@@ -30,7 +30,7 @@ class User
 
     static mappedBy = [logs: "user", userRoles: "user", templates: "user"]
 
-    static transients = ["roles", "permissions"];
+    static transients = ["roles", "permissions"]
 
     public String getSubjectId()
     {
@@ -39,15 +39,15 @@ class User
 
     public List<Role> getRoles()
     {
-        return getUserRoles().collect() { it.role; };
+        return getUserRoles().collect() { it.role }
     }
 
     public AccessPermission getPermissions()
     {
         if (permissions == null)
         {
-            permissions = AccessPermission.findWhere(type: Type.PERSON, objectId: id);
+            permissions = AccessPermission.findWhere(type: Type.PERSON, objectId: id)
         }
-        return permissions;
+        return permissions
     }
 }

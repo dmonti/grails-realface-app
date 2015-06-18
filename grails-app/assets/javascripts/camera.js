@@ -7,7 +7,9 @@ function Camera() {
         var $form = $(this);
         var id1 = $("#photo1").data("id");
         var id2 = $("#photo2").data("id");
-        $.post($form.attr("action"), { id1: id1, id2: id2 }, function() { });
+        $.post($form.attr("action"), { id1: id1, id2: id2 }, function() {
+            toastr.success("Gerando registro de identificação!");
+        });
         return false;
     };
 

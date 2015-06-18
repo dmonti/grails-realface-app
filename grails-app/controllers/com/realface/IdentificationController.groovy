@@ -2,15 +2,9 @@ package com.realface
 
 import com.neurotec.biometrics.NBiometricStatus
 
-class PhotoTemplateController
+class IdentificationController
 {
-    def photoTemplateService
-
-    def capture()
-    {
-        PhotoTemplate photo = photoTemplateService.capture()
-        return render(contentType: "text/json") { photo }
-    }
+    def identificationService
 
     def match()
     {
@@ -27,7 +21,7 @@ class PhotoTemplateController
         }
         else
         {
-            photoTemplateService.recognize(photo1, photo2)
+            identificationService.recognize(photo1, photo2)
         }
         return render(1)
     }

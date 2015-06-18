@@ -19,9 +19,9 @@ public class TemplateCreationHandler implements CompletionHandler<NBiometricStat
 
     private NSubject subject;
     private PhotoTemplate photo;
-    private PhotoTemplateService service;
+    private IdentificationService service;
 
-    public TemplateCreationHandler(PhotoTemplateService service, PhotoTemplate photo, NSubject subject)
+    public TemplateCreationHandler(IdentificationService service, PhotoTemplate photo, NSubject subject)
     {
         this.timeMillis = System.currentTimeMillis();
         log.debug("Generating template...");
@@ -34,13 +34,13 @@ public class TemplateCreationHandler implements CompletionHandler<NBiometricStat
     @Override
     public void completed(final NBiometricStatus result, final Object attachment)
     {
-        log.debug("Template creation for photo #" + photo.id + " completed in " + (System.currentTimeMillis() - timeMillis) + "ms, result: " + result);
+        log.debug("Template creation for photo #" + photo.getSId() + " completed in " + (System.currentTimeMillis() - timeMillis) + "ms, result: " + result);
         service.save(subject, photo, result);
     }
 
     @Override
     public void failed(final Throwable th, final Object attachment)
     {
-        log.debug("Template creation for photo #" + photo.id + " failed in " + (System.currentTimeMillis() - timeMillis) + "ms.", th);
+        log.warn("Template creation for photo #" + photo.getSId() + " failed in " + (System.currentTimeMillis() - timeMillis) + "ms.", th);
     }
 }

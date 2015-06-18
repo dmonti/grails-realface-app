@@ -19,7 +19,7 @@ import java.awt.Dimension
 import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
 
-class PhotoTemplateService
+class IdentificationService
 {
     private static final String DIR = "templates"
     private static final String DEFAULT_FORMAT = "PNG"
@@ -102,22 +102,33 @@ class PhotoTemplateService
 
     void recognize(PhotoTemplate source, PhotoTemplate target)
     {
-        File sourceFile = getTemplateFile(source)
-        NSubject subjectTest = NSubject.fromFile(sourceFile.getAbsolutePath())
-        subjectTest.setId(source.getSubjectId())
-
-        File targetFile = getTemplateFile(target)
-        NSubject subjectTarget = NSubject.fromFile(targetFile.getAbsolutePath())
-        subjectTarget.setId(target.getSubjectId())
-
         List licenses = ["Biometrics.FaceExtraction", "Biometrics.FaceMatching"]
         FaceTools.getInstance().obtainLicenses(licenses)
         FaceTools.getInstance().getClient().clear()
 
         NBiometricTask enrollmentTask = new NBiometricTask(EnumSet.of(NBiometricOperation.ENROLL))
-        enrollmentTask.getSubjects().add(subjectTarget)
+        NSubject targetSubject = loadSubject(target)
+        enrollmentTask.getSubjects().add(targetSubject)
 
-        FaceTools.getInstance().getClient().performTask(enrollmentTask, null, new EnrollHandler(subjectTest))
+        EnrollHandler handler = new EnrollHandler(this, source, target)
+        FaceTools.getInstance().getClient().performTask(enrollmentTask, null, handler)
+    }
+
+    public void save(NMatchingResult result, NBiometricStatus status, PhotoTemplate source, PhotoTemplate target)
+    {
+        PhotoIdentificationLog.withTransaction {
+            new PhotoIdentificationLog(
+                source: source, target: target, status: status, score: result.getScore()
+            ).save(failOnError: true)
+        }
+    }
+
+    public NSubject loadSubject(PhotoTemplate photo)
+    {
+        File file = getTemplateFile(photo)
+        NSubject subject = NSubject.fromFile(file.getAbsolutePath())
+        subject.setId(photo.getSubjectId())
+        return subject
     }
 
     public File getPhotoFile(PhotoTemplate photo)

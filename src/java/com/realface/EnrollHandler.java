@@ -15,26 +15,34 @@ public class EnrollHandler implements CompletionHandler<NBiometricTask, Object>
 {
     private static final Logger log = LoggerFactory.getLogger(EnrollHandler.class);
 
-    private NSubject subject;
+    IdentificationService service;
 
-    public EnrollHandler(NSubject subject)
+    PhotoTemplate source;
+
+    PhotoTemplate target;
+
+    public EnrollHandler(IdentificationService service, PhotoTemplate source, PhotoTemplate target)
     {
-        this.subject = subject;
+        this.service = service;
+        this.source = source;
+        this.target = target;
     }
 
     @Override
     public void completed(NBiometricTask task, Object attachment)
     {
-        log.warn("EnrollHandler status: " + task.getStatus());
+        log.debug("EnrollHandler status: " + task.getStatus());
         if (NBiometricStatus.OK.equals(task.getStatus()))
         {
-            FaceTools.getInstance().getClient().identify(subject, null, new IdentificationHandler(subject));
+            NSubject sourceSubject = service.loadSubject(source);
+            IdentificationHandler identificationHandler = new IdentificationHandler(service, sourceSubject, source, target);
+            FaceTools.getInstance().getClient().identify(sourceSubject, null, identificationHandler);
         }
     }
 
     @Override
     public void failed(final Throwable th, final Object attachment)
     {
-        log.warn("Failed!", th);
+        log.warn("EnrollHandler failed!", th);
     }
 }

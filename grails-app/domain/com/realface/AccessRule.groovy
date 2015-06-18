@@ -22,9 +22,6 @@ class AccessRule
     {
         code(size: 3..64, unique: true)
         description(nullable: true, type: "text")
-
-        users(joinTable: [name: "access_rule_users"])
-        roles(joinTable: [name: "access_rule_roles"])
     }
 
     static mapping =
@@ -34,5 +31,7 @@ class AccessRule
         afterMinute(defaultValue: 0)
         beforeHour(defaultValue: 24)
         beforeMinute(defaultValue: 0)
+        users(joinTable: [name: "access_rule_users", key: 'rule_id'])
+        roles(joinTable: [name: "access_rule_roles", key: 'rule_id'])
     }
 }

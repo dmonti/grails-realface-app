@@ -9,6 +9,7 @@
       <thead>
         <tr>
           <th>#</th>
+          <th>Usuário</th>
           <th>Imagem</th>
           <th>Status do template</th>
           <th>Data de criação</th>
@@ -18,6 +19,7 @@
           <g:each in="${photos}">
             <tr>
                 <td scope="row">${it.id}</td>
+                <td scope="row">${it.user ? "${it.user.name} #${it.id}" : "-"}</td>
                 <td>
                     <a style="width: 128px;" class="thumbnail">
                         <img src="${createLink(controller: 'photo', action: 'resource', id: it.id)}" />

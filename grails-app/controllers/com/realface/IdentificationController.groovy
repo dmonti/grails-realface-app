@@ -6,6 +6,11 @@ class IdentificationController
 {
     def identificationService
 
+    def index()
+    {
+        [logs: PhotoIdentificationLog.list(sort: "id", order: "desc")]
+    }
+
     def match()
     {
         PhotoTemplate photo1 = PhotoTemplate.get(params.id1)

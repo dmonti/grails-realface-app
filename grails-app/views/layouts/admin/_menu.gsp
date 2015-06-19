@@ -13,6 +13,7 @@
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Cameras <span class="caret"></span></a>
         <ul class="dropdown-menu">
             <li><g:link controller="Photo">Fotos</g:link></li>
+            <li><g:link controller="Identification">Logs de identificação</g:link></li>
             <li><g:link controller="Camera" action="test">Teste de reconhecimento</g:link></li>
         </ul>
     </li>

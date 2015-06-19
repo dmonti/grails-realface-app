@@ -53,6 +53,6 @@ public class IdentificationHandler implements CompletionHandler<NBiometricStatus
     @Override
     public void failed(final Throwable th, final Object attachment)
     {
-        log.warn("Failed!", th);
+        log.warn("IdentificationHandler Failed!", th);
     }
 }

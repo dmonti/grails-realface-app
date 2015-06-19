@@ -35,16 +35,18 @@ public class IdentificationHandler implements CompletionHandler<NBiometricStatus
     @Override
     public void completed(final NBiometricStatus status, final Object attachment)
     {
-        if ((status == NBiometricStatus.OK) || (status == NBiometricStatus.MATCH_NOT_FOUND))
+        log.debug("IdentificationHandler completed, status: status" + status);
+        if (subject.getMatchingResults().isEmpty())
+        {
+            log.warn("No match results for source #" + source.getSId() + " with target #" + target.getSId());
+            service.save(null, status, source, target);
+        }
+        else
         {
             for (NMatchingResult result : subject.getMatchingResults())
             {
                 service.save(result, status, source, target);
             }
-        }
-        else
-        {
-            log.warn("Identification failed: " + status);
         }
     }
 

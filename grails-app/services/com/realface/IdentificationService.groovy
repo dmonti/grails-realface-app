@@ -118,7 +118,10 @@ class IdentificationService
     {
         PhotoIdentificationLog.withTransaction {
             new PhotoIdentificationLog(
-                source: source, target: target, status: status, score: result.getScore()
+                source: source,
+                target: target,
+                status: status,
+                score: (result ? result.getScore() : -1)
             ).save(failOnError: true)
         }
     }

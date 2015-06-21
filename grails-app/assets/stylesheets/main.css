@@ -13,3 +13,13 @@ h3 {
 .toast-top-center {
     margin-top: 65px;
 }
+
+.navbar-brand {
+    padding: 0;
+}
+
+.navbar-header {
+    height: 61px;
+    width: 255px;
+    background: transparent url("../images/logo.png") no-repeat 0 0;
+}

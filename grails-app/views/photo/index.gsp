@@ -11,6 +11,7 @@
           <th>#</th>
           <th>Usuário</th>
           <th>Imagem</th>
+          <th>Autenticidade</th>
           <th>Status do template</th>
           <th>Data de criação</th>
         </tr>
@@ -25,6 +26,7 @@
                         <img src="${createLink(controller: 'photo', action: 'resource', id: it.id)}" />
                     </a>
                 </td>
+                <td>${it.authenticity}</td>
                 <td>${it.status}</td>
                 <td><g:formatDate date="${it.dateCreated}" /></td>
             </tr>

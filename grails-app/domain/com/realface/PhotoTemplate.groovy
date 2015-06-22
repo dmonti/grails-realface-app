@@ -6,6 +6,8 @@ class PhotoTemplate
 {
     User user
 
+    AuthenticityStatus authenticity
+
     NBiometricStatus status
 
     Date dateCreated
@@ -16,12 +18,14 @@ class PhotoTemplate
     {
         user(nullable: true)
         status(nullable: true)
+        authenticity(nullable: true)
     }
 
     static mapping =
     {
         version(false)
         status(enumType: "ordinal")
+        authenticity(enumType: "ordinal")
     }
 
     public String getSId()
@@ -31,18 +35,16 @@ class PhotoTemplate
 
     public String getSubjectId()
     {
-        return (user ? "user-${String.valueOf(user.id)}" : "photo-${String.valueOf(id)}")
+        return (user ? "user-${String.valueOf(user.id)}" : "photo-${getSId()}")
     }
 
     public String getTemplateFileName()
     {
-        String sId = String.valueOf(id)
-        return "${sId}.template"
+        return "${getSId()}.template"
     }
 
     public String getPhotoFileName()
     {
-        String sId = String.valueOf(id)
-        return "${sId}.png"
+        return "${getSId()}.png"
     }
 }

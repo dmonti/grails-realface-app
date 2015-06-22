@@ -5,36 +5,31 @@ import grails.transaction.Transactional
 @Transactional
 class UserService
 {
+    private static String FIND_CODE_OR_EMAIL_QUERY = "FROM User WHERE email = :codeOrEmail OR credential.code = :codeOrEmail"
+
     public User findUser(String codeOrEmail)
     {
         List result = User.executeQuery(
-            "FROM User WHERE email = :codeOrEmail OR credential.code = :codeOrEmail",
+            FIND_CODE_OR_EMAIL_QUERY,
             [codeOrEmail: codeOrEmail], [max: 1]
-        );
-
-        User user;
-        if (result.isEmpty())
-            user = null;
-        else
-            user = result.first();
-
-        return user;
+        )
+        return (result.isEmpty() ? null : result.first())
     }
 
     public boolean existsUsernameOrEmail(String codeOrEmail)
     {
-        final String query = "SELECT 1 FROM User WHERE email = :codeOrEmail OR credential.code = :codeOrEmail";
-        return !User.executeQuery(query, [codeOrEmail: codeOrEmail], [max: 1]).isEmpty()
+        final String query = "SELECT 1 ${FIND_CODE_OR_EMAIL_QUERY}"
+        List result = User.executeQuery(query, [codeOrEmail: codeOrEmail], [max: 1])
+
+        return !result.isEmpty()
     }
 
     def bootStrap()
     {
         if (User.count() > 0)
-            return;
+            return
 
-        User user;
-
-        user = new User(
+        User user1 = new User(
             name: "Daniel",
             email: "dms.monti@gmail.com",
             credential: new Credential(
@@ -42,11 +37,11 @@ class UserService
                 enabled: true,
                 level: AccessLevel.SYSTEM
             )
-        );
-        user.credential.setAndEncodePassword("1234qwer");
-        user.save(failOnError: true);
+        )
+        user1.credential.setAndEncodePassword("1234qwer")
+        user1.save(failOnError: true)
 
-        user = new User(
+        User user2 = new User(
             name: "Anderson",
             email: "souza.ander@gmail.com",
             credential: new Credential(
@@ -54,8 +49,8 @@ class UserService
                 enabled: true,
                 level: AccessLevel.SYSTEM
             )
-        );
-        user.credential.setAndEncodePassword("1234qwer");
-        user.save(failOnError: true);
+        )
+        user2.credential.setAndEncodePassword("1234qwer")
+        user2.save(failOnError: true)
     }
 }

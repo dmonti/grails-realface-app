@@ -1,13 +1,20 @@
-import com.neurotec.plugins.NDataFileManager;
+import com.neurotec.plugins.NDataFileManager
 
 class BootStrap
 {
-    def userService;
+    def userService
+
+    def grailsApplication
 
     def init = {  servletContext ->
-        NDataFileManager.getInstance().addFromDirectory("/Volumes/dmonti/Development/Realface/Neurotec_Biometric_5_1_SDK_Trial/Bin/Data", false)
-        userService.bootStrap();
+        NDataFileManager.getInstance().addFromDirectory(getNDataFilePath(), false)
+        userService.bootStrap()
     }
 
     def destroy = { }
+
+    public String getNDataFilePath()
+    {
+        return grailsApplication.config.neurotec.dataFile.path
+    }
 }

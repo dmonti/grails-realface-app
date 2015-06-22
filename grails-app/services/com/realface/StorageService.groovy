@@ -6,7 +6,7 @@ class StorageService
 {
     static transactional = false
 
-    private static final String STORAGE_PATH = "/Volumes/dmonti/Development/Realface/storage"
+    def grailsApplication
 
     private File baseDir
 
@@ -14,12 +14,17 @@ class StorageService
     {
         if (baseDir == null)
         {
-            baseDir = new File("${STORAGE_PATH}/")
+            baseDir = new File(getStoragePath())
             if (!baseDir.exists())
             {
                 baseDir.mkdirs()
             }
         }
         return baseDir
+    }
+
+    public String getStoragePath()
+    {
+        return grailsApplication.config.realface.storage.path
     }
 }

@@ -25,6 +25,8 @@ class IdentificationService
     private static final String DEFAULT_FORMAT = "PNG"
     private static final Dimension DEFAULT_PHOTO_DIMENSION = new Dimension(640, 480)
 
+    public static List<NSubject> subjects = new ArrayList<NSubject>()
+
     File photoBaseDir
 
     File templateBaseDir
@@ -154,5 +156,28 @@ class IdentificationService
                 templateBaseDir.mkdirs()
         }
         return new File(templateBaseDir, photo.getTemplateFileName())
+    }
+
+    public void loadCache()
+    {
+        PhotoTemplateService.subjects.clear()
+        NBiometricTask enrollmentTask = new NBiometricTask(EnumSet.of(NBiometricOperation.ENROLL))
+
+        for (PhotoTemplate photo : loadVerifiedTemplates())
+        {
+            NSubject subject = loadSubject(photo)
+            enrollmentTask.getSubjects().add(subject)
+            PhotoTemplateService.subjects.add(subject)
+        }
+
+        FaceTools.getInstance().getClient().performTask(enrollmentTask, this, new EnrollSubjectsCacheHandler())
+    }
+
+    public List<PhotoTemplate> loadVerifiedTemplates()
+    {
+        return PhotoTemplate.findAll(
+            "FROM PhotoTemplate WHERE user IS NOT NULL AND status = ? AND authenticity = ?",
+            [NBiometricStatus.OK, AuthenticityStatus.VERIFIED]
+        )
     }
 }

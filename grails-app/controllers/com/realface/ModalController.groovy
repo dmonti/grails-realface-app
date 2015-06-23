@@ -2,13 +2,8 @@ package com.realface
 
 import org.codehaus.groovy.grails.web.servlet.mvc.exceptions.ControllerExecutionException;
 
-class TemplateController
+class ModalController
 {
-    def index()
-    {
-        redirect(action: "load", params: params);
-    }
-
     def load()
     {
         String path = params.path;

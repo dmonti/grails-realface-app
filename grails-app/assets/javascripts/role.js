@@ -43,7 +43,7 @@ function RoleForm($form) {
         if ($tr.length > 0) {
             $tbody.prepend($tr);
         } else {
-            $.get("/template/load", { path: "/role/users_row", bean: "User", id: user.id }, function(html) {
+            $.get("/modal/load", { path: "/role/users_row", bean: "User", id: user.id }, function(html) {
                 console.log(html);
                 $tbody.prepend(html);
             });

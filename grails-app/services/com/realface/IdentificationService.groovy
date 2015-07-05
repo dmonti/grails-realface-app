@@ -160,14 +160,14 @@ class IdentificationService
 
     public void loadCache()
     {
-        PhotoTemplateService.subjects.clear()
+        IdentificationService.subjects.clear()
         NBiometricTask enrollmentTask = new NBiometricTask(EnumSet.of(NBiometricOperation.ENROLL))
 
         for (PhotoTemplate photo : loadVerifiedTemplates())
         {
             NSubject subject = loadSubject(photo)
             enrollmentTask.getSubjects().add(subject)
-            PhotoTemplateService.subjects.add(subject)
+            IdentificationService.subjects.add(subject)
         }
 
         FaceTools.getInstance().getClient().performTask(enrollmentTask, this, new EnrollSubjectsCacheHandler())

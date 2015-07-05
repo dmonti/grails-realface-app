@@ -1,3 +1,4 @@
+import com.realface.LibraryManager
 import com.neurotec.plugins.NDataFileManager
 
 class BootStrap
@@ -9,6 +10,7 @@ class BootStrap
     def grailsApplication
 
     def init = {  servletContext ->
+        LibraryManager.initLibraryPath()
         NDataFileManager.getInstance().addFromDirectory(getNDataFilePath(), false)
 
         userService.bootStrap()

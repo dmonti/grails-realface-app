@@ -67,7 +67,7 @@ class DeviceService
     public NSubject createCaptureSubject()
     {
         NFace face = new NFace()
-        EnumSet<NBiometricCaptureOption> options = EnumSet.of(NBiometricCaptureOption.STREAM, NBiometricCaptureOption.MANUAL)
+        EnumSet<NBiometricCaptureOption> options = EnumSet.of(NBiometricCaptureOption.STREAM)
 
         face.setCaptureOptions(options)
         NSubject subject = new NSubject()

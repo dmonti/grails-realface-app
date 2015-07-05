@@ -32,7 +32,7 @@ class Device
         _private(column: "private")
     }
 
-    public static from(NDevice nDevice)
+    public Device static from(NDevice nDevice)
     {
         Map properties = [
             name: nDevice.getDisplayName(),

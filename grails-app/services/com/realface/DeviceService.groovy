@@ -1,10 +1,15 @@
 package com.realface
 
-import com.neurotec.samples.FaceTools
+import com.neurotec.biometrics.NBiometricCaptureOption
+import com.neurotec.biometrics.NFace
+import com.neurotec.biometrics.NSubject
+import com.neurotec.biometrics.client.NBiometricClient;
 import com.neurotec.devices.NDevice
 import com.neurotec.devices.NDeviceType
+import com.neurotec.samples.FaceTools
 
 import grails.transaction.Transactional
+import java.util.EnumSet
 
 @Transactional
 class DeviceService
@@ -39,5 +44,26 @@ class DeviceService
         }
 
         log.debug("Devices updated in ${System.currentTimeMillis() - t}ms.")
-     }
+    }
+
+    public void capture(NDevice nDevice)
+    {
+        NBiometricClient client = new NBiometricClient()
+        client.setFaceCaptureDevice(nDevice)
+        NSubject subject = createCaptureSubject()
+        client.capture(subject, subject, new CamaraCaptureHandler())
+    }
+
+    public NSubject createCaptureSubject()
+    {
+        NFace face = new NFace()
+        EnumSet<NBiometricCaptureOption> options = EnumSet.of(NBiometricCaptureOption.STREAM)
+
+        face.setCaptureOptions(options)
+        NSubject subject = new NSubject()
+        subject.getFaces().add(face)
+        view.setFace(face)
+
+        return subject
+    }
 }

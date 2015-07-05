@@ -87,12 +87,14 @@ grails.hibernate.osiv.readonly = false
 
 environments {
     development {
+        grails.cache.enabled = false
         grails.logging.jul.usebridge = true
 
         neurotec.sdk.home = "/Volumes/dmonti/Development/Realface/Neurotec_Biometric_5_1_SDK_Trial"
         realface.storage.path = "/Volumes/dmonti/Development/Realface/storage"
     }
     development2 {
+        grails.cache.enabled = false
         grails.logging.jul.usebridge = true
 
         neurotec.sdk.home = "C:\\realface\\Neurotec_Biometric_5_1_SDK_Trial"

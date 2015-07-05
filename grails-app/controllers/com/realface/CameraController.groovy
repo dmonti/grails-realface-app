@@ -9,5 +9,6 @@ class CameraController
     def test2()
     {
         deviceService.test()
+        render(1)
     }
 }

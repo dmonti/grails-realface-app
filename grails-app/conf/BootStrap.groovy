@@ -19,6 +19,7 @@ class BootStrap
 
     public String getNDataFilePath()
     {
-        return grailsApplication.config.neurotec.dataFile.path
+        String sdkHome = grailsApplication.config.neurotec.sdk.home
+        return "${sdkHome}${File.separator}Bin${File.separator}Data"
     }
 }

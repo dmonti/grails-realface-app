@@ -34,7 +34,7 @@ class DeviceService
 
         for (NDevice nDevice : devices)
         {
-            NDevice device = Device.from(nDevice)
+            Device device = Device.from(nDevice)
             device.save(failOnError: true)
         }
 

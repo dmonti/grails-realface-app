@@ -32,18 +32,18 @@ class Device
         _private(column: "private")
     }
 
-    public static from(NDevice device)
+    public static from(NDevice nDevice)
     {
         Map properties = [
-            name: device.getDisplayName(),
-            systemId: device.getId(),
-            manufacturer: device.getMake(),
-            model: device.getModel(),
-            serialNumber: device.getSerialNumber(),
-            type: device.getDeviceType(),
-            available: device.isAvailable(),
-            disconnectable: device.isDisconnectable(),
-            _private: device.isPrivate()
+            name: nDevice.getDisplayName(),
+            systemId: nDevice.getId(),
+            manufacturer: nDevice.getMake(),
+            model: nDevice.getModel(),
+            serialNumber: nDevice.getSerialNumber(),
+            type: nDevice.getDeviceType(),
+            available: nDevice.isAvailable(),
+            disconnectable: nDevice.isDisconnectable(),
+            _private: nDevice.isPrivate()
         ]
 
         Device device = Device.findWhere(serialNumber: properties.serialNumber)

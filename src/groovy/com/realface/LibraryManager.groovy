@@ -1,8 +1,9 @@
 package com.realface
 
 import com.neurotec.samples.util.Utils
-import com.sun.jna.Platform;
-import java.lang.reflect.Field;
+import com.sun.jna.Platform
+import java.io.File
+import java.lang.reflect.Field
 import org.apache.log4j.Logger
 
 public final class LibraryManager
@@ -53,7 +54,7 @@ public final class LibraryManager
         }
         else
         {
-            String path = sdkHome + FIle.separator + "Bin" + File.separator
+            path = sdkHome + File.separator + "Bin" + File.separator
             if (Platform.isWindows())
             {
                 return path + (Platform.is64Bit() ? WIN64_X64 : WIN32_X86)

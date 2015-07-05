@@ -7,9 +7,6 @@ class Device
 {
     String name
     String systemId
-    String manufacturer
-    String model
-    String serialNumber
 
     NDeviceType type
 
@@ -20,10 +17,7 @@ class Device
     Date dateCreated
     Date lastUpdated
 
-    static constraints =
-    {
-        serialNumber(unique: true)
-    }
+    static constraints = { }
 
     static mapping =
     {
@@ -37,16 +31,13 @@ class Device
         Map properties = [
             name: nDevice.getDisplayName(),
             systemId: nDevice.getId(),
-            manufacturer: nDevice.getMake(),
-            model: nDevice.getModel(),
-            serialNumber: nDevice.getSerialNumber(),
             type: nDevice.getDeviceType(),
             available: nDevice.isAvailable(),
             disconnectable: nDevice.isDisconnectable(),
             _private: nDevice.isPrivate()
         ]
 
-        Device device = Device.findWhere(serialNumber: properties.serialNumber)
+        Device device = Device.findWhere(systemId: properties.systemId)
         if (device)
             device.properties = properties
         else

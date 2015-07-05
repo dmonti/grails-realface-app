@@ -34,7 +34,7 @@ class Device
 
     public static from(NDevice device)
     {
-        return new Device(
+        Map properties = [
             name: device.getDisplayName(),
             systemId: device.getId(),
             manufacturer: device.getMake(),
@@ -44,7 +44,15 @@ class Device
             available: device.isAvailable(),
             disconnectable: device.isDisconnectable(),
             _private: device.isPrivate()
-        )
+        ]
+
+        Device device = Device.findWhere(serialNumber: properties.serialNumber)
+        if (device)
+            device.properties = properties
+        else
+            device = new Device(properties)
+
+        return device
     }
 
     public boolean isPrivate()

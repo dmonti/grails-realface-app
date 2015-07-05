@@ -12,6 +12,7 @@ import com.neurotec.biometrics.NLAttributes
 import com.neurotec.biometrics.NSubject
 import com.neurotec.biometrics.NBiometricOperation
 import com.neurotec.biometrics.client.NBiometricClient
+import com.neurotec.images.NImageFormat
 import com.neurotec.samples.FaceTools
 import com.neurotec.util.concurrent.CompletionHandler
 
@@ -75,6 +76,24 @@ class IdentificationService
         client.createTemplate(subject, null, handler)
 
         return photo
+    }
+
+    public PhotoTemplate savePhoto(NFace face)
+    {
+        PhotoTemplate photo = new PhotoTemplate()
+        photo.save(failOnError: true)
+
+        try
+        {
+            File file = getPhotoFile(photo)
+            face.getImage().save(file.getAbsolutePath(), NImageFormat.getJPEG())
+        }
+        catch(IOException e)
+        {
+            log.warn("Exception capturing photo #${photo.id}.", e)
+        }
+
+        return generate(photo)
     }
 
     public void save(NSubject subject, PhotoTemplate photo, NBiometricStatus status)

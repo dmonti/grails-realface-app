@@ -8,7 +8,6 @@ class CameraController
 
     def test2()
     {
-        def camera1 = deviceService.list().first()
-        deviceService.capture(camera1)
+        deviceService.test()
     }
 }

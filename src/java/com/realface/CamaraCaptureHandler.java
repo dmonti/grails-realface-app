@@ -4,25 +4,29 @@ import com.neurotec.biometrics.NBiometricStatus;
 import com.neurotec.biometrics.NSubject;
 import com.neurotec.util.concurrent.CompletionHandler;
 
-public class CamaraCaptureHandler implements CompletionHandler<NBiometricStatus, NSubject>
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class CamaraCaptureHandler implements CompletionHandler<NBiometricStatus, CamaraCaptureHandlerAttachment>
 {
+    private static final Logger log = LoggerFactory.getLogger(CamaraCaptureHandler.class);
+
     @Override
-    public void completed(final NBiometricStatus result, final NSubject subject)
+    public void completed(final NBiometricStatus result, final CamaraCaptureHandlerAttachment attachment)
     {
-        System.out.println("CamaraCaptureHandler, result: " + result);
-        if ((result == NBiometricStatus.OK) || (result == NBiometricStatus.CANCELED))
+        log.debug("CamaraCaptureHandler, result: " + result);
+        if (result == NBiometricStatus.OK)
         {
+            attachment.saveImages();
         }
-        else
+        else if (result != NBiometricStatus.CANCELED)
         {
-            // Template creation failed, so start capturing again.
-            // getSubject().getFaces().get(0).setImage(null);
-            // FaceTools.getInstance().getClient().capture(getSubject(), null, captureCompletionHandler);
+            attachment.restartCam();
         }
     }
 
     @Override
-    public void failed(final Throwable th, final NSubject subject)
+    public void failed(final Throwable th, final CamaraCaptureHandlerAttachment attachment)
     {
     }
 }

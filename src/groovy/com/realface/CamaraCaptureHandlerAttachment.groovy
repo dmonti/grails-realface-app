@@ -1,0 +1,46 @@
+package com.realface
+
+import com.neurotec.biometrics.NFace
+import com.neurotec.biometrics.NSubject
+
+public class CamaraCaptureHandlerAttachment
+{
+    DeviceService deviceService
+
+    IdentificationService identificationService
+
+    NSubject subject
+
+    public NSubject getSubject()
+    {
+        return subject
+    }
+
+    public void saveImages()
+    {
+        PhotoTemplate.withTransaction {
+            saveImages(subject)
+        }
+    }
+
+    public void saveImages(NSubject subject)
+    {
+        for (NFace face : subject.getFaces())
+        {
+            identificationService.saveImage(face)
+        }
+    }
+
+    public void resetImages()
+    {
+        for (NFace face : getSubject().getFaces())
+        {
+            face.setImage(null)
+        }
+    }
+
+    public void restartCam()
+    {
+        deviceService.test()
+    }
+}

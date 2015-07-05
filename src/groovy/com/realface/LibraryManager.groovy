@@ -46,14 +46,16 @@ public final class LibraryManager
 
     public static String getLibraryPath()
     {
-        StringBuilder path = new StringBuilder();
-        int index = Utils.getWorkingDirectory().lastIndexOf(Utils.FILE_SEPARATOR);
+        final StringBuilder path = new StringBuilder();
+
+        String sdkHome = System.getProperty("neurotec.sdk.home")
+        int index = sdkHome.lastIndexOf(Utils.FILE_SEPARATOR);
         if (index == -1)
         {
             return null;
         }
 
-        String part = Utils.getWorkingDirectory().substring(0, index);
+        String part = sdkHome.substring(0, index);
         if (Platform.isWindows())
         {
             if (part.endsWith("Bin"))

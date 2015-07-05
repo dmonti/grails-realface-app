@@ -26,6 +26,16 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label for="inputDescription" class="col-sm-2 control-label">Dispositivos:</label>
+                    <div class="col-sm-5">
+                        <select class="form-control">
+                            <g:each in="${devices}">
+                                <option>${it}</option>
+                            </g:each>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
                     <div class="row">
                         <div class="col-xs-offset-2 col-xs-10">
                             <div class="panel panel-default">

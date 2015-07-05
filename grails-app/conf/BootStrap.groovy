@@ -15,7 +15,7 @@ class BootStrap
         NDataFileManager.getInstance().addFromDirectory(getNDataFilePath(), false)
 
         deviceService.init()
-        deviceService.update()
+        // deviceService.update()
 
         userService.bootStrap()
         identificationService.loadCache()

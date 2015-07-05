@@ -12,6 +12,6 @@ class DevicesMonitorJob
 
     def execute()
     {
-        deviceService.update()
+        // deviceService.update()
     }
 }

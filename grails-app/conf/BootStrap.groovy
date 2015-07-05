@@ -10,9 +10,9 @@ class BootStrap
     def grailsApplication
 
     def init = {  servletContext ->
-        System.setProperty("neurotec.sdk.home", grailsApplication.config.neurotec.sdk.home)
+        String sdkHome = grailsApplication.config.neurotec.sdk.home
 
-        LibraryManager.initLibraryPath()
+        LibraryManager.initLibraryPath(sdkHome)
         NDataFileManager.getInstance().addFromDirectory(getNDataFilePath(), false)
 
         userService.bootStrap()

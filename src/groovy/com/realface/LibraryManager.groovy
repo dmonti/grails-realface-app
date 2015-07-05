@@ -15,9 +15,9 @@ public final class LibraryManager
 
     private static final Logger log = Logger.getLogger(LibraryManager.class)
 
-    public static void initLibraryPath()
+    public static void initLibraryPath(String sdkHome)
     {
-        String libraryPath = getLibraryPath();
+        String libraryPath = getLibraryPath(sdkHome);
         log.debug("Setting library path: ${libraryPath}.")
 
         String jnaLibraryPath = System.getProperty("jna.library.path");
@@ -44,11 +44,9 @@ public final class LibraryManager
         }
     }
 
-    public static String getLibraryPath()
+    public static String getLibraryPath(String sdkHome)
     {
         final StringBuilder path = new StringBuilder();
-
-        String sdkHome = System.getProperty("neurotec.sdk.home")
         int index = sdkHome.lastIndexOf(Utils.FILE_SEPARATOR);
         if (index == -1)
         {

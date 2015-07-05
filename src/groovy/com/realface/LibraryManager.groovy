@@ -46,41 +46,23 @@ public final class LibraryManager
 
     public static String getLibraryPath(String sdkHome)
     {
-        final StringBuilder path = new StringBuilder();
-        int index = sdkHome.lastIndexOf(Utils.FILE_SEPARATOR);
-        if (index == -1)
+        String path
+        if (Platform.isMac())
         {
-            return null;
+            path = MAC_OS
         }
-
-        String part = sdkHome.substring(0, index);
-        if (Platform.isWindows())
+        else
         {
-            if (part.endsWith("Bin"))
+            String path = sdkHome + FIle.separator + "Bin" + File.separator
+            if (Platform.isWindows())
             {
-                path.append(part);
-                path.append(Utils.FILE_SEPARATOR);
-                path.append(Platform.is64Bit() ? WIN64_X64 : WIN32_X86);
+                return path + (Platform.is64Bit() ? WIN64_X64 : WIN32_X86)
+            }
+            else if (Platform.isLinux())
+            {
+                return path + (Platform.is64Bit() ? LINUX_X86_64 : LINUX_X86)
             }
         }
-        else if (Platform.isLinux())
-        {
-            index = part.lastIndexOf(Utils.FILE_SEPARATOR);
-            if (index == -1)
-            {
-                return null;
-            }
-            part = part.substring(0, index);
-            path.append(part);
-            path.append(Utils.FILE_SEPARATOR);
-            path.append("Lib");
-            path.append(Utils.FILE_SEPARATOR);
-            path.append(Platform.is64Bit() ? LINUX_X86_64 : LINUX_X86);
-        }
-        else if (Platform.isMac())
-        {
-            path.append(MAC_OS);
-        }
-        return path.toString();
+        return path
     }
 }

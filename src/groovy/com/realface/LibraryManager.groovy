@@ -4,7 +4,9 @@ import com.neurotec.samples.util.Utils
 import com.sun.jna.Platform
 import java.io.File
 import java.lang.reflect.Field
-import org.apache.log4j.Logger
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class LibraryManager
 {
@@ -14,7 +16,7 @@ public final class LibraryManager
     private static final String LINUX_X86_64 = "Linux_x86_64";
     private static final String MAC_OS = "/Library/Frameworks/";
 
-    private static final Logger log = Logger.getLogger(LibraryManager.class)
+    private static final Logger log = LoggerFactory.getLogger(EnrollHandler.class);
 
     public static void initLibraryPath(String sdkHome)
     {

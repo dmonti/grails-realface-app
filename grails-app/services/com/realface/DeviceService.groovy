@@ -58,7 +58,7 @@ class DeviceService
 
         def attachment = new CamaraCaptureHandlerAttachment()
         attachment.subject = subject
-        attachment.deviceService = deviceService
+        attachment.deviceService = this
         attachment.identificationService = identificationService
 
         client.capture(subject, attachment, new CamaraCaptureHandler())

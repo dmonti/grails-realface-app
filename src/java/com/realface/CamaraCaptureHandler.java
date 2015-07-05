@@ -28,5 +28,6 @@ public class CamaraCaptureHandler implements CompletionHandler<NBiometricStatus,
     @Override
     public void failed(final Throwable th, final CamaraCaptureHandlerAttachment attachment)
     {
+        log.warn("CamaraCaptureHandler failed!", th);
     }
 }

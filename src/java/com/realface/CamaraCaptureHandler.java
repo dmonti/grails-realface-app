@@ -15,13 +15,24 @@ public class CamaraCaptureHandler implements CompletionHandler<NBiometricStatus,
     public void completed(final NBiometricStatus result, final CamaraCaptureHandlerAttachment attachment)
     {
         log.debug("CamaraCaptureHandler, result: " + result);
+        if (result == NBiometricStatus.CANCELED)
+        {
+            return;
+        }
+
         if (result == NBiometricStatus.OK)
         {
             attachment.saveImages();
         }
-        else if (result != NBiometricStatus.CANCELED)
+
+        try
         {
+            Thread.sleep(10000);
             attachment.restartCam();
+        }
+        catch (InterruptedException e)
+        {
+            log.warn("Exception waiting 10secs.", e);
         }
     }
 

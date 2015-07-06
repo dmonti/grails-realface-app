@@ -26,7 +26,7 @@ class DeviceService
 
     public List<NDevice> list()
     {
-        FaceTools.getInstance().obtainLicenses(["Devices.Cameras"])
+        FaceTools.getInstance().obtainLicenses(["Devices.Cameras", "Biometrics.FaceExtraction"])
         def deviceManager = FaceTools.getInstance().getClient().getDeviceManager()
         return deviceManager.getDevices()
     }

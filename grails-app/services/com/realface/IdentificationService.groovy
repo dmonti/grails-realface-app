@@ -70,7 +70,6 @@ class IdentificationService
         subject.getFaces().add(face)
 
         NBiometricClient client = FaceTools.getInstance().getClient()
-        FaceTools.getInstance().obtainLicenses(["Biometrics.FaceExtraction", "Biometrics.FaceSegmentsDetection"])
 
         TemplateCreationHandler handler = new TemplateCreationHandler(this, photo, subject)
         client.createTemplate(subject, null, handler)
@@ -123,10 +122,6 @@ class IdentificationService
 
     void recognize(PhotoTemplate source, PhotoTemplate target)
     {
-        List licenses = ["Biometrics.FaceExtraction", "Biometrics.FaceMatching"]
-        FaceTools.getInstance().obtainLicenses(licenses)
-        FaceTools.getInstance().getClient().clear()
-
         NBiometricTask enrollmentTask = new NBiometricTask(EnumSet.of(NBiometricOperation.ENROLL))
         NSubject targetSubject = loadSubject(target)
         enrollmentTask.getSubjects().add(targetSubject)

@@ -1,5 +1,6 @@
 import com.realface.LibraryManager
 import com.neurotec.plugins.NDataFileManager
+import com.neurotec.samples.FaceTools
 
 class BootStrap
 {
@@ -9,6 +10,14 @@ class BootStrap
     def identificationService
 
     def init = {  servletContext ->
+        FaceTools.getInstance().obtainLicenses([
+            "Devices.Cameras",
+            "Biometrics.FaceMatching",
+            "Biometrics.FaceDetection",
+            "Biometrics.FaceExtraction",
+            "Biometrics.FaceSegmentsDetection"
+        ])
+
         String sdkHome = grailsApplication.config.neurotec.sdk.home
 
         LibraryManager.initLibraryPath(sdkHome)

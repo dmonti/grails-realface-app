@@ -27,7 +27,7 @@ public class CamaraCaptureHandlerAttachment
     {
         for (NFace face : subject.getFaces())
         {
-            identificationService.saveImage(face)
+            identificationService.savePhoto(face)
         }
     }
 

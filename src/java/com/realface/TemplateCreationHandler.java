@@ -3,6 +3,7 @@ package com.realface;
 import com.neurotec.biometrics.NSubject;
 import com.neurotec.biometrics.NBiometricStatus;
 import com.neurotec.io.NFile;
+import com.neurotec.samples.FaceTools;
 import com.neurotec.util.concurrent.CompletionHandler;
 
 import java.io.File;
@@ -36,6 +37,13 @@ public class TemplateCreationHandler implements CompletionHandler<NBiometricStat
     {
         log.debug("Template creation for photo #" + photo.getSId() + " completed in " + (System.currentTimeMillis() - timeMillis) + "ms, result: " + result);
         service.save(subject, photo, result);
+
+        CameraIdentificationAttachment attachment2 = new CameraIdentificationAttachment();
+        attachment2.photo = photo;
+        attachment2.subject = subject;
+        attachment2.service = service;
+
+        FaceTools.getInstance().getClient().identify(subject, attachment2, new CameraIdentificationHandler());
     }
 
     @Override

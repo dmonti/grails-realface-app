@@ -19,7 +19,7 @@ public class CameraIdentificationHandler implements CompletionHandler<NBiometric
     @Override
     public void completed(final NBiometricStatus status, final CameraIdentificationAttachment attachment)
     {
-        log.debug("CameraIdentificationHandler completed, status: status" + status);
+        log.debug("CameraIdentificationHandler completed, status: " + status);
         NSubject subject = attachment.subject;
         for (NMatchingResult result : subject.getMatchingResults())
         {

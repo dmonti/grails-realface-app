@@ -10,6 +10,11 @@ class BootStrap
     def identificationService
 
     def init = {  servletContext ->
+        String sdkHome = grailsApplication.config.neurotec.sdk.home
+
+        LibraryManager.initLibraryPath(sdkHome)
+        NDataFileManager.getInstance().addFromDirectory(getNDataFilePath(), false)
+
         FaceTools.getInstance().obtainLicenses([
             "Devices.Cameras",
             "Biometrics.FaceMatching",
@@ -17,11 +22,6 @@ class BootStrap
             "Biometrics.FaceExtraction",
             "Biometrics.FaceSegmentsDetection"
         ])
-
-        String sdkHome = grailsApplication.config.neurotec.sdk.home
-
-        LibraryManager.initLibraryPath(sdkHome)
-        NDataFileManager.getInstance().addFromDirectory(getNDataFilePath(), false)
 
         deviceService.init()
         // deviceService.update()

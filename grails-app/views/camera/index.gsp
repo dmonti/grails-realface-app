@@ -10,9 +10,9 @@
             <div class="form-group">
                 <label for="inputDescription" class="col-sm-2 control-label">Dispositivos:</label>
                 <div class="col-sm-5">
-                    <select class="form-control">
-                        <g:each in="${devices}">
-                            <option>${it}</option>
+                    <select class="form-control" name="index">
+                        <g:each status="i" var="device" in="${devices}">
+                            <option value="${i}">${device}</option>
                         </g:each>
                     </select>
                 </div>

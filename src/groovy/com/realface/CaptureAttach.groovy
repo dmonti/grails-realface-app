@@ -2,19 +2,17 @@ package com.realface
 
 import com.neurotec.biometrics.NFace
 import com.neurotec.biometrics.NSubject
+import com.neurotec.devices.NDevice
 
 public class CaptureAttach
 {
-    DeviceService deviceService
+    public DeviceService deviceService
 
-    IdentificationService identificationService
+    public IdentificationService identificationService
 
-    NSubject subject
+    public NSubject subject
 
-    public NSubject getSubject()
-    {
-        return subject
-    }
+    public NDevice nDevice
 
     public void saveImages()
     {

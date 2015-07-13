@@ -28,7 +28,7 @@ public class CaptureHandler implements CompletionHandler<NBiometricStatus, Captu
         try
         {
             Thread.sleep(10000);
-            attachment.restartCam();
+            attachment.deviceService.capture(attachment.nDevice);
         }
         catch (InterruptedException e)
         {

@@ -61,6 +61,7 @@ class DeviceService
         attachment.subject = subject
         attachment.deviceService = this
         attachment.identificationService = identificationService
+        attachment.nDevice = nDevice
 
         client.capture(subject, attachment, new CaptureHandler())
         return client

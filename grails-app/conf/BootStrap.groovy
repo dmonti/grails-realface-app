@@ -18,7 +18,7 @@ class BootStrap
         licenseService.obtainAll()
         deviceService.init()
         // deviceService.update()
-        // enrollService.loadCache()
+        enrollService.loadCache()
         userService.bootStrap()
     }
 

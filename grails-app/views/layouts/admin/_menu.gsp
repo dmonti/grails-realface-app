@@ -14,6 +14,7 @@
         <ul class="dropdown-menu">
             <li><g:link controller="Photo">Fotos</g:link></li>
             <li><g:link controller="Photo" action="create">Tirar foto</g:link></li>
+            <li><g:link controller="Camera">Ativar camera</g:link></li>
             <li><g:link controller="Identification">Logs de identificação</g:link></li>
         </ul>
     </li>

@@ -16,6 +16,8 @@ class DeviceService
 {
     def identificationService
 
+    private static final Map<Integer, NBiometricClient> clients = new HashMap<Integer, NBiometricClient>()
+
     public void init()
     {
         FaceTools.getInstance().getClient().setUseDeviceManager(true)
@@ -47,7 +49,7 @@ class DeviceService
         log.debug("Devices updated in ${System.currentTimeMillis() - t}ms.")
     }
 
-    public void capture(NDevice nDevice)
+    public NBiometricClient capture(NDevice nDevice)
     {
         NBiometricClient client = new NBiometricClient()
         client.setUseDeviceManager(true)
@@ -61,6 +63,7 @@ class DeviceService
         attachment.identificationService = identificationService
 
         client.capture(subject, attachment, new CaptureHandler())
+        return client
     }
 
     public NSubject createCaptureSubject()
@@ -75,9 +78,15 @@ class DeviceService
         return subject
     }
 
-    public void test()
+    public void start(int i)
     {
-        def camera = list().first()
-        capture(camera)
+        def camera = list()[i]
+        def client = capture(camera)
+        clients.put(i, client)
+    }
+
+    public void stop(int i)
+    {
+        clients.get(i).cancel()
     }
 }

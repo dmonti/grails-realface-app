@@ -55,12 +55,12 @@ class DeviceService
 
         NSubject subject = createCaptureSubject()
 
-        def attachment = new CamaraCaptureHandlerAttachment()
+        def attachment = new CaptureAttach()
         attachment.subject = subject
         attachment.deviceService = this
         attachment.identificationService = identificationService
 
-        client.capture(subject, attachment, new CamaraCaptureHandler())
+        client.capture(subject, attachment, new CaptureHandler())
     }
 
     public NSubject createCaptureSubject()

@@ -36,6 +36,6 @@
           </g:each>
       </tbody>
     </table>
-    <asset:javascript src="role.js"/>
+    <asset:javascript src="view/role.js"/>
 </body>
 </html>

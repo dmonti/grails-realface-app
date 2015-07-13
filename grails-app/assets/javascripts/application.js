@@ -1,9 +1,8 @@
-//= require jquery-2.1.3.min
-//= require jquery-ui.min
-//= require bootstrap.min
-//= require toastr.min
-//= require menu
-//= require modal
+//= require jquery-ui.min.js
+//= require bootstrap.min.js
+//= require toastr.min.js
+//= require view/menu.js
+//= require view/modal.js
 //= require_self
 
 function $post($form, data, $btn) {

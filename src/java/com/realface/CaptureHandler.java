@@ -7,14 +7,14 @@ import com.neurotec.util.concurrent.CompletionHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class CamaraCaptureHandler implements CompletionHandler<NBiometricStatus, CamaraCaptureHandlerAttachment>
+public class CaptureHandler implements CompletionHandler<NBiometricStatus, CaptureAttach>
 {
-    private static final Logger log = LoggerFactory.getLogger(CamaraCaptureHandler.class);
+    private static final Logger log = LoggerFactory.getLogger(CaptureHandler.class);
 
     @Override
-    public void completed(final NBiometricStatus result, final CamaraCaptureHandlerAttachment attachment)
+    public void completed(final NBiometricStatus result, final CaptureAttach attachment)
     {
-        log.debug("CamaraCaptureHandler, result: " + result);
+        log.debug("CaptureHandler, result: " + result);
         if (result == NBiometricStatus.CANCELED)
         {
             return;
@@ -37,8 +37,8 @@ public class CamaraCaptureHandler implements CompletionHandler<NBiometricStatus,
     }
 
     @Override
-    public void failed(final Throwable th, final CamaraCaptureHandlerAttachment attachment)
+    public void failed(final Throwable th, final CaptureAttach attachment)
     {
-        log.warn("CamaraCaptureHandler failed!", th);
+        log.warn("CaptureHandler failed!", th);
     }
 }

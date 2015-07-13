@@ -68,6 +68,6 @@
             </g:form>
         </div>
     </div>
-    <asset:javascript src="point.js"/>
+    <asset:javascript src="view/point.js"/>
 </body>
 </html>

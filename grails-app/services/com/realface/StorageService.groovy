@@ -9,6 +9,8 @@ class StorageService
     def grailsApplication
 
     private File baseDir
+    private File photoBaseDir
+    private File templateBaseDir
 
     public File getBaseDir()
     {
@@ -26,5 +28,27 @@ class StorageService
     public String getStoragePath()
     {
         return grailsApplication.config.realface.storage.path
+    }
+
+    public File getPhotoFile(PhotoTemplate photo)
+    {
+        if (photoBaseDir == null)
+        {
+            photoBaseDir = new File(getBaseDir(), "photos")
+            if (!photoBaseDir.exists())
+                photoBaseDir.mkdirs()
+        }
+        return new File(photoBaseDir, photo.getPhotoFileName())
+    }
+
+    public File getTemplateFile(PhotoTemplate photo)
+    {
+        if (templateBaseDir == null)
+        {
+            templateBaseDir = new File(getBaseDir(), "templates")
+            if (!templateBaseDir.exists())
+                templateBaseDir.mkdirs()
+        }
+        return new File(templateBaseDir, photo.getTemplateFileName())
     }
 }

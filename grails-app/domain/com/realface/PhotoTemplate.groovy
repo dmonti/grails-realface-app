@@ -35,7 +35,7 @@ class PhotoTemplate
 
     public String getSubjectId()
     {
-        return (user ? "user-${String.valueOf(user.id)}" : "photo-${getSId()}")
+        return getSId()
     }
 
     public String getTemplateFileName()

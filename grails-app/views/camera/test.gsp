@@ -24,6 +24,6 @@
             </div>
         </div>
     </g:form>
-    <asset:javascript src="camera.js"/>
+    <asset:javascript src="view/camera.js"/>
 </body>
 </html>

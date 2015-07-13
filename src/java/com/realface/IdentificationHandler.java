@@ -12,46 +12,32 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class IdentificationHandler implements CompletionHandler<NBiometricStatus, Object>
+public class IdentificationHandler implements CompletionHandler<NBiometricStatus, IdentificationAttach>
 {
     private static final Logger log = LoggerFactory.getLogger(IdentificationHandler.class);
 
-    IdentificationService service;
-
-    NSubject subject;
-
-    PhotoTemplate source;
-
-    PhotoTemplate target;
-
-    public IdentificationHandler(IdentificationService service, NSubject subject, PhotoTemplate source, PhotoTemplate target)
-    {
-        this.service = service;
-        this.subject = subject;
-        this.source = source;
-        this.target = target;
-    }
-
     @Override
-    public void completed(final NBiometricStatus status, final Object attachment)
+    public void completed(final NBiometricStatus status, final IdentificationAttach attachment)
     {
-        log.debug("IdentificationHandler completed, status: status" + status);
+        log.debug("IdentificationHandler completed, status: " + status);
+
+        NSubject subject = attachment.subject;
         if (subject.getMatchingResults().isEmpty())
         {
-            log.warn("No match results for source #" + source.getSId() + " with target #" + target.getSId());
-            service.save(null, status, source, target);
+            log.debug("No match results for subject #" + subject.getId());
         }
         else
         {
+            IdentificationService service = attachment.service;
             for (NMatchingResult result : subject.getMatchingResults())
             {
-                service.save(result, status, source, target);
+                service.save(result, attachment, status);
             }
         }
     }
 
     @Override
-    public void failed(final Throwable th, final Object attachment)
+    public void failed(final Throwable th, final IdentificationAttach attachment)
     {
         log.warn("IdentificationHandler Failed!", th);
     }

@@ -9,8 +9,10 @@
       <thead>
         <tr>
           <th>#</th>
-          <th>Imagem 1</th>
-          <th>Imagem 2</th>
+          <th>Usuário ID 1</th>
+          <th>Imagem</th>
+          <th>Usuário ID 2</th>
+          <th>Imagem</th>
           <th>Status</th>
           <th>Score</th>
           <th>Data de criação</th>
@@ -20,11 +22,13 @@
           <g:each in="${logs}">
             <tr>
                 <td scope="row">${it.id}</td>
+                <td>#${it.source.user?.id}</td>
                 <td>
                     <a style="width: 128px;" class="thumbnail">
                         <img src="${createLink(controller: 'photo', action: 'resource', id: it.source.id)}" />
                     </a>
                 </td>
+                <td>#${it.target.user?.id}</td>
                 <td>
                     <a style="width: 128px;" class="thumbnail">
                         <img src="${createLink(controller: 'photo', action: 'resource', id: it.target.id)}" />

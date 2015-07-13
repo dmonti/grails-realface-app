@@ -2,17 +2,28 @@ package com.realface
 
 class PhotoController
 {
+    def storageService
     def identificationService
-
-    def capture()
-    {
-        PhotoTemplate photo = identificationService.capture()
-        return render(contentType: "text/json") { photo }
-    }
 
     def index()
     {
-        [photos: PhotoTemplate.list(sort: "id", order: "desc")]
+        return [photos: PhotoTemplate.list(sort: "id", order: "desc")]
+    }
+
+    def create()
+    {
+    }
+
+    def capture()
+    {
+        User user
+        if (params.user?.id != null)
+        {
+            user = User.get(params.user.id)
+        }
+
+        PhotoTemplate photo = identificationService.capture(user)
+        return render(contentType: "text/json") { photo }
     }
 
     def resource()
@@ -20,12 +31,13 @@ class PhotoController
         PhotoTemplate photo = PhotoTemplate.get(params.id)
         if (photo)
         {
-            File file = identificationService.getPhotoFile(photo)
+            File file = storageService.getPhotoFile(photo)
             return render(file: file, contentType: "image/png")
         }
         else
         {
-            return render(0)
+            response.status = 404
+            return
         }
     }
 }

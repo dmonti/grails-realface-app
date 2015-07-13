@@ -29,6 +29,6 @@
             </g:form>
         </div>
     </div>
-    <asset:javascript src="login.js"/>
+    <asset:javascript src="view/login.js"/>
 </body>
 </html>

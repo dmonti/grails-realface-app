@@ -67,6 +67,6 @@
             </g:form>
         </div>
     </div>
-    <asset:javascript src="user.js"/>
+    <asset:javascript src="view/user.js"/>
 </body>
 </html>

@@ -2,7 +2,7 @@ package com.realface
 
 import com.neurotec.biometrics.NSubject
 
-public class CameraIdentificationAttachment
+public class IdentificationAttach
 {
     public PhotoTemplate photo
 

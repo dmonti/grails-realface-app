@@ -83,4 +83,4 @@
         </g:form>
     </div>
 </div>
-<asset:javascript src="rule.js"/>
+<asset:javascript src="view/rule.js"/>

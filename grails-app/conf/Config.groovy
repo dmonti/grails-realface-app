@@ -127,8 +127,5 @@ log4j.main = {
     warn "grails.app", // Grails App
          "com.realface" // RealFace
 
-    debug "com.realface.DeviceService",
-          "com.realface.LibraryManager",
-          "com.realface.TemplateCreationHandler",
-          "com.realface.EnrollSubjectsCacheHandler"
+    debug "com.realface"
 }

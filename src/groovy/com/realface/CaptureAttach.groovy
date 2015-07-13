@@ -3,7 +3,7 @@ package com.realface
 import com.neurotec.biometrics.NFace
 import com.neurotec.biometrics.NSubject
 
-public class CamaraCaptureHandlerAttachment
+public class CaptureAttach
 {
     DeviceService deviceService
 

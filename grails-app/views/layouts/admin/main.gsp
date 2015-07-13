@@ -8,19 +8,20 @@
     <link rel="shortcut icon" href="/bootstrap/img/favicon.ico">
     <g:layoutHead/>
     <asset:stylesheet src="application.css" />
-    <asset:javascript src="application.js" />
+    <asset:javascript src="jquery-2.1.3.min.js" />
 </head>
 <body>
-<g:render template="/layouts/admin/header" />
-<div class="container-fluid">
-    <div class="row">
-        <div id="menu" class="col-xs-2">
-            <g:render template="/layouts/admin/menu" />
-        </div>
-        <div id="content" class="col-xs-10">
-            <g:layoutBody />
+    <g:render template="/layouts/admin/header" />
+    <div class="container-fluid">
+        <div class="row">
+            <div id="menu" class="col-xs-2">
+                <g:render template="/layouts/admin/menu" />
+            </div>
+            <div id="content" class="col-xs-10">
+                <g:layoutBody />
+            </div>
         </div>
     </div>
-</div>
+    <asset:javascript src="application.js" />
 </body>
 </html>

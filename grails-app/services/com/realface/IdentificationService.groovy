@@ -95,16 +95,11 @@ class IdentificationService
 
     public void save(NSubject subject, PhotoTemplate photo, NBiometricStatus status)
     {
-        if (photo.user)
-        {
-            photo.authenticity = AuthenticityStatus.VERIFIED
-        }
-        else
-        {
-            identifySubject(photo, subject)
-        }
-
         PhotoTemplate.withTransaction {
+            if (photo.user)
+            {
+                photo.authenticity = AuthenticityStatus.VERIFIED
+            }
             photo.status = status
             photo.save(failOnError: true)
         }
@@ -125,9 +120,14 @@ class IdentificationService
         {
             log.warn("Exception writing photo template #${photo.id}, file: ${file.getAbsolutePath()}", e)
         }
+
+        if (!photo.user)
+        {
+            identifyUser(photo, subject)
+        }
     }
 
-    public void identifySubject(PhotoTemplate photo, NSubject subject)
+    public void identifyUser(PhotoTemplate photo, NSubject subject)
     {
         IdentificationAttach attachment = new IdentificationAttach()
         attachment.photo = photo
@@ -139,15 +139,17 @@ class IdentificationService
 
     public void save(NMatchingResult result, IdentificationAttach attachment, NBiometricStatus status)
     {
+        long targetId = Long.parseLong(result.getId())
+
         PhotoTemplate target
         PhotoTemplate source
 
         PhotoTemplate.withTransaction {
-            target = PhotoTemplate.get(Long.parseLong(result.getId()))
-
+            target = PhotoTemplate.get(targetId)
             source = attachment.photo
+
             source.user = target.user
-            source.authenticity = AuthenticityStatus.SUGGESTED
+            source.authenticity = AuthenticityStatus.IDENTIFIED
             source.save(failOnError: true)
         }
 

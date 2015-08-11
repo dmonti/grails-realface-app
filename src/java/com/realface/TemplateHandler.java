@@ -39,6 +39,12 @@ public class TemplateHandler implements CompletionHandler<NBiometricStatus, Temp
     @Override
     public void failed(final Throwable th, final TemplateAttach attachment)
     {
-        log.warn("Template creation for photo #" + attachment.photo.getSId() + " failed in " + (System.currentTimeMillis() - timeMillis) + "ms.", th);
+        NSubject subject = attachment.subject;
+        PhotoTemplate photo = attachment.photo;
+        IdentificationService service = attachment.identificationService;
+
+        log.warn("Template creation for photo #" + photo.getSId() + " failed in " + (System.currentTimeMillis() - timeMillis) + "ms.", th);
+
+        service.save(subject, photo, th);
     }
 }

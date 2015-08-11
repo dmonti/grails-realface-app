@@ -93,6 +93,14 @@ class IdentificationService
         return generate(photo)
     }
 
+    public void save(NSubject subject, PhotoTemplate photo, Throwable th)
+    {
+        if ("Operation is not activated".equals(th.getCause().getMessage()))
+        {
+            save(subject, photo, NBiometricStatus.OPERATION_NOT_ACTIVATED)
+        }
+    }
+
     public void save(NSubject subject, PhotoTemplate photo, NBiometricStatus status)
     {
         PhotoTemplate.withTransaction {

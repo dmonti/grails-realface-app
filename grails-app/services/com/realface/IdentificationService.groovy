@@ -32,7 +32,7 @@ class IdentificationService
     public PhotoTemplate capture(User user = null)
     {
         PhotoTemplate photo = new PhotoTemplate(user: user)
-        photo.save(failOnError: true)
+        photo.save(flush: true)
 
         Webcam webcam = Webcam.getDefault()
         webcam.setViewSize(DEFAULT_PHOTO_DIMENSION)
@@ -75,10 +75,39 @@ class IdentificationService
         return photo
     }
 
+    public PhotoTemplate savePhoto(byte[] data)
+    {
+        PhotoTemplate photo = new PhotoTemplate()
+        photo.save(flush: true)
+
+        try
+        {
+            File file = storageService.getPhotoFile(photo)
+            file.withOutputStream { OutputStream stream ->
+                stream.write(data)
+            }
+        }
+        catch(Exception e)
+        {
+            log.warn("Exception saving photo #${photo.id}.", e)
+        }
+
+        try
+        {
+            generate(photo)
+        }
+        catch(Exception e)
+        {
+            log.warn("Exception generating template for photo #${photo.id}.", e)
+        }
+
+        return photo
+    }
+
     public PhotoTemplate savePhoto(NFace face)
     {
         PhotoTemplate photo = new PhotoTemplate()
-        photo.save(failOnError: true)
+        photo.save(flush: true)
 
         try
         {
@@ -109,7 +138,7 @@ class IdentificationService
                 photo.authenticity = AuthenticityStatus.VERIFIED
             }
             photo.status = status
-            photo.save(failOnError: true)
+            photo.save(flush: true)
         }
 
         if (!NBiometricStatus.OK.equals(status))
@@ -117,6 +146,8 @@ class IdentificationService
             log.debug("Photo template #${photo.id} NOT OK, status: ${photo.status}.")
             return
         }
+
+        subject.setId(photo.getSubjectId())
 
         File file = storageService.getTemplateFile(photo)
         try
@@ -129,7 +160,11 @@ class IdentificationService
             log.warn("Exception writing photo template #${photo.id}, file: ${file.getAbsolutePath()}", e)
         }
 
-        if (!photo.user)
+        if (photo.user)
+        {
+            enrollService.perform(subject)
+        }
+        else
         {
             identifyUser(photo, subject)
         }

@@ -14,13 +14,20 @@
             </div>
         </nav>
         <div class="container" ng-controller="SnapshotController">
-            <div class="starter-template">
-                <h1>Camera de accesso: ${accessPoint?.name}</h1>
-                <p class="lead">
-                    <div class="camera" id="camera"></div>
-                    <button type="submit" class="btn btn-default" ng-click="takeSnapshot()">Identificar</button>
-                </p>
-            </div>
+            <g:if test="${accessPoint != null}">
+                <div class="starter-template">
+                    <h1>Camera de accesso: ${accessPoint?.name}</h1>
+                    <p class="lead">
+                        <div class="camera" id="camera"></div>
+                        <button type="submit" class="btn btn-default" ng-click="takeSnapshot(${accessPoint.id})">Identificar</button>
+                    </p>
+                </div>
+            </g:if>
+            <g:else>
+                <div class="starter-template">
+                    <h1>Camera de accesso não encontrada!</h1>
+                </div>
+            </g:else>
         </div>
         <asset:javascript src="camera.js" />
     </body>

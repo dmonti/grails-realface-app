@@ -5,6 +5,8 @@ class AccessPoint
     String name
     String description
 
+    int cameraIdx
+
     Date dateCreated
     Date lastUpdated
 
@@ -12,7 +14,10 @@ class AccessPoint
 
     static mappedBy = [logs: "accessPoint"]
 
-    static constraints = { }
+    static constraints =
+    {
+        description(nullable: true)
+    }
 
     static mapping =
     {

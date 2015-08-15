@@ -8,7 +8,7 @@
     <link rel="shortcut icon" href="/bootstrap/img/favicon.ico">
     <g:layoutHead/>
     <asset:stylesheet src="application.css" />
-    <asset:javascript src="jquery-2.1.3.min.js" />
+    <asset:javascript src="jquery.js" />
 </head>
 <body>
     <g:render template="/layouts/admin/header" />

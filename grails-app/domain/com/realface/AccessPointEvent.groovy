@@ -1,6 +1,6 @@
 package com.realface
 
-class AccessPointLog
+class AccessPointEvent
 {
     enum Status { DENIED, GRANTED; }
 

@@ -10,7 +10,7 @@ class AccessPoint
     Date dateCreated
     Date lastUpdated
 
-    static hasMany = [rules: AccessRule, logs: AccessPointLog]
+    static hasMany = [rules: AccessRule, logs: AccessPointEvent]
 
     static mappedBy = [logs: "accessPoint"]
 

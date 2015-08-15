@@ -36,4 +36,13 @@ class AccessController
         session.currentUserId = null;
         return redirect(uri: "/login");
     }
+
+    def camera()
+    {
+    }
+
+    def snapshot()
+    {
+        // def accessPoint = AccessPoint.get(params.id)
+    }
 }

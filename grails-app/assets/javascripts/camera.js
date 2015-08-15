@@ -8,20 +8,17 @@ angular.module("CameraAccess", [])
 .controller("SnapshotController", ["$scope", SnapshotController]);
 
 Webcam.set({
-    width: 320,
-    height: 240,
+    width: 640, height: 480,
     image_format: "jpeg",
-    jpeg_quality: 90
+    jpeg_quality: 100
 });
 
 function SnapshotController($scope) {
-    $scope.takeSnapshot = function() {
-        Webcam.snap(snapshot);
+    $scope.takeSnapshot = function(accessPointId) {
+        Webcam.snap(function(dataUri) {
+            $.post("/access/snapshot", { id: accessPointId, dataUri: dataUri }, function() { });
+        });
     }
 
     Webcam.attach("#camera");
-}
-
-function snapshot(dataUri) {
-    console.log(dataUri);
 }

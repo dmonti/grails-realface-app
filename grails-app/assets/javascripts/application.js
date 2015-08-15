@@ -1,6 +1,6 @@
 //= require jquery-ui.js
 //= require bootstrap.js
-//= require toastr.min.js
+//= require toastr.js
 //= require view/menu.js
 //= require view/modal.js
 //= require_self

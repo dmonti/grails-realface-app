@@ -9,7 +9,7 @@
 *
 *= require jquery-ui.css
 *= require bootstrap.css
-*= require toastr.min
+*= require toastr.css
 *= require main
 *= require_self
 */

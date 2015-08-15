@@ -1,3 +1,4 @@
+import com.realface.AccessPoint
 import com.realface.LibraryManager
 import com.neurotec.plugins.NDataFileManager
 
@@ -20,6 +21,8 @@ class BootStrap
         // deviceService.update()
         enrollService.loadCache()
         userService.bootStrap()
+
+        new AccessPoint(name: "Ponto de acesso padrão", cameraIdx: 0).save()
     }
 
     def destroy = { }

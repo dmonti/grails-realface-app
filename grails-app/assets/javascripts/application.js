@@ -1,4 +1,4 @@
-//= require jquery-ui.min.js
+//= require jquery-ui.js
 //= require bootstrap.js
 //= require toastr.min.js
 //= require view/menu.js

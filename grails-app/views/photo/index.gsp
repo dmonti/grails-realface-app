@@ -13,6 +13,7 @@
           <th>Imagem</th>
           <th>Autenticidade</th>
           <th>Status do template</th>
+          <th>Ponto de acesso</th>
           <th>Data de criação</th>
         </tr>
       </thead>
@@ -28,6 +29,7 @@
                 </td>
                 <td>${it.authenticity}</td>
                 <td>${it.status}</td>
+                <td>${it.accessPoint?.name}</td>
                 <td><g:formatDate date="${it.dateCreated}" /></td>
             </tr>
           </g:each>

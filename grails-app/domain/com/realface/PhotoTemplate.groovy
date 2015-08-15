@@ -6,6 +6,8 @@ class PhotoTemplate
 {
     User user
 
+    AccessPoint accessPoint
+
     AuthenticityStatus authenticity
 
     NBiometricStatus status
@@ -17,8 +19,9 @@ class PhotoTemplate
     static constraints =
     {
         user(nullable: true)
-        status(nullable: true)
+        accessPoint(nullable: true)
         authenticity(nullable: true)
+        status(nullable: true)
     }
 
     static mapping =

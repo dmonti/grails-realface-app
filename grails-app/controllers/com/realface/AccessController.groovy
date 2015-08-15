@@ -52,9 +52,9 @@ class AccessController
         dataUri = dataUri.substring(dataUri.indexOf(",") + 1)
 
         byte[] data = Base64.getDecoder().decode(dataUri)
-        identificationService.savePhoto(data)
 
         def accessPoint = AccessPoint.get(params.id)
+        identificationService.savePhoto(data, accessPoint)
 
         render(params)
     }

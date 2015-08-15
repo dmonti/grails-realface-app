@@ -75,9 +75,10 @@ class IdentificationService
         return photo
     }
 
-    public PhotoTemplate savePhoto(byte[] data)
+    public PhotoTemplate savePhoto(byte[] data, AccessPoint accessPoint)
     {
         PhotoTemplate photo = new PhotoTemplate()
+        photo.accessPoint = accessPoint
         photo.save(flush: true)
 
         try

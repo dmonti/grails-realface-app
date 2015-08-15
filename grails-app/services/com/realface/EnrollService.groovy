@@ -55,10 +55,16 @@ class EnrollService
         EnrollService.subjects.clear()
     }
 
-    public void perform()
+    public void perform(NSubject subject)
+    {
+        addSubject(subject)
+        perform([subject])
+    }
+
+    public void perform(List<NSubject> subjects = null)
     {
         NBiometricTask enrollmentTask = new NBiometricTask(EnumSet.of(NBiometricOperation.ENROLL))
-        for (NSubject subject : getSubjects())
+        for (NSubject subject : (subjects ?: getSubjects()))
         {
             enrollmentTask.getSubjects().add(subject)
         }

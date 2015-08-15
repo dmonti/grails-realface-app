@@ -1,5 +1,5 @@
 //= require jquery-ui.min.js
-//= require bootstrap.min.js
+//= require bootstrap.js
 //= require toastr.min.js
 //= require view/menu.js
 //= require view/modal.js

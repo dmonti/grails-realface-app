@@ -8,7 +8,7 @@
 * compiled file, but it's generally better to create a new file per style scope.
 *
 *= require jquery-ui.min
-*= require bootstrap.min
+*= require bootstrap.css
 *= require toastr.min
 *= require main
 *= require_self

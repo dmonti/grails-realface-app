@@ -15,12 +15,14 @@ class AccessPointController
     {
         List devices = deviceService.list()
 
-        render(view: "edit", model: [devices: devices])
+        return render(view: "edit", model: [devices: devices])
     }
 
     def edit()
     {
+        List devices = deviceService.list()
         AccessPoint point = AccessPoint.get(params.id)
+
         return [ point: point, devices: devices ]
     }
 }

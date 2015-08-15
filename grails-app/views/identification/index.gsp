@@ -28,11 +28,13 @@
                         <img src="${createLink(controller: 'photo', action: 'resource', id: it.source.id)}" />
                     </a>
                 </td>
-                <td>#${it.target.user?.id}</td>
+                <td>#${it.target?.user?.id}</td>
                 <td>
-                    <a style="width: 128px;" class="thumbnail">
-                        <img src="${createLink(controller: 'photo', action: 'resource', id: it.target.id)}" />
-                    </a>
+                    <g:if test="${it.target}">
+                        <a style="width: 128px;" class="thumbnail">
+                            <img src="${createLink(controller: 'photo', action: 'resource', id: it.target?.id)}" />
+                        </a>
+                    </g:if>
                 </td>
                 <td>${it.status}</td>
                 <td>${it.score}</td>

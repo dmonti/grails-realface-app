@@ -14,11 +14,14 @@ class PhotoIdentificationLog
 
     Date dateCreated
 
+    static constraints =
+    {
+        target(nullable: true)
+    }
+
     static mapping =
     {
         version(false)
         status(enumType: "ordinal")
     }
-
-    static constraints = { }
 }

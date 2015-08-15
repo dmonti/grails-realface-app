@@ -22,13 +22,15 @@ public class IdentificationHandler implements CompletionHandler<NBiometricStatus
         log.debug("IdentificationHandler completed, status: " + status);
 
         NSubject subject = attachment.subject;
+        IdentificationService service = attachment.service;
+
         if (subject.getMatchingResults().isEmpty())
         {
             log.debug("No match results for subject #" + subject.getId());
+            service.save(null, attachment, status);
         }
         else
         {
-            IdentificationService service = attachment.service;
             for (NMatchingResult result : subject.getMatchingResults())
             {
                 service.save(result, attachment, status);

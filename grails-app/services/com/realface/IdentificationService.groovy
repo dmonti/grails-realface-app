@@ -182,17 +182,19 @@ class IdentificationService
 
     public void save(NMatchingResult result, IdentificationAttach attachment, NBiometricStatus status)
     {
-        long targetId = Long.parseLong(result.getId())
-
-        PhotoTemplate target
         PhotoTemplate source
+        PhotoTemplate target = null
 
         PhotoTemplate.withTransaction {
-            target = PhotoTemplate.get(targetId)
             source = attachment.photo
 
-            source.user = target.user
-            source.authenticity = AuthenticityStatus.IDENTIFIED
+            if (result)
+            {
+                target = PhotoTemplate.get(Long.parseLong(result.getId()))
+                source.user = target.user
+            }
+
+            source.authenticity = target ? AuthenticityStatus.IDENTIFIED : AuthenticityStatus.UNKNOWN
             source.save(failOnError: true)
         }
 

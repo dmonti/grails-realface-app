@@ -5,7 +5,8 @@
 //= require_self
 
 angular.module("CameraAccess", [])
-.controller("SnapshotController", ["$scope", SnapshotController]);
+.controller("SnapshotController", ["$scope", SnapshotController])
+.directive("camera", [CameraDirective]);
 
 Webcam.set({
     width: 640, height: 480,
@@ -19,6 +20,14 @@ function SnapshotController($scope) {
             $.post("/access/snapshot", { id: accessPointId, dataUri: dataUri }, function() { });
         });
     }
+}
 
-    Webcam.attach("#camera");
+function CameraDirective() {
+    function link(scope, element, attrs) {
+        if (attrs.camera == "on") {
+            Webcam.attach(element[0]);
+        }
+    }
+
+    return { restrict: "A", link: link };
 }

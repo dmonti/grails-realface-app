@@ -18,7 +18,7 @@
                 <div class="starter-template">
                     <h1>Camera de accesso: ${accessPoint?.name}</h1>
                     <p class="lead">
-                        <div class="camera" id="camera"></div>
+                        <div class="camera" camera="on"></div>
                         <button type="submit" class="btn btn-default" ng-click="takeSnapshot(${accessPoint.id})">Identificar</button>
                     </p>
                 </div>

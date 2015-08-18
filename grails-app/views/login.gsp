@@ -28,6 +28,11 @@
               </div>
             </g:form>
         </div>
+        <div class="row">
+            <div class="col-xs-offset-3 col-xs-7 text-center">
+                <g:link controller="access" action="camera" class="btn btn-link">Ir para camera de acesso padrão</g:link>
+            </div>
+        </div>
     </div>
     <asset:javascript src="view/login.js"/>
 </body>

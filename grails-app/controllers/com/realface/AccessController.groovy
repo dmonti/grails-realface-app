@@ -41,7 +41,11 @@ class AccessController
 
     def camera()
     {
-        def accessPoint = AccessPoint.get(params.id)
+        def accessPoint
+        if (params.id)
+            accessPoint = AccessPoint.get(params.id)
+        else
+            accessPoint = AccessPoint.list(max: 1).first()
 
         return [accessPoint: accessPoint]
     }

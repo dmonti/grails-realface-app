@@ -1,6 +1,6 @@
-//= require jquery-2.1.3.min
-//= require bootstrap.min
-//= require toastr.min
+//= require jquery.js
+//= require bootstrap.js
+//= require toastr.js
 //= require_self
 
 window.homePage = "/";

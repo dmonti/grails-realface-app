@@ -28,6 +28,7 @@ class IdentificationService
 
     def enrollService
     def storageService
+    def accessPointService
 
     public PhotoTemplate capture(User user = null)
     {
@@ -206,6 +207,11 @@ class IdentificationService
                 status: status,
                 score: (result ? result.getScore() : -1)
             ).save(failOnError: true)
+        }
+
+        if (target && source.accessPoint)
+        {
+            accessPointService.access(source.accessPoint, target.user)
         }
     }
 }

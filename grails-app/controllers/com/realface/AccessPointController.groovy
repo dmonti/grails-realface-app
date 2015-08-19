@@ -25,4 +25,10 @@ class AccessPointController
 
         return [ point: point, devices: devices ]
     }
+
+    def report()
+    {
+        List events = AccessPointEvent.findAll("from AccessPointEvent order by id desc", [max: 25]);
+        return [ events: events ]
+    }
 }

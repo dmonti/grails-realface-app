@@ -4,15 +4,15 @@ import org.apache.commons.lang.builder.HashCodeBuilder
 
 class UserRole implements Serializable
 {
-    User user;
+    User user
 
-    Role role;
+    Role role
 
-    Date dateCreated;
+    Date dateCreated
 
     static mapping =
     {
-        id(composite: ['user', 'role']);
+        id(composite: ['user', 'role'])
     }
 
     boolean equals(other)
@@ -25,8 +25,8 @@ class UserRole implements Serializable
     int hashCode()
     {
         def builder = new HashCodeBuilder()
-        builder.append(user.id);
-        builder.append(role.id);
-        return builder.toHashCode();
+        builder.append(user.id)
+        builder.append(role.id)
+        return builder.toHashCode()
     }
 }

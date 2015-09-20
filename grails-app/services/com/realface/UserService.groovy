@@ -24,6 +24,41 @@ class UserService
         return !result.isEmpty()
     }
 
+    User tryFindByIdOrCode(String idOrCode)
+    {
+        User user = tryFindById(idOrCode)
+        if (!user)
+        {
+            user = tryFindByCode(idOrCode)
+        }
+        return user
+    }
+
+    User tryFindById(String id)
+    {
+        User user
+        try
+        {
+            Long userId = Long.parseLong(id)
+            user = User.get(userId)
+        }
+        catch (Exception e) { }
+
+        return user
+    }
+
+    User tryFindByCode(String code)
+    {
+        User user
+        try
+        {
+            user = User.findWhere("FROM User WHERE credential.code = ?", code)
+        }
+        catch (Exception e) { }
+
+        return user
+    }
+
     def bootStrap()
     {
         if (User.count() > 0)

@@ -9,45 +9,22 @@ function RoleForm($form) {
         $(this).parents("tr:first").remove();
     })
 
-    $form.find("a.add-user").click(function(e) {
-        try {
-            var url = $(this).attr("href");
-            loadAddUserModal(url);
-        } catch (e) {
-            toastr.error(response.message);
-        } finally {
-            return false;
-        }
-    });
+    $form.find("a.add-user").click(addUser);
 
-    var loadAddUserModal = function(url) {
-        $.get(url, null, function(html) {
-            var modal = new Modal(html, { removeAfterHide: true });
-            modal.get().find("#inputEmail").autocomplete({
-                source: "/user/search",
-                minLength: 2,
-                select: function(event, ui) {
-                    modal.data(ui.item);
-                }
-            });
-            modal.on("remove", function(e) {
-                addUser(modal.data());
-            });
-            modal.show();
+
+    function addUser(event) {
+        var $target = $(this);
+        var url = $target.attr("href");
+        var codeOrId = $("input.add-user").val();
+        $.get(url, { codeOrId: codeOrId }, function(result) {
+            console.log(result);
+            if (result.status) {
+                $("table.users > tbody").prepend(result.user);
+            } else {
+                toastr.error("Usuário não encontrado!");
+            }
         });
-    };
-
-    var addUser = function(user) {
-        var $tbody = $("table.users > tbody");
-        var $tr = $tbody.find("tr#user-" + user.id);
-        if ($tr.length > 0) {
-            $tbody.prepend($tr);
-        } else {
-            $.get("/modal/load", { path: "/role/users_row", bean: "User", id: user.id }, function(html) {
-                console.log(html);
-                $tbody.prepend(html);
-            });
-        }
+        return false;
     }
 
     var submit = function() {
@@ -63,10 +40,11 @@ function RoleForm($form) {
     var update = function(url, data) {
         var $btn = $form.find("button[type=submit]").button("loading");
         $.post($form.attr("action"), $form.serialize(), function(result) {
-            if (result.status)
+            if (result.status) {
                 toastr.success(result.message)
-            else
+            } else {
                 toastr.error(result.message)
+            }
         }).always(function() {
             $btn.button("reset");
         });

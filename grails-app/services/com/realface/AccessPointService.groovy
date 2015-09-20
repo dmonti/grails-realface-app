@@ -18,7 +18,15 @@ class AccessPointService
             return grant(accessPoint, user)
         }
 
-        deny(accessPoint, user)
+        for (AccessRule rule : rules)
+        {
+            if (rule.access(user))
+            {
+                return grant(accessPoint, user)
+            }
+        }
+
+        return deny(accessPoint, user)
     }
 
     def grant(AccessPoint accessPoint, User user)

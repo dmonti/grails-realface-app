@@ -13,7 +13,6 @@ class BootStrap
 
     def init = {  servletContext ->
         LibraryManager.initLibraryPath(getSDKHome())
-
         NDataFileManager.getInstance().addFromDirectory(getNDataFilePath(), false)
 
         licenseService.obtainAll()
@@ -22,7 +21,9 @@ class BootStrap
         enrollService.loadCache()
         userService.bootStrap()
 
-        new AccessPoint(name: "Ponto de acesso padrão", cameraIdx: 0).save()
+        if (!AccessPoint.count()) {
+            new AccessPoint(name: "Ponto de acesso padrão", cameraIdx: 0).save()
+        }
     }
 
     def destroy = { }

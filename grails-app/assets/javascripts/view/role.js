@@ -11,7 +11,6 @@ function RoleForm($form) {
 
     $form.find("a.add-user").click(addUser);
 
-
     function addUser(event) {
         var $target = $(this);
         var url = $target.attr("href");

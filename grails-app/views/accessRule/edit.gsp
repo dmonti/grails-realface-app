@@ -51,48 +51,68 @@
                 <div class="form-group">
                     <label class="col-xs-3 control-label">Usuários:</label>
                     <div class="col-xs-9">
-                        <table class="users table table-striped table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Nome</th>
-                                    <th>Email</th>
-                                    <th>&nbsp;
-                                        <g:link controller="Template" action="load" params="${[path: '/role/add_user_modal']}" class="add-user">
-                                            <span class="glyphicon glyphicon-plus-sign pull-right" />
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <div class="col-xs-10">
+                                        <input type="text" class="form-control add-user" placeholder="ID ou código do usuário" />
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <g:link controller="user" action="add" class="add-user">
+                                            <span class="glyphicon glyphicon-plus-sign" style="margin-top: 8px;" />
                                         </g:link>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <g:each in="${rule?.getUsers()}">
-                                    <g:render template="users_row" bean="${it}" />
-                                </g:each>
-                            </tbody>
-                        </table>
+                                    </div>
+                                </div>
+                                <table class="users table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Nome</th>
+                                            <th>Email</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <g:each in="${rule?.getUsers()}">
+                                            <g:render template="/role/users_row" bean="${it}" />
+                                        </g:each>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-xs-3 control-label">Papéis:</label>
                     <div class="col-xs-9">
-                        <table class="users table table-striped table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Nome</th>
-                                    <th>&nbsp;
-                                        <g:link controller="Template" action="load" params="${[path: '/role/add_role_modal']}" class="add-user">
-                                            <span class="glyphicon glyphicon-plus-sign pull-right" />
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <div class="col-xs-10">
+                                        <input type="text" class="form-control add-role" placeholder="ID ou código do papel" />
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <g:link controller="role" action="add" class="add-role">
+                                            <span class="glyphicon glyphicon-plus-sign" style="margin-top: 8px;" />
                                         </g:link>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <g:each in="${rule?.getRoles()}">
-                                    <g:render template="users_row" bean="${it}" />
-                                </g:each>
-                            </tbody>
-                        </table>
+                                    </div>
+                                </div>
+                                <table class="roles table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Nome</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <g:each in="${rule?.getRoles()}">
+                                            <g:render template="/user/role_row" bean="${it}" model="${[editable: true]}" />
+                                        </g:each>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">

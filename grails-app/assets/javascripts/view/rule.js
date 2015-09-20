@@ -10,9 +10,42 @@ function RuleForm($form) {
     });
 
     $form.find("a.add-user").click(function() {
-        console.log(this);
+        var $target = $(this);
+        var url = $target.attr("href");
+        var codeOrId = $("input.add-user").val();
+        $.get(url, { codeOrId: codeOrId }, function(result) {
+            if (result.status) {
+                $("table.users > tbody").prepend(result.user);
+                $("input.add-user").val("");
+            } else {
+                toastr.error("Usuário não encontrado!");
+            }
+        });
         return false;
     });
+
+    $form.on("click", "a.user-remove", function(e) {
+        $(this).parents("tr:first").remove();
+    })
+
+    $form.find("a.add-role").click(function() {
+        var $target = $(this);
+        var url = $target.attr("href");
+        var nameOrId = $("input.add-role").val();
+        $.get(url, { nameOrId: nameOrId }, function(result) {
+            if (result.status) {
+                $("table.roles > tbody").prepend(result.role);
+                $("input.add-role").val("");
+            } else {
+                toastr.error("Papel não encontrado!");
+            }
+        });
+        return false;
+    });
+
+    $form.on("click", "a.role-remove", function(e) {
+        $(this).parents("tr:first").remove();
+    })
 
     var submit = function() {
         try {

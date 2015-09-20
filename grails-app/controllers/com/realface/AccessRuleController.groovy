@@ -5,6 +5,8 @@ class AccessRuleController
     private static final byte OK = 1;
     private static final byte NOK = 0;
 
+    def accessRuleService
+
     def index()
     {
         List rules = AccessRule.list(max: 25)
@@ -61,6 +63,20 @@ class AccessRuleController
         {
             params.beforeHour = params.beforeTime.split(":")[0]
             params.beforeMinute = params.beforeTime.split(":")[1]
+        }
+
+        accessRule.getUsers()?.clear()
+        List users = params.list("users.id")
+        users?.each {
+            Long id = Long.parseLong(it)
+            accessRule.addToUsers(User.get(id))
+        }
+
+        accessRule.getRoles()?.clear()
+        List roles = params.list("roles.id")
+        roles?.each {
+            Long id = Long.parseLong(it)
+            accessRule.addToRoles(Role.get(id))
         }
 
         accessRule.properties = params

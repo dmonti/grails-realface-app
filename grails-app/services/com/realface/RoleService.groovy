@@ -24,4 +24,27 @@ class RoleService
         Set added = (newUsers - oldUsers);
         added.each() { it.save(); }
     }
+
+    Role tryFindByIdOrName(String idOrName)
+    {
+        Role role = tryFindById(idOrName)
+        if (!role)
+        {
+            role = Role.findByNameIlike(idOrName)
+        }
+        return role
+    }
+
+    Role tryFindById(String id)
+    {
+        Role role
+        try
+        {
+            Long roleId = Long.parseLong(id)
+            role = Role.get(roleId)
+        }
+        catch (Exception e) { }
+
+        return role
+    }
 }

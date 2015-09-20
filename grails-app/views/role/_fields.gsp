@@ -14,7 +14,7 @@
                         <input type="text" class="form-control add-user" name="user" placeholder="ID ou código do usuário" />
                     </div>
                     <div class="col-xs-2">
-                        <g:link controller="user" action="add" href="javascript:void(0);" class="add-user">
+                        <g:link controller="user" action="add" class="add-user">
                             <span class="glyphicon glyphicon-plus-sign" style="margin-top: 8px;" />
                         </g:link>
                     </div>

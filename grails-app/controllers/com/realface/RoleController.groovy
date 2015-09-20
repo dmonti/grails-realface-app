@@ -63,4 +63,14 @@ class RoleController
             [ status: (hasErrors ? NOK : OK), message: msg ]
         };
     }
+
+    def add()
+    {
+        String nameOrId = params.nameOrId
+        Role role = roleService.tryFindByIdOrName(nameOrId)
+        return render(contentType: "text/json") {[
+            status: (role ? OK : NOK),
+            role: (role ? g.render(template: "/user/role_row", bean: role, model: [editable: true]) : null)
+        ]}
+    }
 }

@@ -9,7 +9,7 @@
         <h3>Regra de acesso #${rule.id}</h3>
     </g:if>
     <g:else>
-        <h3>Novo ponto de acesso</h3>
+        <h3>Nova regra de acesso</h3>
     </g:else>
     <div class="row">
         <div class="col-xs-6">

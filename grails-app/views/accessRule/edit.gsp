@@ -89,7 +89,7 @@
                             <div class="panel-body">
                                 <div class="form-group">
                                     <div class="col-xs-10">
-                                        <input type="text" class="form-control add-role" placeholder="ID ou código do papel" />
+                                        <input type="text" class="form-control add-role" placeholder="ID ou nome do papel" />
                                     </div>
                                     <div class="col-xs-2">
                                         <g:link controller="role" action="add" class="add-role">

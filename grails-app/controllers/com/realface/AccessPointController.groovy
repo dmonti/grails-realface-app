@@ -37,7 +37,6 @@ class AccessPointController
 
     def submit()
     {
-        println params
         def accessPoint
         boolean containsId = params.containsKey("id")
         if (containsId)

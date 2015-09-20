@@ -16,7 +16,6 @@ function RoleForm($form) {
         var url = $target.attr("href");
         var codeOrId = $("input.add-user").val();
         $.get(url, { codeOrId: codeOrId }, function(result) {
-            console.log(result);
             if (result.status) {
                 $("table.users > tbody").prepend(result.user);
             } else {

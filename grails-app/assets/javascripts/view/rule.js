@@ -4,11 +4,6 @@ function RuleForm($form) {
     var self = this;
     var $btn = $form.find("button[type=submit]");
 
-    $form.find("a.add-role").click(function() {
-        console.log(this);
-        return false;
-    });
-
     $form.find("a.add-user").click(function() {
         var $target = $(this);
         var url = $target.attr("href");

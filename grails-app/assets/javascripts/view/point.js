@@ -8,27 +8,24 @@ $(function() {
 function AccessPointForm($form) {
     var self = this;
 
-    $form.find("a.add-rule").click(function(e) {
-        try {
-            var url = $(this).attr("href");
-            loadAddRuleModal(url);
-        } catch (e) {
-            toastr.error(response.message);
-        } finally {
-            return false;
-        }
+    $form.find("a.add-rule").click(function() {
+        var $target = $(this);
+        var url = $target.attr("href");
+        var codeOrId = $("input.add-rule").val();
+        $.get(url, { codeOrId: codeOrId }, function(result) {
+            if (result.status) {
+                $("table.rules > tbody").prepend(result.rule);
+                $("input.add-rule").val("");
+            } else {
+                toastr.error("Regra de acesso não encontrado!");
+            }
+        });
+        return false;
     });
 
-    var loadAddRuleModal = function(url) {
-        $.get(url, null, function(html) {
-            var modal = new Modal(html, { removeAfterHide: true });
-            modal.on("remove", function(e) {
-                //addRule(modal.data());
-                console.log("REMOVED!")
-            });
-            modal.show();
-        });
-    };
+    $form.on("click", "a.rule-remove", function(e) {
+        $(this).parents("tr:first").remove();
+    })
 
     var submit = function() {
         try {

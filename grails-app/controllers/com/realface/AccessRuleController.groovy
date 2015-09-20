@@ -97,4 +97,14 @@ class AccessRuleController
             message: msg
         ]}
     }
+
+    def add()
+    {
+        String codeOrId = params.codeOrId
+        AccessRule rule = accessRuleService.tryFindByIdOrCode(codeOrId)
+        return render(contentType: "text/json") {[
+            status: (rule ? OK : NOK),
+            rule: (rule ? g.render(template: "/accessPoint/rules_row", bean: rule) : null)
+        ]}
+    }
 }

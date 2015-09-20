@@ -12,7 +12,7 @@
     </g:else>
     <div class="row">
         <div class="col-xs-6">
-            <g:form controller="point" action="submit" id="${point?.id}" class="point form-horizontal">
+            <g:form controller="accessPoint" action="submit" id="${point?.id}" class="point form-horizontal">
                 <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">Nome:</label>
                     <div class="col-sm-10">
@@ -27,7 +27,7 @@
                 </div>
                 <div class="form-group">
                     <label for="inputDescription" class="col-sm-2 control-label">Dispositivos:</label>
-                    <div class="col-sm-5">
+                    <div class="col-sm-10">
                         <select class="form-control">
                             <g:each in="${devices}">
                                 <option>${it}</option>
@@ -36,23 +36,31 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="row">
-                        <div class="col-xs-offset-2 col-xs-10">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">Regras de acesso:</div>
-                                <div class="panel-body">
-                                    <input type="text" class="form-control" name="rule" placeholder="Procurar regra de acesso..." />
+                    <label for="inputDescription" class="col-sm-2 control-label">Regras de acesso:</label>
+                    <div class="col-sm-10">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <div class="col-xs-10">
+                                        <input type="text" class="form-control add-rule" name="rule" placeholder="ID ou código da regra" />
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <g:link controller="accessRule" action="add" class="add-rule">
+                                            <span class="glyphicon glyphicon-plus-sign" style="margin-top: 8px;" />
+                                        </g:link>
+                                    </div>
                                 </div>
-                                <table class="users table">
+                                <table class="rules table table-striped table-bordered">
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Nome</th>
+                                            <th>Código</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <g:each in="${point?.rules}">
-                                            <g:render template="rule_row" bean="${it}" />
+                                        <g:each in="${point?.getRules()}">
+                                            <g:render template="rules_row" bean="${it}" />
                                         </g:each>
                                     </tbody>
                                 </table>

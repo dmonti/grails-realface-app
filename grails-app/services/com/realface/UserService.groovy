@@ -29,7 +29,8 @@ class UserService
         User user = tryFindById(idOrCode)
         if (!user)
         {
-            user = User.findWhere("FROM User WHERE credential.code = ?", idOrCode)
+            List result = User.executeQuery("FROM User WHERE credential.code = ?", idOrCode)
+            user = result.isEmpty() ? null : result.first()
         }
         return user
     }

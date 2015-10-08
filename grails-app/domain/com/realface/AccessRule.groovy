@@ -68,7 +68,7 @@ class AccessRule
         int currentHour = currentTime.get(Calendar.HOUR_OF_DAY);
         int currentMinutes = currentTime.get(Calendar.MINUTE);
 
-        return ((currentHour == afterHour && currentMinutes >= afterHour || currentHour > afterHour) &&
-                currentHour == beforeHour && currentMinutes <= beforeMinute || currentHour < beforeHour)
+        return (currentHour == afterHour && currentMinutes >= afterMinute || currentHour > afterHour) &&
+               (currentHour == beforeHour && currentMinutes <= beforeMinute || currentHour < beforeHour)
     }
 }

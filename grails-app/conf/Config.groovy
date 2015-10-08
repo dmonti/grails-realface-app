@@ -90,15 +90,15 @@ environments {
         grails.cache.enabled = false
         grails.logging.jul.usebridge = true
 
-        neurotec.sdk.home = "/Volumes/dmonti/Development/Realface/Neurotec_Biometric_5_1_SDK_Trial"
-        realface.storage.path = "/Volumes/dmonti/Development/Realface/storage"
+        neurotec.sdk.home = "C:\\realface\\Neurotec_Biometric_5_1_SDK_Trial"
+        realface.storage.path = "C:\\realface\\storage"
     }
     development2 {
         grails.cache.enabled = false
         grails.logging.jul.usebridge = true
 
-        neurotec.sdk.home = "C:\\realface\\Neurotec_Biometric_5_1_SDK_Trial"
-        realface.storage.path = "C:\\realface\\storage"
+        neurotec.sdk.home = "/Volumes/dmonti/Development/Realface/Neurotec_Biometric_5_1_SDK_Trial"
+        realface.storage.path = "/Volumes/dmonti/Development/Realface/storage"
     }
     production {
         grails.logging.jul.usebridge = false

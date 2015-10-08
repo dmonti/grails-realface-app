@@ -19,16 +19,16 @@ environments {
     development {
         dataSource {
             dbCreate = "update" // one of 'create', 'create-drop', 'update', 'validate', ''
-            url = "jdbc:mysql://localhost:3306/realface?zeroDateTimeBehavior=convertToNull&reconnect=true"
-            username = "root"
+            url = "jdbc:mysql://localhost:3306/realface-grails?zeroDateTimeBehavior=convertToNull&reconnect=true"
+            username = "grails"
             password = ""
         }
     }
     development2 {
         dataSource {
             dbCreate = "update"
-            url = "jdbc:mysql://localhost:3306/realface-grails?zeroDateTimeBehavior=convertToNull&reconnect=true"
-            username = "grails"
+            url = "jdbc:mysql://localhost:3306/realface?zeroDateTimeBehavior=convertToNull&reconnect=true"
+            username = "root"
             password = ""
         }
     }

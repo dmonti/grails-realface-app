@@ -1,3 +1,3 @@
 RealFace
 
-Ferramenta administrativa para controle de reconhecimento facial.
+Ferramenta administrativa para controle de de acessos por reconhecimento facial.

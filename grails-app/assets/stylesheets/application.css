@@ -29,3 +29,8 @@
 select.rule-type {
     height: 45px;
 }
+
+.icon.download {
+    cursor: pointer;
+    text-decoration: none;
+}

@@ -4,7 +4,7 @@
     <meta name="layout" content="admin/main">
 </head>
 <body>
-    <h3>Dashboard</h3>
+    <h3>Dashboard <a class="glyphicon glyphicon-download-alt icon download" href="${createLink(controller: 'home', action: 'download')}"></a></h3>
     <div class="row">
         <div class="col-xs-5 text-center">
             <h2>Acessos permitidos</h2>

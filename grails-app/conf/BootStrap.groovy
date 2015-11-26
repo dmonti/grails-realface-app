@@ -1,6 +1,8 @@
 import com.realface.AccessPoint
 import com.realface.LibraryManager
 import com.neurotec.plugins.NDataFileManager
+import java.lang.ExceptionInInitializerError
+import java.lang.NoClassDefFoundError
 
 class BootStrap
 {
@@ -13,12 +15,22 @@ class BootStrap
 
     def init = {  servletContext ->
         LibraryManager.initLibraryPath(getSDKHome())
-        NDataFileManager.getInstance().addFromDirectory(getNDataFilePath(), false)
 
-        licenseService.obtainAll()
-        deviceService.init()
-        // deviceService.update()
-        enrollService.loadCache()
+        try {
+            NDataFileManager.getInstance().addFromDirectory(getNDataFilePath(), false)
+        } catch (ExceptionInInitializerError e) {
+            log.warn("Exception initializing NDataFileManager.", e)
+        }
+
+        try {
+            licenseService.obtainAll()
+            deviceService.init()
+            // deviceService.update()
+            enrollService.loadCache()
+        } catch (NoClassDefFoundError e) {
+            log.warn("Neurotec license not load.", e)
+        }
+
         userService.bootStrap()
 
         if (!AccessPoint.count()) {

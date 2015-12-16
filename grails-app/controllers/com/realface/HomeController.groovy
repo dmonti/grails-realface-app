@@ -23,7 +23,7 @@ class HomeController
         accesses.each({ access ->
             def user = access.user
             def accessPoint = access.accessPoint
-            output += "\n{{access.status}},{{user.id}},{{user.email}},{{accessPoint.id}},{{accessPoint.name}}"
+            output += "\n${access.status},${user.id},${user.email},${accessPoint.id},${accessPoint.name}"
         })
 
         byte[] bytes = output.bytes
